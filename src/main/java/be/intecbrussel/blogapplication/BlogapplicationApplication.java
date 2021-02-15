@@ -18,7 +18,7 @@ public class BlogapplicationApplication {
 /*    @Bean
     CommandLineRunner runner(UserRepository repository){
         return args -> {
-            repository.save(new User("fooUser@gmail.com", "foofoo", "yvo", "urvoy"));
+            repository.save(new User("fooUser@gmail.com", "foofoo", "yvo", "urvoy", "1986-12-09", "male"));
         };
     }*/
 

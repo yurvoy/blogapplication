@@ -20,6 +20,8 @@ public class UserRepoTest {
         user.setPassword("foofoo");
         user.setFirstName("foO");
         user.setLastName("oofoof");
+        user.setBirthday("1986-12-09");
+        user.setGender("male");
 
         User savedUser = repo.save(user);
 
