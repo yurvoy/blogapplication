@@ -6,16 +6,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 @SpringBootTest
 public class UserRepoTest {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository repo;
 
     @Test
-    public void test() {
-        User user = new User(123456L, "yvo@gmail.com", "F4k3Pass");
-        userRepository.save(user);
+    public void testUser() {
+        User user = new User();
+        user.setEmail("foo@gmail.com");
+        user.setPassword("foofoo");
+
+        User savedUser = repo.save(user);
+
+        System.out.println(repo.findByEmail("foo@gmail.com"));
     }
 
 
