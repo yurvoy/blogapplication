@@ -1,5 +1,7 @@
 package be.intecbrussel.blogapplication.web;
 
+import org.springframework.util.StringUtils;
+
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -39,7 +41,7 @@ public class UserRegistrationDto {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = StringUtils.capitalize(firstName);
     }
 
     public String getLastName() {
@@ -47,7 +49,7 @@ public class UserRegistrationDto {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = StringUtils.capitalize(lastName);
     }
 
     public String getPassword() {
