@@ -1,4 +1,4 @@
-package be.intecbrussel.blogapplication.config;
+package be.intecbrussel.blogapplication.web;
 
 import be.intecbrussel.blogapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

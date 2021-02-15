@@ -1,6 +1,7 @@
 package be.intecbrussel.blogapplication.controllers;
 
-import be.intecbrussel.blogapplication.config.UserRegistrationDto;
+import be.intecbrussel.blogapplication.repositories.UserRepository;
+import be.intecbrussel.blogapplication.web.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

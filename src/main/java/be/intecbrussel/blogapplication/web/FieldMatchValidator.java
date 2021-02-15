@@ -1,4 +1,4 @@
-package be.intecbrussel.blogapplication.config;
+package be.intecbrussel.blogapplication.web;
 
 import org.apache.commons.beanutils.BeanUtils;
 

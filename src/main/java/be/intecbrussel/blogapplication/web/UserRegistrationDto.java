@@ -1,12 +1,11 @@
-package be.intecbrussel.blogapplication.config;
+package be.intecbrussel.blogapplication.web;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @FieldMatch.List({
-        @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
-        @FieldMatch(first = "email", second = "confirmEmail", message = "The email fields must match")
+        @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 })
 public class UserRegistrationDto {
 
@@ -22,13 +21,15 @@ public class UserRegistrationDto {
     @NotEmpty
     private String confirmPassword;
 
-    @Email
     @NotEmpty
-    private String email;
+    private String birthday;
+
+    @NotEmpty
+    private String gender;
 
     @Email
     @NotEmpty
-    private String confirmEmail;
+    private String email;
 
     @AssertTrue
     private Boolean terms;
@@ -73,12 +74,20 @@ public class UserRegistrationDto {
         this.email = email;
     }
 
-    public String getConfirmEmail() {
-        return confirmEmail;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setConfirmEmail(String confirmEmail) {
-        this.confirmEmail = confirmEmail;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public Boolean getTerms() {

@@ -1,6 +1,6 @@
 package be.intecbrussel.blogapplication.services;
 
-import be.intecbrussel.blogapplication.config.UserRegistrationDto;
+import be.intecbrussel.blogapplication.web.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.Role;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
@@ -36,6 +36,8 @@ public class UserServiceImpl implements UserService {
         user.setLastName(registration.getLastName());
         user.setEmail(registration.getEmail());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
+        user.setBirthday(registration.getBirthday());
+        user.setGender(registration.getGender());
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
         return userRepository.save(user);
     }

@@ -23,6 +23,10 @@ public class User implements Principal {
     private String firstName;
     @Column
     private String lastName;
+    @Column
+    private String birthday;
+    @Column
+    private String gender;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -33,19 +37,22 @@ public class User implements Principal {
     private Collection<Role> roles;
 
 
-    public User(String email, String password, String firstName, String lastName) {
+    public User(String email, String password, String firstName, String lastName, String birthday, String gender) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.birthday = birthday;
+        this.gender = gender;
     }
 
-
-    public User(String email, String password, String firstName, String lastName, Collection<Role> roles) {
+    public User(String email, String password, String firstName, String lastName, String birthday, String gender, Collection<Role> roles) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.birthday = birthday;
+        this.gender = gender;
         this.roles = roles;
     }
 

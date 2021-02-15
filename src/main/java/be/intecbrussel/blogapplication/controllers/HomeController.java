@@ -27,11 +27,6 @@ public class HomeController {
         return "index";
     }
 
-//    @GetMapping("/")
-//    public String root() {
-//        return "index";
-//    }
-
     @GetMapping("/login")
     public String login(Model model) {
         return "login";

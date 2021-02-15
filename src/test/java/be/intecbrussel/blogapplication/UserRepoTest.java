@@ -18,6 +18,8 @@ public class UserRepoTest {
         User user = new User();
         user.setEmail("foo@gmail.com");
         user.setPassword("foofoo");
+        user.setFirstName("foO");
+        user.setLastName("oofoof");
 
         User savedUser = repo.save(user);
 
