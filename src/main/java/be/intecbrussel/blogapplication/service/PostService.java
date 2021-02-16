@@ -1,4 +1,6 @@
 package be.intecbrussel.blogapplication.service;
 
-public interface PostService {
+import be.intecbrussel.blogapplication.model.Post;
+
+public interface PostService extends CrudService<Post, Long>{
 }
