@@ -46,23 +46,27 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/edit")
-    public String updateUserForm(@PathVariable Long userId, Model model, Principal principal){
+    public String updateUserForm(@PathVariable Long userId, Model model, Principal principal) {
 
-/*
-        model.addAttribute("userUpdate", userService.findById(userId));
-        return UPDATE_USER;
 
- */
+        /*model.addAttribute("userUpdate", userService.findById(userId));
+        return UPDATE_USER;*/
+
+
 
         model.addAttribute("userUpdate", userService.findById(userId));
         if(principal != null) {
             return UPDATE_USER;
         }
         return CREATE_USER;
+
+
+
     }
 
     @PostMapping("/{userId}/edit")
     public String processUpdateUserForm(@Valid @ModelAttribute("user") User user, BindingResult result, @PathVariable Long userId){
+
 
         if(result.hasErrors()){
             return CREATE_USER;
