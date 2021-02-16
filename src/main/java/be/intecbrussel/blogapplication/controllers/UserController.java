@@ -15,7 +15,7 @@ import java.security.Principal;
 public class UserController {
 
     @Autowired
-    UserRepository repo;
+    private UserRepository repo;
 
     @RequestMapping(value = "/")
     public String root(Principal principal, Model model) {

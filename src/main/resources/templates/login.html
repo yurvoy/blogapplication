@@ -6,25 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
 
     <title>Registration</title>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<!--------------Navigation--------------->
+<nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span> <span
-                    class="icon-bar"></span> <span class="icon-bar"></span> <span
-                    class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">LOGO Blog app</a>
+        <div class="collapse navbar-collapse p-2" id="navbarResponsive">
+            <a class="navbar-brand" href="#">LOGO Blog app</a>
+            <ul class = "navbar-nav ml-auto">
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" font-color="black">
+                    <a href="/" th:href="@{/login}">Log in</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" font-color="black">
+                    <a href="/" th:href="@{/resgistration}">Register</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
+                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
+            </ul>
         </div>
     </div>
 </nav>
-<br>
-<br>
+<!--------------End Navigation --------------->
 <div class="container">
 
     <div class="row">
