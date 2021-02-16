@@ -12,7 +12,7 @@ import java.security.Principal;
 
 
 @Controller
-public class HomeController {
+public class UserController {
 
     @Autowired
     UserRepository repo;
