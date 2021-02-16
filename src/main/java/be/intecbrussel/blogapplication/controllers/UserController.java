@@ -15,11 +15,11 @@ import java.security.Principal;
 public class UserController {
 
     @Autowired
-    private UserRepository repo;
+    private UserRepository userRepository;
 
     @RequestMapping(value = "/")
     public String root(Principal principal, Model model) {
-        User user = repo.findByEmail(principal.getName());
+        User user = userRepository.findByEmail(principal.getName());
 
         model.addAttribute("user", user);
 
