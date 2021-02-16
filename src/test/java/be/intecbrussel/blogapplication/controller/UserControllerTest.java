@@ -42,7 +42,7 @@ class UserControllerTest {
 
         users = new HashSet<>();
         userController = new UserController(userService);
-        //users.add(User.builder().id(1L).build());
+        users.add(User.builder().id(1L).build());
 
         mockMvc = MockMvcBuilders
                 .standaloneSetup(userController)
@@ -62,14 +62,11 @@ class UserControllerTest {
     void updateUserForm() throws Exception {
         //User user = new User();
 
-        //when(userService.findById(anyLong())).thenReturn(User.builder().id(1L).build());
+        when(userService.findById(anyLong())).thenReturn(User.builder().id(1L).build());
 
         mockMvc.perform(get("/users/1/edit"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("user"));
-
-
-
+                .andExpect(model().attributeExists("userUpdate"));
 
     }
 }
