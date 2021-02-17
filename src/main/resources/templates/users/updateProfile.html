@@ -10,6 +10,8 @@
 
 <body>
 <!--------------Navigation--------------->
+
+<!--/*@thymesVar id="profileUpdate" type="be.intecbrussel.blogapplication.model.User"*/-->
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
@@ -38,7 +40,7 @@
         <div class="col-lg-3"></div>
         <div class=" pb-3 pt-5 pr-5 pl-5 col-lg-6 border border-dark rounded">
             <div id="ui" >
-                <form th:object="${profileUpdate}"  class="form-group" method="post" >
+                <form th:object="${profileUpdate}" th:action="@{/users/}" class="form-group" method="post" >
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <input class="form-control" type="text" name="firstname" th:field="*{firstName}"  id="firstname" placeholder="First Name">
@@ -61,7 +63,7 @@
                         <input class="form-control" type="text" name="newpassword" id="newpassword" placeholder="New Password">
                         <input class="form-control"type="text" name="confirmpassword" id="confirmpassword" placeholder="Confirm New Password"><br>
                         <label>Bio:</label><br>
-                        <textarea rows="4" cols="50" name="comment"></textarea>
+                        <textarea rows="4" cols="50" th:field="*{userBio}" name="comment"></textarea>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-6">

@@ -3,6 +3,7 @@ package be.intecbrussel.blogapplication.service;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User save(User user) {
         return userRepository.save(user);
     }
