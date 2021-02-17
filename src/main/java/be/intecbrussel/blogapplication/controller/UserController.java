@@ -37,19 +37,26 @@ public class UserController {
           result.getAllErrors().forEach(objectError -> {
               log.debug(objectError.toString());
           });
+
+          userService.updateBio(user.getId(), user.getUserBio());
+
           return UPDATE_USER;
       }
-      User userToSave = userService.save(user);
-      return "redirect:/users/" + userToSave.getId() +  "/profile.html";
+        userService.save(user);
+      //User userToSave = userService.save(user);
+      return "redirect:/users/" + user.getId() +  "/profile.html";
     }
 
     @GetMapping("users/{userId}/profile.html")
     public String showProfile(@PathVariable Long userId, Model model) {
 
-        User user = userService.findById(1L);
+        User user = userService.findById(userId);
+        user.setUserBio(userService.updateBio(userId, user.getUserBio()));
         model.addAttribute("view", "users/profile");
         model.addAttribute("user", user);
         return USER_PROFILE;
     }
+
+
 
 }

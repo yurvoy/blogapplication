@@ -31,6 +31,7 @@ public class User {
     @Column(name = "profile_image")
     private Byte[] profileImage;
 
+    @Lob
     @Column(name = "user_bio")
     private String userBio;
 

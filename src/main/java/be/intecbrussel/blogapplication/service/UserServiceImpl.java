@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     } */
 
+    @Override
     public void updateUser(Long id, String userEmail, String password, Byte[] profileImage, String userBio, LocalDateTime birthdate){
         userRepository.findUserById(id).ifPresent(user -> {
             user.setUserEmail(userEmail);
@@ -67,5 +68,14 @@ public class UserServiceImpl implements UserService {
             user.setUserBio(userBio);
             user.setBirthDate(birthdate);
         });
+    }
+
+    @Override
+    public String updateBio(Long id, String userBio){
+        userRepository.findUserById(id).ifPresent(user -> {
+            user.setUserBio(userBio);
+        });
+
+        return userBio;
     }
 }
