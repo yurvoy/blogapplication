@@ -69,7 +69,7 @@
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 cover">
                 <div class="media align-items-end profile-head">
-                    <div class="profile mr-3"><img src="https://i.pinimg.com/originals/48/58/02/4858027e661b5d6e7f6c6ad6cd61dba5.jpg" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                    <div class="profile mr-3"><img src="https://i.pinimg.com/originals/48/58/02/4858027e661b5d6e7f6c6ad6cd61dba5.jpg" alt="..."  th:src="@{'/users/' + ${user.id} + '/profileimage'}" width="130" class="rounded mb-2 img-thumbnail">
                         <a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a></div>
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0">The Swedish Chef</h4>

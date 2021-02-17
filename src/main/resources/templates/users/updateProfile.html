@@ -11,7 +11,7 @@
 <body>
 <!--------------Navigation--------------->
 
-<!--/*@thymesVar id="profileUpdate" type="be.intecbrussel.blogapplication.model.User"*/-->
+<!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
@@ -40,7 +40,7 @@
         <div class="col-lg-3"></div>
         <div class=" pb-3 pt-5 pr-5 pl-5 col-lg-6 border border-dark rounded">
             <div id="ui" >
-                <form th:object="${profileUpdate}" th:action="@{/users/}" class="form-group" method="post" >
+                <form th:object="${user}" th:action="@{/users/}" class="form-group" method="post" enctype="multipart/form-data" >
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <input class="form-control" type="text" name="firstname" th:field="*{firstName}"  id="firstname" placeholder="First Name">
@@ -96,8 +96,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Upload profile image</label>
-                        <input class="form-control" type="file" name="fileToUpload" id="fileToUpload">
+
+                        <a class="btn btn-default" href="#"
+                           th:href="@{'/users/' + ${user.id} + '/image'}" role="button">Change Profile Image</a>
 
                     </div>
 

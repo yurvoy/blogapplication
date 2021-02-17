@@ -1,6 +1,7 @@
 package be.intecbrussel.blogapplication.controller;
 
 import be.intecbrussel.blogapplication.model.User;
+import be.intecbrussel.blogapplication.service.ImageService;
 import be.intecbrussel.blogapplication.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,6 +28,9 @@ class UserControllerTest {
 
     @Mock
     UserService userService;
+
+    @Mock
+    ImageService imageService;
 
     @InjectMocks
     UserController userController;
