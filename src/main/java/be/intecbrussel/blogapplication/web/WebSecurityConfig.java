@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/registration**",
                         "/forgotPassword**",
+                        "/resetPassword**",
                         "/js/**",
                         "/css/**",
                         "/img/**",

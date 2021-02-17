@@ -3,23 +3,23 @@ package be.intecbrussel.blogapplication.controllers;
 import be.intecbrussel.blogapplication.model.ConfirmationToken;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.ConfirmationTokenRepository;
-import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.services.EmailSenderService;
+import be.intecbrussel.blogapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
-@RequestMapping("/forgotPassword")
 public class ForgotPasswordController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
@@ -27,39 +27,50 @@ public class ForgotPasswordController {
     @Autowired
     private EmailSenderService emailSenderService;
 
-    @GetMapping
-    public String showForgotPassword(Model model) {
-        return "forgotPassword";
+    @GetMapping(value = "/forgotPassword")
+    public ModelAndView displayForgotPasswordPage() {
+        return new ModelAndView("forgotPassword");
     }
 
+    // Process form submission from forgotPassword page
     @PostMapping(value = "/forgotPassword")
-    public ModelAndView forgotUserPassword(ModelAndView modelAndView, String email) {
-        User existingUser = userRepository.findByEmail(email);
-        if (existingUser != null) {
-            // Create token
-            ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
+    public ModelAndView processForgotPasswordForm(ModelAndView modelAndView, @RequestParam("email") String userEmail, HttpServletRequest request) {
 
-            // Save it
+        // Lookup user in database by e-mail
+        User existing = userService.findByEmail(userEmail);
+
+        if (existing != null) {
+            modelAndView.addObject("errorMessage", "We didn't find an account for that e-mail address.");
+        } else {
+            // Generate random 36-character string token for reset password
+            ConfirmationToken confirmationToken = new ConfirmationToken(existing);
+
+            // Save token to database
             confirmationTokenRepository.save(confirmationToken);
 
-            // Create the email
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(existingUser.getEmail());
-            mailMessage.setSubject("Complete Password Reset!");
-            mailMessage.setFrom("test-email@gmail.com");
-            mailMessage.setText("To complete the password reset process, please click here: "
-                    + "http://localhost:8080/confirm-reset?token=" + confirmationToken.getConfirmationToken());
+            String appUrl = request.getScheme() + "://" + request.getServerName();
 
-            // Send the email
-            emailSenderService.sendEmail(mailMessage);
+            // Email message
+            SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
+            passwordResetEmail.setFrom("support@demo.com");
+            passwordResetEmail.setTo(existing.getEmail());
+            passwordResetEmail.setSubject("Password Reset Request");
+            passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
+                    + "/reset?token=" + confirmationToken.getConfirmationToken());
 
-            modelAndView.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
-            modelAndView.setViewName("successForgotPassword");
+            emailSenderService.sendEmail(passwordResetEmail);
 
-        } else {
-            modelAndView.addObject("message", "This email address does not exist!");
-            modelAndView.setViewName("error");
+            // Add success message to view
+            modelAndView.addObject("successMessage", "A password reset link has been sent to " + userEmail);
         }
+
+        modelAndView.setViewName("forgotPassword");
         return modelAndView;
+    }
+
+
+    @GetMapping(value = "/reset")
+    public ModelAndView displayResetPasswordPage() {
+        return new ModelAndView("resetPassword");
     }
 }
