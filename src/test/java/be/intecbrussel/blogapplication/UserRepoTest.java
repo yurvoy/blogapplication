@@ -22,7 +22,6 @@ public class UserRepoTest {
         user.setPassword("foofoo");
         user.setFirstName("foO");
         user.setLastName("oofoof");
-        user.setBirthday(LocalDateTime.of(1999,11,10,1,1));
         user.setGender("male");
 
         User savedUser = repo.save(user);

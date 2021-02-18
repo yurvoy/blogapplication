@@ -27,7 +27,7 @@ public class UserRegistrationDto {
     private String confirmPassword;
 
     @NotEmpty
-    private LocalDateTime birthday;
+    private String birthday;
 
     @NotEmpty
     private String gender;
