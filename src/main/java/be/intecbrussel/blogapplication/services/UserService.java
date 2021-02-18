@@ -15,6 +15,4 @@ public interface UserService extends UserDetailsService {
 
     String updateBio(Long id, String userBio);
 
-    void updateUser(Long id, String userEmail, String password, Byte[] profileImage, String userBio, LocalDateTime birthdate);
-
 }

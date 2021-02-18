@@ -6,8 +6,11 @@ import be.intecbrussel.blogapplication.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Principal;
 
 
 @Controller
@@ -28,12 +31,28 @@ public class UserController {
         return "user/updateProfile.html";
     }
 
-    @PostMapping({"user/{userId}/edit"})
-    public String processUpdateProfile(@PathVariable Long userId, User user){
+//    @PostMapping({"user/{userId}/edit"})
+//    public String processUpdateProfile(@PathVariable Long userId, User user){
+//
+//        userService.updateBio(userId, user.getUserBio());
+//        userRepository.save(user);
+//        return "redirect:/user/" + userId +  "/profile.html";
+//    }
 
-        userService.updateBio(userId, user.getUserBio());
+    @PostMapping({"user/{userId}/edit"})
+    public String processUpdateProfile(Principal principal, @ModelAttribute("user") User userForm){
+        User user = userRepository.findByEmail(principal.getName());
+
+        user.setFirstName(userForm.getFirstName());
+        user.setLastName(userForm.getLastName());
+        user.setPassword(userForm.getPassword());
+        user.setUserBio(userForm.getUserBio());
+        user.setProfileImage(userForm.getProfileImage());
+        user.setBirthday(userForm.getBirthday());
+        user.setGender(userForm.getGender());
+
         userRepository.save(user);
-        return "redirect:/user/" + userId +  "/profile.html";
+        return "user/index";
     }
 
     @GetMapping("user/{userId}/profile")

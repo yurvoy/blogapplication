@@ -12,10 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
 
 
-
     <head>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js	"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js	"/>
 
@@ -70,9 +68,9 @@
             <div class="px-4 pt-0 pb-4 cover">
                 <div class="media align-items-end profile-head">
                     <div class="profile mr-3"><img src="https://i.pinimg.com/originals/48/58/02/4858027e661b5d6e7f6c6ad6cd61dba5.jpg" alt="..."  th:src="@{'/users/' + ${user.id} + '/profileimage'}" width="130" class="rounded mb-2 img-thumbnail">
-                        <a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a></div>
+                        <a href="/" th:href="@{'/user/' + ${user.getId()} + '/edit'}">Edit profile</a></div>
                     <div class="media-body mb-5 text-white">
-                        <h4 class="mt-0 mb-0">The Swedish Chef</h4>
+                        <h4 class="mt-0 mb-0"><span th:text="${user.firstName}"> </span><span th:text="${user.lastName}"></span></h4>
                         <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>Stockholm</p>
                     </div>
                 </div>

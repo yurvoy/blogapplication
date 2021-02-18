@@ -63,20 +63,6 @@ public class UserServiceImpl implements UserService {
         return userBio;
     }
 
-    @Override
-    public void updateUser(Long id, String userEmail, String password, Byte[] profileImage, String userBio, LocalDateTime birthday){
-    userRepository.findById(id).ifPresent(user -> {
-        user.setEmail(userEmail);
-        user.setPassword(password);
-        user.setProfileImage(profileImage);
-        user.setUserBio(userBio);
-        user.setBirthday(birthday);
-        userRepository.save(user);
-      });
-    }
-
-
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
