@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long aLong) {
         Optional<User> userOptional = userRepository.findById(aLong);
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             throw new RuntimeException("user not found");
         }
         return userOptional.get();
@@ -56,24 +56,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String updateBio(Long id, String userBio){
+    public String updateBio(Long id, String userBio) {
         userRepository.findById(id).ifPresent(user -> {
             user.setUserBio(userBio);
         });
         return userBio;
     }
 
-    /*public void updateUser(Long id, String userEmail, String password, Byte[] profileImage, String userBio, LocalDateTime birthdate){
-        userRepository.findUserById(id).ifPresent(user -> {
-            user.setUserEmail(userEmail);
-            user.setPassword(password);
-            user.setProfileImage(profileImage);
-            user.setUserBio(userBio);
-            user.setBirthDate(birthdate);
-        });
-    }
-
-     */
     @Override
     public void updateUser(Long id, String userEmail, String password, Byte[] profileImage, String userBio, LocalDateTime birthday){
     userRepository.findById(id).ifPresent(user -> {
@@ -83,9 +72,10 @@ public class UserServiceImpl implements UserService {
         user.setUserBio(userBio);
         user.setBirthday(birthday);
         userRepository.save(user);
-    });
+      });
+    }
 
-}
+
 
 
     @Override
