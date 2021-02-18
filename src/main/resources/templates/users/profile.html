@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en xmlns:th=http://www.thymeleaf.org>">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
 <head>
     <meta charset="UTF-8"/>
 
@@ -14,9 +14,11 @@
 
 
     <head>
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js	"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js	"/>
+
 
         <!--- style sheet page -->
         <style>
@@ -42,29 +44,32 @@
 
 <body>
 <!--------------Navigation--------------->
+
+<!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#">LOGO Blog app</a>
             <ul class = "navbar-nav ml-auto">
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()" font-color="black">
-                    <a href="/" th:href="@{/login}">Log in</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()" font-color="black">
-                    <a href="/" th:href="@{/registration}">Register</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
-                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" font-color="black" href="#">Log in</buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" font-color="black" href="#">Register</buttom>
             </ul>
         </div>
     </div>
 </nav>
+
+
 <!--------------End Navigation --------------->
+
+
+
+
 <div class="row py-5 px-4">
     <div class="col-md-5 mx-auto">
         <!-- Profile widget -->
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 cover">
                 <div class="media align-items-end profile-head">
-                    <div class="profile mr-3"><img src="https://i.pinimg.com/originals/48/58/02/4858027e661b5d6e7f6c6ad6cd61dba5.jpg" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                    <div class="profile mr-3"><img src="https://i.pinimg.com/originals/48/58/02/4858027e661b5d6e7f6c6ad6cd61dba5.jpg" alt="..."  th:src="@{'/users/' + ${user.id} + '/profileimage'}" width="130" class="rounded mb-2 img-thumbnail">
                         <a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a></div>
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0">The Swedish Chef</h4>
@@ -89,9 +94,7 @@
             <div class="px-4 py-3">
                 <h5 class="mb-0">About</h5>
                 <div class="p-4 rounded shadow-sm bg-light">
-                    <p class="font-italic mb-0">Java Developer</p>
-                    <p class="font-italic mb-0">Lives in Antwerp</p>
-                    <p class="font-italic mb-0">Cooking Swedish recipes</p>
+                    <p class="font-italic mb-0" th:text="${user.userBio}">Java Developer</p>
                 </div>
 
             </div>
