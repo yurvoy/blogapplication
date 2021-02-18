@@ -1,7 +1,9 @@
 package be.intecbrussel.blogapplication.web;
 
 import be.intecbrussel.blogapplication.services.UserService;
+import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,11 +23,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/").permitAll().and()
+                .authorizeRequests().antMatchers("/console/**").permitAll();
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
         http.authorizeRequests()
                 .antMatchers(
                         "/registration**",
                         "/forgotPassword**",
-                        "/resetPassword**",
                         "/js/**",
                         "/css/**",
                         "/img/**",
@@ -33,15 +39,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/loginUser")
                 .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/loginUser?logout")
                 .permitAll();
+
     }
 
     @Bean
@@ -60,5 +67,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
+    }
+
+    @Bean
+    ServletRegistrationBean h2servletRegistration(){
+        ServletRegistrationBean registration = new ServletRegistrationBean( new org.h2.server.web.WebServlet());
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+        registrationBean.addUrlMappings("/console/*");
+        return registrationBean;
     }
 }

@@ -14,11 +14,15 @@ import java.security.Principal;
 @Controller
 public class UserController {
 
+
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(value = "/")
+    @RequestMapping({"","/","/index"})
     public String root(Principal principal, Model model) {
+        if (principal == null){
+            return "loginUser";
+        }
         User user = userRepository.findByEmail(principal.getName());
 
         model.addAttribute("user", user);
@@ -26,14 +30,15 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/login")
+    @GetMapping({"/loginUser"})
     public String login(Model model) {
-        return "login";
+        return "loginUser";
     }
 
     @GetMapping("/user")
     public String userIndex() {
         return "user/index";
     }
+
 
 }
