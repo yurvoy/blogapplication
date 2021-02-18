@@ -31,14 +31,6 @@ public class UserController {
         return "user/updateProfile.html";
     }
 
-//    @PostMapping({"user/{userId}/edit"})
-//    public String processUpdateProfile(@PathVariable Long userId, User user){
-//
-//        userService.updateBio(userId, user.getUserBio());
-//        userRepository.save(user);
-//        return "redirect:/user/" + userId +  "/profile.html";
-//    }
-
     @PostMapping({"user/{userId}/edit"})
     public String processUpdateProfile(Principal principal, @ModelAttribute("user") User userForm){
         User user = userRepository.findByEmail(principal.getName());
