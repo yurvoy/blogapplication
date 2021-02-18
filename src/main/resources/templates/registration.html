@@ -102,7 +102,7 @@
 
                     <div class="form-group ml-4" th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
                         <input type="checkbox" th:field="*{terms}" name="accept-terms" id="acept-terms">
-                        <label for="acept-terms" >Accept Terms &amp; Services</label>
+                        <label for="acept-terms">Accept Terms &amp; Services</label>
                         <p class="error-message" th:each="error : ${#fields.errors('terms')}" th:text="${error}">Validation error
                         </p>
                     </div>

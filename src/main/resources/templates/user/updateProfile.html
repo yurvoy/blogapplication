@@ -15,7 +15,15 @@
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <buttom class="ml-auto btn btn-outline-secondary btn-lg" font-color="black" href="">Log in with an existing account</a></buttom>
+            <a class="navbar-brand" href="#">LOGO Blog app</a>
+            <ul class = "navbar-nav ml-auto">
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()" font-color="black">
+                    <a href="/" th:href="@{/login}">Log in</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" font-color="black">
+                    <a href="/" th:href="@{/registration}">Register</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
+                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
+            </ul>
         </div>
     </div>
 </nav>
@@ -48,14 +56,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Update Password</label>
-                        <input class="form-control" type="text" name="oldpassword" id="oldpassword" placeholder="Old Password">
-
-
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="newpassword" id="newpassword" placeholder="New Password">
-                        <input class="form-control"type="text" name="confirmpassword" id="confirmpassword" placeholder="Confirm New Password"><br>
                         <label>Bio:</label><br>
                         <textarea rows="4" cols="50" th:field="*{userBio}" name="comment"></textarea>
                     </div>
@@ -81,19 +81,11 @@
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="gender" id="other" value="other">
                                     <label class="form-check-label" for="male">Other</label><br>
-
-
                                 </div>
-
-
                             </div>
-                        </div>
-                    </div>
+
                     <div class="form-group">
-
-                        <a class="btn btn-default" href="#"
-                           th:href="@{'/user/' + ${user.id} + '/image'}" role="button">Change Profile Image</a>
-
+                        <input class="btn btn-default" type="file" th:field="*{profileImage}">
                     </div>
 
                     <div class="col text-center">
