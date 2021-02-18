@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
 
@@ -41,11 +41,11 @@
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#">LOGO Blog app</a>
+            <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blog app</a>
             <ul class = "navbar-nav ml-auto">
                 <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()" font-color="black">
                     <a href="/" th:href="@{/login}">Log in</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" font-color="black">
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()" font-color="black">
                     <a href="/" th:href="@{/registration}">Register</a></buttom>
                 <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
                     <a href="/" th:href="@{/logout}">Logout</a></buttom>
@@ -66,7 +66,7 @@
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 cover">
                 <div class="media align-items-end profile-head">
-                    <div class="profile mr-3"><img src="https://i.pinimg.com/originals/48/58/02/4858027e661b5d6e7f6c6ad6cd61dba5.jpg" alt="..."  th:src="@{'/users/' + ${user.id} + '/profileimage'}" width="130" class="rounded mb-2 img-thumbnail">
+                    <div class="profile mr-3"><img src="https://i.pinimg.com/originals/48/58/02/4858027e661b5d6e7f6c6ad6cd61dba5.jpg" alt="..."  th:src="@{'/user/' + ${user.id} + '/profileimage'}" width="130" class="rounded mb-2 img-thumbnail">
                         <a href="/" th:href="@{'/user/' + ${user.getId()} + '/edit'}">Edit profile</a></div>
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0"><span th:text="${user.firstName}"> </span><span th:text="${user.lastName}"></span></h4>
