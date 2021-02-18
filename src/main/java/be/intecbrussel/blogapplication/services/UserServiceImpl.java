@@ -53,6 +53,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String updateBio(Long id, String userBio){
+        userRepository.findById(id).ifPresent(user -> {
+            user.setUserBio(userBio);
+        });
+        return userBio;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
         if (user == null) {

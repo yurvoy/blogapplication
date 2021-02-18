@@ -11,4 +11,6 @@ public interface UserService extends UserDetailsService {
 
     User save(UserRegistrationDto registration);
 
+    String updateBio(Long id, String userBio);
+
 }
