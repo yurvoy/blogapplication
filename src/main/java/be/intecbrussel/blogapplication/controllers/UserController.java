@@ -37,7 +37,6 @@ public class UserController {
 
         user.setFirstName(userForm.getFirstName());
         user.setLastName(userForm.getLastName());
-        user.setPassword(userForm.getPassword());
         user.setUserBio(userForm.getUserBio());
         user.setProfileImage(userForm.getProfileImage());
         user.setBirthday(userForm.getBirthday());
