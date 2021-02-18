@@ -31,6 +31,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public User findById(Long aLong) {
+        Optional<User> userOptional = userRepository.findById(aLong);
+        if(!userOptional.isPresent()){
+            throw new RuntimeException("user not found");
+        }
+        return userOptional.get();
+    }
+
     public User save(UserRegistrationDto registration) {
         User user = new User();
         user.setFirstName(registration.getFirstName());
