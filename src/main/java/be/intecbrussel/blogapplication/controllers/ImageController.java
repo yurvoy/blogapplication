@@ -31,12 +31,12 @@ public class ImageController {
     }
 
 
-    @GetMapping("users/{id}/image")
+    @GetMapping("user/{id}/image")
     public String showUploadForm(@PathVariable String id, Model model){
 
         model.addAttribute("user", userService.findById(Long.valueOf(id)));
 
-        return "users/imageupload";
+        return "user/uploadImage";
     }
 
     @PostMapping("users/{id}/image")
@@ -45,10 +45,10 @@ public class ImageController {
 
         imageService.saveImageFile(Long.valueOf(id), file);
         redirectAttributes.addFlashAttribute("message", "You uploaded");
-        return "redirect:/users/" + id + "/profile.html";
+        return "redirect:/user/" + id + "/profile.html";
     }
 
-    @GetMapping("users/{id}/profileimage")
+    @GetMapping("user/{id}/profileimage")
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
         User user = userService.findById(Long.valueOf(id));
 

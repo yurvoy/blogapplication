@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
 
-    <title>Registration</title>
+    <title>Index</title>
 </head>
 
 <body>
@@ -39,6 +39,11 @@
         Welcome <span th:text="${user.firstName}"></span>
         <span th:text="${user.lastName}"></span>
         <br> Your Email : <span th:text="${user.email}"></span>
+    </p>
+    <p>
+    <div class="form-group">
+        <span><a href="/" th:href="@{/user/${user.id}/profile}">See your profile</a></span>
+        <span><a href="/" th:href="@{/user/${user.id}/edit}">Edit your profile</a></span>
     </p>
 </div>
 
