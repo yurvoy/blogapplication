@@ -1,6 +1,6 @@
 package be.intecbrussel.blogapplication.config;
 
-
+/*
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +14,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception{
 
-        /*http.authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers( "/public/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -23,19 +23,22 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login-error.html")
                 .permitAll();
 
-         */
+
     }
 
-    /* @Override
+     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.inMemoryAuthentication()
                 .withUser("user")
                 .password("{noop}pass")
                 .roles("USER");
-    } */
+    }
 
 
 }
+
+ */
+
 
 
 

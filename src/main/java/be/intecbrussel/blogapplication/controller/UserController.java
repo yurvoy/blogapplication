@@ -30,9 +30,6 @@ public class UserController {
 
     private final UserService userService;
 
-    private final String UPDATE_USER = "users/updateProfile.html";
-    private final String USER_PROFILE = "/users/profile.html";
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -41,23 +38,18 @@ public class UserController {
     public String updateProfile(@PathVariable Long userId, Model model){
 
         model.addAttribute("user", userService.findById(userId));
-        return UPDATE_USER;
+        return "users/updateProfile.html";
     }
 
-    @PostMapping("users")
-    public String processUpdateProfile(@Valid @ModelAttribute("user")User user, BindingResult result){
-      if(result.hasErrors()){
-          result.getAllErrors().forEach(objectError -> {
-              log.debug(objectError.toString());
-          });
+    @PostMapping({"users/{userId}/edit"})
+    public String processUpdateProfile(@PathVariable Long userId, User user){
 
-          userService.updateBio(user.getId(), user.getUserBio());
-
-          return UPDATE_USER;
-      }
-        userService.save(user);
-      return "redirect:/users/" + user.getId() +  "/profile.html";
+          userService.updateBio(userId, user.getUserBio());
+          userService.save(user);
+      return "redirect:/users/" + userId +  "/profile.html";
     }
+
+
 
     @GetMapping("users/{userId}/profile.html")
     public String showProfile(@PathVariable Long userId, Model model) {
@@ -66,7 +58,7 @@ public class UserController {
         user.setUserBio(userService.updateBio(userId, user.getUserBio()));
         model.addAttribute("view", "users/profile");
         model.addAttribute("user", user);
-        return USER_PROFILE;
+        return "/users/profile.html";
     }
 
 

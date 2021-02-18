@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
@@ -31,23 +32,25 @@ public class ImageController {
 
 
     @GetMapping("users/{id}/image")
-    public String showUploadForm(@PathVariable Long id, Model model){
+    public String showUploadForm(@PathVariable String id, Model model){
 
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("user", userService.findById(Long.valueOf(id)));
 
         return "users/imageupload";
     }
 
-    @PostMapping("users/{userId}/image")
-    public String handleImage(@PathVariable Long userId, @RequestParam("file") MultipartFile file){
+    @PostMapping("users/{id}/image")
+    public String handleImage(@PathVariable String id, @RequestParam("fileToUpload") MultipartFile file,
+                              RedirectAttributes redirectAttributes){
 
-        imageService.saveImageFile(userId, file);
-        return "redirect:/users/" + userId + "/profile";
+        imageService.saveImageFile(Long.valueOf(id), file);
+        redirectAttributes.addFlashAttribute("message", "You uploaded");
+        return "redirect:/users/" + id + "/profile.html";
     }
 
     @GetMapping("users/{id}/profileimage")
-    public void renderImageFromDB(@PathVariable Long id, HttpServletResponse response) throws IOException {
-        User user = userService.findById(id);
+    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
+        User user = userService.findById(Long.valueOf(id));
 
         if(user.getProfileImage() != null){
             byte[] byteArray = new byte[user.getProfileImage().length];
@@ -61,6 +64,5 @@ public class ImageController {
             InputStream is  = new ByteArrayInputStream(byteArray);
             IOUtils.copy(is, response.getOutputStream());
         }
-        System.out.println("No profile image");
     }
 }

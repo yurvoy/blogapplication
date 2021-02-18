@@ -22,7 +22,7 @@
 <!--------------End Navigation --------------->
 
 <!-------------- First line Registration text ---------------->
-<div class="container col-12 pt-5 w-100" th:unless="${#authorization.expression('isAuthenticated()')}">
+<div class="container col-12 pt-5 w-100"> <!--th:unless="${#authorization.expression('isAuthenticated()')}"-->
     <div class="container justify-content-center">
         <h1 class="text-center display-3 font-weight-bold">
             Create your account!
@@ -40,7 +40,7 @@
         <div class="col-lg-3"></div>
         <div class=" pb-3 pt-5 pr-5 pl-5 col-lg-6 border border-dark rounded">
             <div id="ui" >
-                <form th:object="${user}" th:action="@{/users/}" class="form-group" method="post" enctype="multipart/form-data" >
+                <form th:object="${user}" th:action="@{'/users/' + ${user.getId()} + '/edit'}" class="form-group" method="post" enctype="multipart/form-data" >
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <input class="form-control" type="text" name="firstname" th:field="*{firstName}"  id="firstname" placeholder="First Name">
