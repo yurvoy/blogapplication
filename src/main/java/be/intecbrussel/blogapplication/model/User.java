@@ -27,6 +27,12 @@ public class User implements Principal {
     private String birthday;
     @Column
     private String gender;
+    @Lob
+    @Column
+    private String userBio;
+    @Lob
+    @Column
+    private Byte[] profileImage;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",

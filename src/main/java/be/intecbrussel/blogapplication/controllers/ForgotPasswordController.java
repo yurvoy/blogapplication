@@ -5,7 +5,6 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.ConfirmationTokenRepository;
 import be.intecbrussel.blogapplication.services.EmailSenderService;
 import be.intecbrussel.blogapplication.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ForgotPasswordController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private ConfirmationTokenRepository confirmationTokenRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    @Autowired
-    private EmailSenderService emailSenderService;
+    private final EmailSenderService emailSenderService;
+
+    public ForgotPasswordController(UserService userService, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService) {
+        this.userService = userService;
+        this.confirmationTokenRepository = confirmationTokenRepository;
+        this.emailSenderService = emailSenderService;
+    }
 
     @GetMapping(value = "/forgotPassword")
     public ModelAndView displayForgotPasswordPage() {

@@ -1,10 +1,8 @@
 package be.intecbrussel.blogapplication.controllers;
 
-import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.web.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +17,11 @@ import javax.validation.Valid;
 @RequestMapping("/registration")
 public class UserRegistrationController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserRegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto() {
