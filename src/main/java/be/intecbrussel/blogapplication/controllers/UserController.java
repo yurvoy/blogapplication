@@ -33,7 +33,7 @@ public class UserController implements ErrorController {
         return "index";
     }
 
-    @GetMapping({"/loginUser"})
+    @GetMapping({"/login"})
     public String login(Model model) {
         return "loginUser";
     }
