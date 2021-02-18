@@ -40,11 +40,12 @@ public class ImageController {
     }
 
     @PostMapping("user/{id}/image")
-    public void handleImage(@PathVariable String id, @RequestParam("fileToUpload") MultipartFile file,
+    public String handleImage(@PathVariable String id, @RequestParam("fileToUpload") MultipartFile file,
                               RedirectAttributes redirectAttributes){
 
         imageService.saveImageFile(Long.valueOf(id), file);
         redirectAttributes.addFlashAttribute("message", "You uploaded");
+        return "user/updateProfile.html";
     }
 
     @GetMapping("user/{id}/profileimage")

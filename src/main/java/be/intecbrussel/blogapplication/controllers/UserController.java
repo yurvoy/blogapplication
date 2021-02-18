@@ -35,13 +35,24 @@ public class UserController {
     public String processUpdateProfile(Principal principal, @ModelAttribute("user") User userForm){
         User user = userRepository.findByEmail(principal.getName());
 
-        user.setFirstName(userForm.getFirstName());
-        user.setLastName(userForm.getLastName());
-        user.setUserBio(userForm.getUserBio());
-        user.setProfileImage(userForm.getProfileImage());
-        user.setBirthday(userForm.getBirthday());
-        user.setGender(userForm.getGender());
-
+        if(userForm.getFirstName() != null) {
+            user.setFirstName(userForm.getFirstName());
+        }
+        if(userForm.getLastName() != null) {
+            user.setLastName(userForm.getLastName());
+        }
+        if(userForm.getUserBio() != null) {
+            user.setUserBio(userForm.getUserBio());
+        }
+        if(userForm.getProfileImage() != null) {
+            user.setProfileImage(userForm.getProfileImage());
+        }
+        if(userForm.getBirthday() != null) {
+            user.setBirthday(userForm.getBirthday());
+        }
+        if(userForm.getGender() != null) {
+            user.setGender(userForm.getGender());
+        }
         userRepository.save(user);
         return "user/index";
     }
