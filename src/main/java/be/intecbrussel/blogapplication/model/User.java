@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Collection;
 
 @Data
@@ -24,7 +25,7 @@ public class User implements Principal {
     @Column
     private String lastName;
     @Column
-    private String birthday;
+    private LocalDate birthday;
     @Column
     private String gender;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -37,7 +38,7 @@ public class User implements Principal {
     private Collection<Role> roles;
 
 
-    public User(String email, String password, String firstName, String lastName, String birthday, String gender) {
+    public User(String email, String password, String firstName, String lastName, LocalDate birthday, String gender) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -46,7 +47,7 @@ public class User implements Principal {
         this.gender = gender;
     }
 
-    public User(String email, String password, String firstName, String lastName, String birthday, String gender, Collection<Role> roles) {
+    public User(String email, String password, String firstName, String lastName, LocalDate birthday, String gender, Collection<Role> roles) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
