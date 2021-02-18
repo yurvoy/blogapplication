@@ -24,7 +24,7 @@ public class UserController implements ErrorController {
     @RequestMapping({"","/","/index"})
     public String root(Principal principal, Model model) {
         if (principal == null){
-            return "loginUser";
+            return "login";
         }
         User user = userRepository.findByEmail(principal.getName());
 
@@ -35,7 +35,7 @@ public class UserController implements ErrorController {
 
     @GetMapping({"/login"})
     public String login(Model model) {
-        return "loginUser";
+        return "login";
     }
 
     @GetMapping("/user")
