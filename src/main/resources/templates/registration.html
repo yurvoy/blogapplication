@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+
+    <title>Register</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+</head>
+
+<body>
+<!--------------Navigation--------------->
+<nav class="navbar bg-white navbar-expand shadow">
+    <div class="container">
+        <div class="collapse navbar-collapse p-2" id="navbarResponsive">
+            <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blog app</a>
+            <ul class = "navbar-nav ml-auto">
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()" font-color="black">
+                    <a href="/" th:href="@{/login}">Log in</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
+                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--------------End Navigation --------------->
+
+<!-------------- First line Registration text ---------------->
+<div class="container col-12 pt-5 w-100">
+    <div class="container justify-content-center">
+        <h1 class="text-center display-3 font-weight-bold">
+            Create your account!
+        </h1>
+        <h2 class="text-center font-weight-light">
+            We just need a little information about you!
+        </h2>
+
+    </div>
+</div>
+<!-------------- End line Registration text ---------------->
+
+<!-------------- First line Registration Formulair ---------------->
+<div class="container mt-5 ">
+    <div class="row">
+
+        <div class="col-lg-3"></div>
+        <div class=" pb-3 pt-5 pr-5 pl-5 col-lg-6 border border-dark rounded">
+            <div id="ui">
+                <div th:if="${param.success}">
+                    <div class="alert alert-info">
+                        <strong>You've successfully registered to the Blog application!</strong>
+                    </div>
+                </div>
+                <form class="form-group" th:action="@{/registration}" th:object="${user}" method="post">
+                    <p class="error-message" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error
+                    </p>
+                    <div class="form-group row">
+
+                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
+                            <label for="firstName" class="control-label">First name</label>
+                            <input id="firstName" class="form-control" th:field="*{firstName}" />
+                            <p class="error-message" th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation error</p>
+                        </div>
+                        <div class="col-lg-6" th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
+                            <label for="lastName" class="control-label">Last name</label>
+                            <input id="lastName" class="form-control" th:field="*{lastName}" />
+                            <p class="error-message" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Validation error</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+                        <label for="email" class="control-label">E-mail</label>
+                        <input id="email" class="form-control" th:field="*{email}" />
+                        <p class="error-message" th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                        <label for="password" class="control-label">Password</label>
+                        <input id="password" class="form-control" type="password" th:field="*{password}" />
+                        <p class="error-message" th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
+                        <label for="confirmPassword" class="control-label">Confirm password</label>
+                        <input id="confirmPassword" class="form-control" type="password" th:field="*{confirmPassword}" />
+                        <p class="error-message" th:each="error : ${#fields.errors('confirmPassword')}" th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>Birthday</label>
+                            <div class="input-group date bdp-date" th:classappend="${#fields.hasErrors('birthday')}? 'has-error':''">
+                                <input type="date" class="form-control" th:field="*{birthday}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 pr-0" th:classappend="${#fields.hasErrors('gender')}? 'has-error':''">
+                            <label>Gender</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                                    <label class="form-check-label" for="male">Male</label><br>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                    <label class="form-check-label" for="male">Female</label><br>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+                                    <label class="form-check-label" for="male">Other</label><br>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ml-4" th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
+                        <input type="checkbox" th:field="*{terms}" name="accept-terms" id="acept-terms">
+                        <label for="acept-terms">Accept Terms &amp; Services</label>
+                        <p class="error-message" th:each="error : ${#fields.errors('terms')}" th:text="${error}">Validation error
+                        </p>
+                    </div>
+                    <div class="col text-center">
+                        <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
+                            <span style="font-size:xx-large">Sing me up!</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------- End line Formulair ---------------->
+
+<!---------------footer--------->
+<footer>
+    <div class="container col-12 mt-5 bg-dark bottompage">
+        <div class="row text-light-center py-4 justify-content-center">
+            <div class="col-10 py-5">
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
