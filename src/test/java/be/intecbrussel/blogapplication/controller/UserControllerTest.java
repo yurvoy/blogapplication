@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controller;
 
+import be.intecbrussel.blogapplication.builder.UserBuilder;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,10 @@ class UserControllerTest {
     @InjectMocks
     UserController userController;
 
+    @Mock
+    UserBuilder userBuilder;
+
+
     Set<User> users;
 
     MockMvc mockMvc;
@@ -40,9 +45,10 @@ class UserControllerTest {
     @BeforeEach
     void setUp() {
 
+
         users = new HashSet<>();
         userController = new UserController(userService);
-        users.add(User.builder().id(1L).build());
+        users.add(userBuilder.setId(1L).build());
 
         mockMvc = MockMvcBuilders
                 .standaloneSetup(userController)
@@ -62,7 +68,7 @@ class UserControllerTest {
     void updateUserForm() throws Exception {
         //User user = new User();
 
-        when(userService.findById(anyLong())).thenReturn(User.builder().id(1L).build());
+        when(userService.findById(anyLong())).thenReturn(userBuilder.setId(1L).build());
 
         mockMvc.perform(get("/users/1/edit"))
                 .andExpect(status().isOk())
