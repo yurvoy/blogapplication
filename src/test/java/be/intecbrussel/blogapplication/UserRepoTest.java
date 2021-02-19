@@ -6,27 +6,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 
 @SpringBootTest
 public class UserRepoTest {
 
+
     @Autowired
-    UserRepository repo;
+    UserRepository userRepository;
 
     @Test
-    public void testUser() {
-        User user = new User();
-        user.setEmail("foo@gmail.com");
-        user.setPassword("foofoo");
-        user.setFirstName("foO");
-        user.setLastName("oofoof");
-        user.setGender("male");
-
-        User savedUser = repo.save(user);
-
-        System.out.println(repo.findByEmail("foo@gmail.com"));
+    public void repoTest() {
+        User user = new User("Geek@gmail.com", "p455w00rd", "foo", "fooFOO", LocalDate.of(1999, 05, 01), "male");
+        userRepository.save(user);
     }
 
 

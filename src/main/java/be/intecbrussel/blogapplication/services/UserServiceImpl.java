@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,7 +22,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -57,11 +57,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String updateBio(Long id, String userBio) {
-        userRepository.findById(id).ifPresent(user -> {
-            user.setUserBio(userBio);
-        });
-        return userBio;
+    public void updateProfile(Long userId, Principal principal, User userForm) {
+        User user = userRepository.findByEmail(principal.getName());
+
+        if(userForm.getFirstName() != null) {
+            user.setFirstName(userForm.getFirstName());
+        }
+        if(userForm.getLastName() != null) {
+            user.setLastName(userForm.getLastName());
+        }
+        if(userForm.getUserBio() != null) {
+            user.setUserBio(userForm.getUserBio());
+        }
+        if(userForm.getProfileImage() != null) {
+            user.setProfileImage(userForm.getProfileImage());
+        }
+        if(userForm.getBirthday() != null) {
+            user.setBirthday(userForm.getBirthday());
+        }
+        if(userForm.getGender() != null) {
+            user.setGender(userForm.getGender());
+        }
+        userRepository.save(user);
     }
 
 

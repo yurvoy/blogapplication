@@ -2,6 +2,7 @@ package be.intecbrussel.blogapplication.controllers;
 
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
+import be.intecbrussel.blogapplication.services.UserService;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +14,10 @@ import java.security.Principal;
 @Controller
 public class HomeController implements ErrorController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public HomeController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public HomeController(UserService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping({"","/","/index"})
@@ -24,7 +25,7 @@ public class HomeController implements ErrorController {
         if (principal == null){
             return "login";
         }
-        User user = userRepository.findByEmail(principal.getName());
+        User user = userService.findByEmail(principal.getName());
 
         model.addAttribute("user", user);
 

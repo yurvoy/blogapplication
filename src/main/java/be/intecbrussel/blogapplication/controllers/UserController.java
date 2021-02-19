@@ -16,11 +16,9 @@ import java.security.Principal;
 @Controller
 public class UserController {
 
-    private final UserRepository userRepository;
     private final UserService userService;
 
-    public UserController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -33,27 +31,8 @@ public class UserController {
 
     @PostMapping({"user/{userId}/edit"})
     public String processUpdateProfile(@PathVariable Long userId, Principal principal, @ModelAttribute("user") User userForm){
-        User user = userRepository.findByEmail(principal.getName());
 
-        if(userForm.getFirstName() != null) {
-            user.setFirstName(userForm.getFirstName());
-        }
-        if(userForm.getLastName() != null) {
-            user.setLastName(userForm.getLastName());
-        }
-        if(userForm.getUserBio() != null) {
-            user.setUserBio(userForm.getUserBio());
-        }
-        if(userForm.getProfileImage() != null) {
-            user.setProfileImage(userForm.getProfileImage());
-        }
-        if(userForm.getBirthday() != null) {
-            user.setBirthday(userForm.getBirthday());
-        }
-        if(userForm.getGender() != null) {
-            user.setGender(userForm.getGender());
-        }
-        userRepository.save(user);
+        userService.updateProfile(userId, principal, userForm);
         return "redirect:/user/" + userId + "/profile";
     }
 
@@ -61,7 +40,6 @@ public class UserController {
     public String showProfile(@PathVariable Long userId, Model model) {
 
         User user = userService.findById(userId);
-        user.setUserBio(userService.updateBio(userId, user.getUserBio()));
         model.addAttribute("view", "user/profile");
         model.addAttribute("user", user);
         return "/user/profile";
