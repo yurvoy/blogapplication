@@ -1,8 +1,9 @@
 package be.intecbrussel.blogapplication.controller;
 
 import be.intecbrussel.blogapplication.builder.UserBuilder;
+import be.intecbrussel.blogapplication.controllers.UserController;
 import be.intecbrussel.blogapplication.model.User;
-import be.intecbrussel.blogapplication.service.UserService;
+import be.intecbrussel.blogapplication.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +48,7 @@ class UserControllerTest {
 
 
         users = new HashSet<>();
-        userController = new UserController(userService);
+        userController = new UserController((be.intecbrussel.blogapplication.services.UserService) userService);
         users.add(userBuilder.setId(1L).build());
 
         mockMvc = MockMvcBuilders
