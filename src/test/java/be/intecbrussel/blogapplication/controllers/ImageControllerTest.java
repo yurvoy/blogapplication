@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -68,6 +69,32 @@ class ImageControllerTest {
     }
 
     @Test
-    void renderImageFromDB() {
+    void renderImageFromDB() throws Exception {
+        User user = new User();
+        user.setId(1L);
+
+        String str = "Fake Image Text";
+        Byte[] bytesBoxed = new Byte[str.getBytes().length];
+
+        int i = 0;
+
+        for(byte primByte: str.getBytes()){
+            bytesBoxed[i++] = primByte;
+        }
+
+        user.setProfileImage(bytesBoxed);
+
+        when(userService.findById(anyLong())).thenReturn(user);
+
+        MockHttpServletResponse response = mockMvc.perform(get("/user/1/profileimage"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        byte[] responseBytes = response.getContentAsByteArray();
+
+        assertEquals(str.getBytes().length, responseBytes.length);
+
+
+
     }
 }
