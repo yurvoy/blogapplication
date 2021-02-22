@@ -36,6 +36,8 @@ public class UserController {
         return "redirect:/user/" + userId + "/profile";
     }
 
+
+
     @GetMapping("user/{userId}/profile")
     public String showProfile(@PathVariable Long userId, Model model) {
 
@@ -44,6 +46,5 @@ public class UserController {
         model.addAttribute("user", user);
         return "/user/profile";
     }
-
 
 }
