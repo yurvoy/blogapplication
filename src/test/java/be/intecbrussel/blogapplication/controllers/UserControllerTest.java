@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -56,11 +57,15 @@ class UserControllerTest {
 
     @Test
     void processUpdateProfile() throws Exception {
+        assertEquals(1, user.getId());
 
         mockMvc.perform(post("/user/" + user.getId() +"/edit"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/user/" + user.getId() + "/profile"));
+
+
     }
+
 
     @Test
     void showProfile() throws Exception {
