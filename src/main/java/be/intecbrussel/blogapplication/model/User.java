@@ -34,6 +34,8 @@ public class User implements Principal {
     @Lob
     @Column
     private Byte[] profileImage;
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
