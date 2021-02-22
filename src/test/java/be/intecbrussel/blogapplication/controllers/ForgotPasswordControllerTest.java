@@ -1,11 +1,9 @@
 package be.intecbrussel.blogapplication.controllers;
 
 import be.intecbrussel.blogapplication.services.UserService;
-import org.aspectj.lang.annotation.Before;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
