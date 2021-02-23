@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
@@ -23,6 +24,15 @@ public class FrontpageController implements ErrorController {
         this.postService = postService;
     }
 
+    @GetMapping("/user/frontpage")
+    public String showFrontPage(@PathVariable Long userId, Model model) {
+
+        User user = userService.findById(userId);
+        model.addAttribute("view", "user/frontpage");
+        model.addAttribute("user", user);
+        return "/user/frontpage";
+    }
+
     @RequestMapping("/frontpage")
     public String root(Principal principal, Model model) {
 
@@ -34,7 +44,7 @@ public class FrontpageController implements ErrorController {
         model.addAttribute("user", user);
 
 
-        return "index";
+        return "frontpage";
     }
 
     @GetMapping({"frontpage/login"})
