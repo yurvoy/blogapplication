@@ -19,10 +19,10 @@ public interface UserService extends UserDetailsService{
 
     void updateProfile(Long userId, Principal principal, User userForm);
 
-    public void updateResetPasswordToken(String token, String email) throws UserNotFoundException, UserNotFoundException;
+    void updateResetPasswordToken(String token, String email) throws UserNotFoundException;
 
-    public User getByResetPasswordToken(String token);
+    User getByResetPasswordToken(String token);
 
-    public void updatePassword(User user, String newPassword);
+    void updatePassword(User user, String newPassword);
 
 }
