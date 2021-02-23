@@ -8,27 +8,13 @@
 
     <title>FrontPage</title>
 
-    <link href="[YOUR_FAVICON_PATH]/favicon.ico" rel="icon" type="image/x-icon" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js	"/>
 
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
 
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-          crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
 
     <!--- style sheet page -->
     <style>
@@ -48,9 +34,8 @@
             min-height: 100vh
         }
         .rounded-circle{
-            position: relative;
-            align-self: start;
             margin: 10px 0px 0px 10px;
+
         }
     </style>
 
@@ -65,14 +50,17 @@
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
             <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blog app</a>
-            <ul class="navbar-nav ml-auto">
+            <div class="navbar-nav ml-auto">
                 <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
                         font-color="black">
                     <a href="/" th:href="@{/login}">Log in</a></buttom>
                 <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()"
                         font-color="black">
                     <a href="/" th:href="@{/registration}">Register</a></buttom>
-            </ul>
+
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
+                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
+            </div>
         </div>
     </div>
 </nav>
@@ -91,7 +79,7 @@
                 <div >
                     <div>
                         <div class="mr-1" position="relative">
-                            <img class="rounded-circle" padding="10 10 0 0" width="100"  src="https://picsum.photos/50/50">
+                            <img class="rounded-circle"  width="100"  src="https://picsum.photos/50/50">
                                  <!--th:text="${user.getEmail()}"-->
                             <a href="/" th:href="@{'/user/' + @{user.getId()} + '/edit'}"></a>
                             </img>
@@ -125,11 +113,9 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="h7 text-muted" >Joris Dela Vega
-                    </div>
-                    <div class="h7 text-muted">Stockholm</div>
+                    <div class="h7 glyphicon-font=">Joris Dela Vega </div>
 
-                    <div class="h7" >Java Developing, sportsing, watching movies, being in
+                    <div class="h7 text-muted" >Java Developing, sportsing, watching movies, being in
                         quarantaine
                     </div>
                 </div>
