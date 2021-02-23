@@ -41,7 +41,7 @@ public class FrontpageController {
 
 
     @GetMapping({"/user/{userId}/frontpage"})
-    public String showUserFrontPage(@PathVariable Long userId, Model model) {
+    public String showLoggedinUserFrontPage(@PathVariable Long userId, Model model) {
 
         //model.addAttribute("view", "user/frontpage");
         model.addAttribute("user", userService.findById(userId));

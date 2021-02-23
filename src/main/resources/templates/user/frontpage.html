@@ -113,9 +113,9 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="h7 glyphicon-font=">Joris Dela Vega </div>
+                    <div class="h7 glyphicon-font="><span th:text="${user.firstName}"></span><span th:text="${user.lastName}"></span>Joris dela Vega</div>
 
-                    <div class="h7 text-muted" >Java Developing, sportsing, watching movies, being in
+                    <div class="h7 text-muted" th:text="${user.userBio}">Java Developing, sportsing, watching movies, being in
                         quarantaine
                     </div>
                 </div>
