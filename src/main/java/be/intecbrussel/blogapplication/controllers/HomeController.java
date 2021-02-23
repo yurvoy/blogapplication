@@ -23,7 +23,7 @@ public class HomeController implements ErrorController {
     @RequestMapping({"","/","/index"})
     public String root(Principal principal, Model model) {
         if (principal == null){
-            return "login";
+            return "home";
         }
         User user = userService.findByEmail(principal.getName());
 
