@@ -8,6 +8,8 @@
 
     <title>FrontPage</title>
 
+    <link href="[YOUR_FAVICON_PATH]/favicon.ico" rel="icon" type="image/x-icon" />
+
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -48,7 +50,7 @@
         .rounded-circle{
             position: relative;
             align-self: start;
-
+            margin: 10px 0px 0px 10px;
         }
     </style>
 
@@ -86,12 +88,12 @@
             <div class="card">
 
 
-                <div class="media align-items-center profile-head" position="absolute">
+                <div >
                     <div>
                         <div class="mr-1" position="relative">
-                            <img class="rounded-circle" width="100"  src="https://picsum.photos/50/50">
+                            <img class="rounded-circle" padding="10 10 0 0" width="100"  src="https://picsum.photos/50/50">
                                  <!--th:text="${user.getEmail()}"-->
-                            <a href="/" th:href="@{'/user/' + ${user.getId()} + '/edit'}"></a>
+                            <a href="/" th:href="@{'/user/' + @{user.getId()} + '/edit'}"></a>
                             </img>
                         </div>
 
@@ -123,11 +125,11 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="h7 text-muted" th:text="${user.firstName}" th:text="${user.lastName}">Joris Dela Vega
+                    <div class="h7 text-muted" >Joris Dela Vega
                     </div>
                     <div class="h7 text-muted">Stockholm</div>
 
-                    <div class="h7" th:text="${user.getUserBio()}">Java Developing, sportsing, watching movies, being in
+                    <div class="h7" >Java Developing, sportsing, watching movies, being in
                         quarantaine
                     </div>
                 </div>
@@ -140,7 +142,7 @@
                         <div class="h6 text-muted">Following</div>
                         <div class="h5">6758</div>
                     </li>
-                    <li class="list-group-item" th:text="${user.getEmail()}">jonhydelavega@gmail.com</li>
+                    <li class="list-group-item" >jonhydelavega@gmail.com</li>
                 </ul>
             </div>
         </div>
@@ -194,11 +196,11 @@
                             <div class="py-4"></div>
                         </div>
 
-                        <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                        <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
                             <div class="form-group">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="customFile">
-                                    <label class="custom-file-label" for="customFile">Upload image</label>
+                                    <label class="custom-file-label" for="customFile">Upload video</label>
                                 </div>
                             </div>
                             <div class="py-4"></div>
