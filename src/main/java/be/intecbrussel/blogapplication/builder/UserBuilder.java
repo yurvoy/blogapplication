@@ -1,10 +1,8 @@
 package be.intecbrussel.blogapplication.builder;
 
-import be.intecbrussel.blogapplication.model.Role;
 import be.intecbrussel.blogapplication.model.User;
 
 import java.time.LocalDate;
-import java.util.Collection;
 
 public class UserBuilder {
 

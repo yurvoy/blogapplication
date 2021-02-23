@@ -48,7 +48,7 @@ public class ForgotPasswordController {
             model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
 
         } catch (UserNotFoundException ex) {
-            model.addAttribute("error", ex.getMessage());
+            model.addAttribute("message", "This email doesn't exists in our database.");
         } catch (UnsupportedEncodingException | MessagingException e) {
             model.addAttribute("error", "Error while sending email");
         }
