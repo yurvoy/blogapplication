@@ -4,7 +4,6 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.service.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +39,7 @@ public class FrontpageController {
 
 
 
+
     @GetMapping({"/user/{userId}/frontpage"})
     public String showUserFrontPage(@PathVariable Long userId, Model model) {
 
@@ -61,26 +61,6 @@ public class FrontpageController {
 
     @RequestMapping("frontpage/error")
     public String handleError() {
-        return "redirect:/user/frontpage";
-    }
-
-    /*
-    @Override
-    public String getErrorPath() {
-        return null;
-    }
-
-     */
-
-    @RequestMapping({"/frontpage"})
-    public String root(Principal principal, Model model) {
-        if (principal == null){
-            return "redirect: /user/frontpage";
-        }
-        User user = userService.findByEmail(principal.getName());
-
-        model.addAttribute("user", user);
-
         return "redirect:/user/frontpage";
     }
 
