@@ -9,10 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @Controller
-public class HomeController implements ErrorController {
+public class HomeController {
 
     private final UserService userService;
 
@@ -37,20 +38,19 @@ public class HomeController implements ErrorController {
         return "login";
     }
 
-    @GetMapping("/user")
+    //The below has the same function to what we implemented at root
+    /*@GetMapping("/user")
     public String userIndex() {
-        return "user/index";
+        return "index";
+    }
+*/
+
+    @RequestMapping("/404")
+    public String notFoundError(){
+
+        return "404";
     }
 
-    @RequestMapping("/error")
-    public String handleError() {
-        return "redirect:/";
-    }
-
-    @Override
-    public String getErrorPath() {
-        return null;
-    }
 
 
 }
