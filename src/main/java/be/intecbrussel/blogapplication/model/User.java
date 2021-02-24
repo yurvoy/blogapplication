@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,8 @@ import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -42,15 +45,19 @@ public class User implements Principal {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+    @OneToMany
+    private List<Post> posts;
 
 
-    public User(String email, String password, String firstName, String lastName, LocalDate birthday, String gender) {
+    @Builder
+    public User(Long id, String email, String password, String firstName, String lastName, LocalDate birthday, String gender) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
+        this.id = id;
     }
 
     public User(String email, String password, String firstName, String lastName, LocalDate birthday, String gender, Collection<Role> roles) {
