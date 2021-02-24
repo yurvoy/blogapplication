@@ -32,10 +32,6 @@ public class ForgotPasswordControllerTest {
     @Mock
     UserService userService;
     @Mock
-    JavaMailSender mailSender;
-    @Mock
-    Model model;
-    @Mock
     HttpServletRequest request;
 
     MockMvc mockMvc;
