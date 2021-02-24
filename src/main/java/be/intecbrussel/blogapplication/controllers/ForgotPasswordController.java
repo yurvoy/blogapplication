@@ -3,7 +3,7 @@ package be.intecbrussel.blogapplication.controllers;
 import be.intecbrussel.blogapplication.exceptions.UserNotFoundException;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
-import be.intecbrussel.blogapplication.web.Utility;
+import be.intecbrussel.blogapplication.web_secuity_config.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;

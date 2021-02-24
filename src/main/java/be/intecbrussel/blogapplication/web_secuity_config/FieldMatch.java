@@ -1,4 +1,4 @@
-package be.intecbrussel.blogapplication.web;
+package be.intecbrussel.blogapplication.web_secuity_config;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
