@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.BindingResult;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,15 +34,11 @@ class UserRegistrationControllerTest {
     @Mock
     private UserService userService;
 
-    @Mock
-    private JdbcTemplate jdbcTemplateMock;
 
     @InjectMocks
     private UserRegistrationController userRegistrationController;
 
     UserRegistrationDto user;
-
-    User user1;
 
     MockMvc mockMvc;
 
@@ -73,11 +70,7 @@ class UserRegistrationControllerTest {
         assertThat(registered, is("redirect:/registration?success"));
     }
 
-/*
-    @Test
-    void shouldNotRegisterExistingUser() throws Exception{
-    }
-*/
+
     @Test
     void shouldStayOnRegistrationPageIfBindingErrors() throws Exception {
         when(mockBindingResult.hasErrors()).thenReturn(true);
