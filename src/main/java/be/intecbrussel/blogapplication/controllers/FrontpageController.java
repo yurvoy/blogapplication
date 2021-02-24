@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 
-@Slf4j
 @Controller
 public class FrontpageController {
 
@@ -28,17 +27,10 @@ public class FrontpageController {
     }
 
 
-    @GetMapping("/index/frontpage")
-    public String root(Model model) {
-
-        log.debug("getting frontpage");
-
-
-        return "user/frontpage";
+    @GetMapping({"/visitor/frontpage"})
+    public String showVisitorFrontPage() {
+            return "/user/frontpage";
     }
-
-
-
 
     @GetMapping({"/user/{userId}/frontpage"})
     public String showLoggedinUserFrontPage(@PathVariable Long userId, Model model) {
