@@ -45,7 +45,7 @@ public class ForgotPasswordController {
             userService.updateResetPasswordToken(token, email);
             String resetPasswordLink = Utility.getSiteURL(request) + "/resetPassword?token=" + token;
             sendEmail(email, resetPasswordLink);
-            model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
+            model.addAttribute("message", "Email sent ! Please check your mail box.");
 
         } catch (UserNotFoundException ex) {
             model.addAttribute("message", "This email doesn't exists in our database.");
