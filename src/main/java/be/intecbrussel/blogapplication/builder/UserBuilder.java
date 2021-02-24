@@ -1,16 +1,8 @@
 package be.intecbrussel.blogapplication.builder;
 
-<<<<<<< HEAD
-import be.intecbrussel.blogapplication.model.Role;
 import be.intecbrussel.blogapplication.model.User;
 
 import java.time.LocalDate;
-import java.util.Collection;
-=======
-import be.intecbrussel.blogapplication.model.User;
-
-import java.time.LocalDate;
->>>>>>> forgotPassword
 
 public class UserBuilder {
 
