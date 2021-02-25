@@ -3,7 +3,8 @@ package be.intecbrussel.blogapplication.controllers;
 
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
-import be.intecbrussel.blogapplication.web.UserRegistrationDto;
+import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
+import be.intecbrussel.blogapplication.web_security_config.WebConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,16 +12,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.jdbc.core.JdbcTemplate;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import org.springframework.validation.*;
-import org.springframework.web.servlet.tags.form.ErrorsTag;
-
-import javax.servlet.ServletException;
-import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,13 +29,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @ExtendWith(MockitoExtension.class)
 class UserRegistrationControllerTest {
 
     @MockBean
     private BindingResult mockBindingResult;
+
+    @InjectMocks
+    private WebConfig webConfig;
+
 
     @Mock
     private UserService userService;
@@ -57,6 +59,7 @@ class UserRegistrationControllerTest {
         userRegistrationController = new UserRegistrationController(userService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(userRegistrationController)
+                .setViewResolvers(webConfig.viewResolver())
                 .build();
 
         user = new UserRegistrationDto();
@@ -70,6 +73,13 @@ class UserRegistrationControllerTest {
         user.setTerms(true);
 
         mockBindingResult = mock(BindingResult.class);
+    }
+
+    @Test
+    public void showRegistrationFormTest() throws Exception {
+
+        mockMvc.perform(get("/registration"))
+                .andExpect(status().isOk());
     }
 
     @Test

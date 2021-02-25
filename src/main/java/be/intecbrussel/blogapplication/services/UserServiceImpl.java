@@ -1,6 +1,6 @@
 package be.intecbrussel.blogapplication.services;
 
-import be.intecbrussel.blogapplication.web.UserRegistrationDto;
+import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.Role;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
