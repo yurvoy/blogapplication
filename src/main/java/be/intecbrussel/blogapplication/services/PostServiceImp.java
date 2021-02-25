@@ -32,7 +32,7 @@ public class PostServiceImp implements PostService{
         post.setPostText(newPost.getPostText());
 
         List<Post> posts = user.getPosts();
-        posts.add(post);
+        posts.add(0,post);
         user.setPosts(posts);
 
         return postRepository.save(post);

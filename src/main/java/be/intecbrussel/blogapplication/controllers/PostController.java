@@ -35,6 +35,11 @@ public class PostController {
     @GetMapping("user/{userId}/createPost")
     public String showUploadForm(@PathVariable String userId, Model model){
 
+        User existing = userService.findById(Long.parseLong(userId));
+        if (existing == null) {
+            return "user/index";
+        }
+
         model.addAttribute("user", userService.findById(Long.valueOf(userId)));
 
         return "user/createPost";

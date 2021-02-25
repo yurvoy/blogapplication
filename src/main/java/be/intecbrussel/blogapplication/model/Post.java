@@ -22,17 +22,21 @@ public class Post implements Principal {
     @Lob
     @Column
     private String postText;
+    @Column
+    private LocalDate postTimeStamp;
 
     @Builder
     public Post(Long id, String postTitle, String postText) {
         this.id = id;
         this.postTitle = postTitle;
         this.postText = postText;
+        this.postTimeStamp = LocalDate.now();
     }
 
     public Post(String postTitle, String postText) {
         this.postTitle = postTitle;
         this.postText = postText;
+        this.postTimeStamp = LocalDate.now();
     }
 
     public Post() {
