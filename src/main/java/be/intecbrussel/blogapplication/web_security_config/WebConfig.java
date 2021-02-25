@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
+
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;

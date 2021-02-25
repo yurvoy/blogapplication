@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.services;
 
+
 import be.intecbrussel.blogapplication.exceptions.UserNotFoundException;
 import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.Role;

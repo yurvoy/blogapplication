@@ -37,10 +37,12 @@ public class Post implements Principal {
         this.postTitle = postTitle;
         this.postText = postText;
         this.postTimeStamp = getPostTimeStamp();
-    }
 
+    }
     public Post() {
     }
+
+
 
     public Long getId() {
         return id;

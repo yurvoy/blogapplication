@@ -41,11 +41,13 @@ public class HomeController {
     public String logout(Model model) {
         return "home";
     }
-
+/*
     @GetMapping("/user")
     public String userIndex() {
         return "user/index";
     }
+
+ */
 
     @RequestMapping("/404")
     public String notFoundError(){
