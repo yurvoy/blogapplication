@@ -8,6 +8,7 @@ import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
@@ -45,6 +46,8 @@ public class User implements Principal {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+    @OneToMany
+    private List<Post> posts;
 
 
     @Builder
