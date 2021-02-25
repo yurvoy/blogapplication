@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
 
@@ -70,15 +70,20 @@
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
 
 <div class="container-fluid gedf-wrapper">
+
+
     <div class="row">
-        <div class="col-md-3">
-            <div class="card">
+        <div class="col-md-3" >
+
+
+            <div class="card" >
+
 
 
                 <div >
                     <div>
                         <div class="mr-1" position="relative">
-                            <img class="rounded-circle"  width="100"  src="https://picsum.photos/50/50">
+                            <img class="rounded-circle"  width="100"  src="https://picsum.photos/50/50" sec:authorize="isAuthenticated()">
                                  <!--th:text="${user.getEmail()}"-->
                             <a href="/"> <!--th:href="@{'/user/' + @{user.getId()} + '/edit'}"--></a>
                             </img>
@@ -112,29 +117,32 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="h7 glyphicon-font="><span> <!--th:text="${user.firstName}"></span><span th:text="${user.lastName}"--></span>Joris dela Vega</div>
+                    <div class="h7 glyphicon-font=" sec:authorize="isAnonymous()">User Profile</div>
 
-                    <div class="h7 text-muted" ><!--th:text="${user.userBio}"-->Java Developing, sportsing, watching movies, being in
-                        quarantaine
+                    <div class="h7 glyphicon-font=" th:text="${user.firstName + user.lastName}" sec:authorize="isAuthenticated()" ></div>
+
+                    <div class="h7 glyphicon-font=" sec:authorize="isAnonymous()">Biography</div>
+
+                    <div class="h7 text-muted" th:text="${user.userBio}" sec:authorize="isAuthenticated()">
                     </div>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="h6 text-muted">Followers</div>
-                        <div class="h5">5.2342</div>
+                        <div class="h5" sec:authorize="isAuthenticated()">5.2342</div>
                     </li>
                     <li class="list-group-item">
                         <div class="h6 text-muted">Following</div>
-                        <div class="h5">6758</div>
+                        <div class="h5" sec:authorize="isAuthenticated()">6758</div>
                     </li>
-                    <li class="list-group-item" >jonhydelavega@gmail.com</li>
+                    <li class="list-group-item" sec:authorize="isAuthenticated()" >jonhydelavega@gmail.com</li>
                 </ul>
             </div>
         </div>
-        <div class="col-md-6 gedf-main">
+        <div class="col-md-6 gedf-main" >
 
             <!--- \\\\\\\Post-->
-            <div class="card gedf-card">
+            <div class="card gedf-card" sec:authorize="isAuthenticated()">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -216,7 +224,7 @@
             <!-- Post /////-->
 
             <!--- \\\\\\\Post-->
-            <div class="card gedf-card">
+            <div class="card gedf-card" sec:authorize="isAnonymous()">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
