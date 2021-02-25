@@ -1,9 +1,12 @@
 package be.intecbrussel.blogapplication.services;
 
-import org.springframework.web.multipart.MultipartFile;
-
+import be.intecbrussel.blogapplication.model.Post;
+import be.intecbrussel.blogapplication.web.CreatePostDto;
 
 public interface PostService {
-    void savePost(Long userId, String postTitle, String postText);
+
+    Post findById(Long id);
+
+    Post savePost(Long userId, CreatePostDto newPost);
 }
 

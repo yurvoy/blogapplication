@@ -23,7 +23,14 @@ public class Post implements Principal {
     @Column
     private String postText;
 
+    @Builder
     public Post(Long id, String postTitle, String postText) {
+        this.id = id;
+        this.postTitle = postTitle;
+        this.postText = postText;
+    }
+
+    public Post(String postTitle, String postText) {
         this.postTitle = postTitle;
         this.postText = postText;
     }
