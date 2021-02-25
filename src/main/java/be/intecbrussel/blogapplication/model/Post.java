@@ -58,3 +58,4 @@ public class Post implements Principal {
         return false;
     }
 }
+

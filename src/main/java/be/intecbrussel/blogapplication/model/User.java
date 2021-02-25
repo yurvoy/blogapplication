@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
+
 @Data
 @Entity
 @Table(name = "users")
@@ -40,7 +41,7 @@ public class User implements Principal {
     private String resetPasswordToken;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "users_roles",
+            name = "user_roles",
             joinColumns = @JoinColumn(
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(

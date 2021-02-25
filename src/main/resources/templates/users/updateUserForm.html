@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Update your profile</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+</head>
+
+<body>
+<!--------------Navigation--------------->
+<nav class="navbar bg-white navbar-expand shadow">
+    <div class="container">
+        <div class="collapse navbar-collapse p-2" id="navbarResponsive">
+            <buttom class="ml-auto btn btn-outline-secondary btn-lg" font-color="black" href="">Log in with an existing account</a></buttom>
+        </div>
+    </div>
+</nav>
+<!--------------End Navigation --------------->
+
+<!-------------- First line Registration text ---------------->
+<div class="container col-12 pt-5 w-100">
+    <div class="container justify-content-center">
+        <h1 class="text-center display-3 font-weight-bold">
+            Create your account!
+        </h1>
+        <h2 class="text-center font-weight-light">
+            We just need a little information about you!
+        </h2>
+
+    </div>
+</div>
+<!-------------- End line Registration text ---------------->
+<!-------------- First line Formulair ---------------->
+<div class="container mt-5 ">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class=" pb-3 pt-5 pr-5 pl-5 col-lg-6 border border-dark rounded">
+            <div id="ui" >
+                <form th:object="${userUpdate}"  class="form-group" method="post" >
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <input class="form-control" type="text" name="firstname" th:field="*{firstName}"  id="firstname" placeholder="First Name">
+                        </div>
+                        <div class="col-lg-6">
+                            <input class="form-control" type="text" name="lastname" th:field="*{lastName}"   id="lastname" placeholder="Last Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="email" name="email" id="email" placeholder="Email address">
+                    </div>
+                    <div class="form-group">
+                        <label>Update Password</label>
+                        <input class="form-control" type="text" name="oldpassword" id="oldpassword" placeholder="Old Password">
+
+
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="newpassword" id="newpassword" placeholder="New Password">
+                        <input class="form-control"type="text" name="confirmpassword" id="confirmpassword" placeholder="Confirm New Password"><br>
+                        <label>Bio:</label><br>
+                        <textarea rows="4" cols="50" name="comment"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>BirthDate</label>
+                            <div class="input-group date bdp-date">
+                                <input type="text" class="form-control" placeholder="dd/mm/yyyy"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 pr-0">
+                            <label>Gender</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                                    <label class="form-check-label" for="male">Male</label><br>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                    <label class="form-check-label" for="male">Female</label><br>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+                                    <label class="form-check-label" for="male">Other</label><br>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload profile image</label>
+                        <input class="form-control" type="file" name="fileToUpload" id="fileToUpload">
+
+                    </div>
+
+
+
+                    <div class="form-group ml-4 ">
+                        <input type="checkbox" name="accept-terms" id="acept-terms">
+                        <label for="acept-terms" >Accept Terms &amp; Services</label>
+                    </div>
+                    <div class="col text-center">
+                        <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
+                            <span style="font-size:xx-large">Update profile</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-------------- End line Formulair ---------------->
+
+<!---------------footer--------->
+<footer>
+    <div class="container col-12 mt-5 bg-dark bottompage">
+        <div class="row text-light-center py-4 justify-content-center">
+            <div class="col-10 py-5">
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/7ea262bad9.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

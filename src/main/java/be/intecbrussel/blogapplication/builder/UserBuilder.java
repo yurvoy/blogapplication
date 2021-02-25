@@ -1,36 +1,40 @@
 package be.intecbrussel.blogapplication.builder;
 
+import be.intecbrussel.blogapplication.model.Role;
 import be.intecbrussel.blogapplication.model.User;
+import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
+@Data
 public class UserBuilder {
 
     private Long id;
-    private String email;
+    private String userEmail;
     private String password;
     private String firstName;
     private String lastName;
     private LocalDate birthday;
     private String gender;
+    private Collection<Role> roles;
+    private Byte[] profileImage;
+    private String userBio;
 
-    public UserBuilder() {
+    public UserBuilder(){}
+
+    public UserBuilder(String userEmail){
+        this.userEmail = userEmail;
     }
 
-    public UserBuilder(Long id) {
+    public UserBuilder(Long id, String userEmail, String password, String firstName, String lastName, Byte[] profileImage, String userBio) {
         this.id = id;
-    }
-
-    public UserBuilder(Long id, String email, String password, String firstName, String lastName, LocalDate birthday,
-                       String gender, String userBio, Byte[] profileImage) {
-        this.id = id;
-        this.email = email;
+        this.userEmail = userEmail;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthday = birthday;
-        this.gender = gender;
-
+        this.profileImage = profileImage;
+        this.userBio = userBio;
     }
 
     public UserBuilder setId(Long id) {
@@ -38,8 +42,8 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setEmail(String email) {
-        this.email = email;
+    public UserBuilder setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
         return this;
     }
 
@@ -58,19 +62,17 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+    public UserBuilder setProfileImage(Byte[] profileImage) {
+        this.profileImage = profileImage;
         return this;
     }
 
-    public UserBuilder setGender(String gender) {
-        this.gender = gender;
+    public UserBuilder setUserBio(String userBio) {
+        this.userBio = userBio;
         return this;
     }
-
-
 
     public User build(){
-        return new User(id, email, password, firstName, lastName, birthday, gender);
+        return new User(userEmail,password,firstName,lastName, birthday, gender, roles);
     }
 }
