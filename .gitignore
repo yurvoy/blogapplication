@@ -105,7 +105,7 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 .DS_Store
-/src/.DS_Store
+src/.DS_Store
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
