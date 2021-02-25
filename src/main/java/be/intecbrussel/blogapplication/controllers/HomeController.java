@@ -7,12 +7,13 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 
 @Controller
-public class HomeController {
+public class HomeController implements ErrorController {
 
     private final UserService userService;
 
@@ -20,10 +21,10 @@ public class HomeController {
         this.userService = userService;
     }
 
-    @RequestMapping({"","/","/index"})
+    @RequestMapping({"","/", "/home", "/index"})
     public String root(Principal principal, Model model) {
         if (principal == null){
-            return "login";
+            return "/user/frontpage";
         }
         User user = userService.findByEmail(principal.getName());
 
@@ -32,7 +33,16 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping({"/login"})
+    @GetMapping({"/user/{userId}/frontpage"})
+    public String showLoggedinUserFrontPage(@PathVariable Long userId, Model model) {
+
+        //model.addAttribute("view", "user/frontpage");
+        model.addAttribute("user", userService.findById(userId));
+        return "/user/frontpage";
+    }
+
+
+    @GetMapping({"/login", "/frontpage/login"})
     public String login(Model model) {
         return "login";
     }
@@ -41,13 +51,6 @@ public class HomeController {
     public String logout(Model model) {
         return "home";
     }
-/*
-    @GetMapping("/user")
-    public String userIndex() {
-        return "user/index";
-    }
-
- */
 
     @RequestMapping("/404")
     public String notFoundError(){
@@ -55,5 +58,8 @@ public class HomeController {
         return "404";
     }
 
-
+    @Override
+    public String getErrorPath() {
+        return null;
+    }
 }

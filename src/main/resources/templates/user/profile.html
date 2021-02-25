@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
 
@@ -74,11 +74,7 @@
                             <a class="btn btn-outline-dark mt-2" style="font-size:x-small" href="/" th:href="@{'/user/' + ${user.getId()} + '/edit'}">Edit profile</a>
                         </div>
                         <div>
-<<<<<<< HEAD
                             <a class="btn btn-outline-dark mt-2" sec:authorize="isAuthenticated()" style="font-size:x-small" href="/" th:href="@{'/user/' + ${user.getId()} + '/createPost'}">Create Post</a>
-=======
-                            <a class="btn btn-outline-dark mt-2" style="font-size:x-small" href="/" th:href="@{'/user/' + ${user.getId()} + '/createPost'}">Create Post</a>
->>>>>>> registrationControllerTest
                         </div>
                     </div>
                     <div class="media-body mb-5 text-white">

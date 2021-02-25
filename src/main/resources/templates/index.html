@@ -18,7 +18,7 @@
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blog app</a>
+            <a class="navbar-brand" href="#" th:href="@{/home}">LOGO Blog app</a>
             <ul class = "navbar-nav ml-auto">
                 <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()" font-color="black">
                     <a href="/" th:href="@{/login}">Log in</a></buttom>
@@ -44,7 +44,7 @@
     <div class="form-group">
         <span><a href="/" th:href="@{'/user/' + ${user.getId()} + '/profile'}">See your profile</a></span>
         <span><a href="/" th:href="@{'/user/' + ${user.getId()} + '/edit'}">Edit your profile</a></span>
-
+        <span><a href="/" th:href="@{'/user/' + ${user.getId()} + '/frontpage'}">See the frontpage</a></span>
 
     </div>
 

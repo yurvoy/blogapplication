@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>FrontPage</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+
+
+
+
+    <!--- style sheet page -->
+    <style>
+        .profile-head {
+            transform: translateY(5rem)
+        }
+
+        .cover {
+            background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
+            background-size: cover;
+            background-repeat: no-repeat
+        }
+
+        body {
+            background: #654ea3;
+            background: linear-gradient(to right, #e96443, #904e95);
+            min-height: 100vh
+        }
+        .rounded-circle{
+            margin: 10px 0px 0px 10px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+<!--------------Navigation--------------->
+
+<!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
+
+<nav class="navbar bg-white navbar-expand shadow">
+    <div class="container">
+        <div class="collapse navbar-collapse p-2" id="navbarResponsive">
+            <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blog app | WELCOME</a>
+            <div class="navbar-nav ml-auto">
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
+                        font-color="black">
+                    <a href="/" th:href="@{/login}">Log in</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()"
+                        font-color="black">
+                    <a href="/" th:href="@{/registration}">Register</a></buttom>
+
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
+                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
+            </div>
+        </div>
+    </div>
+</nav>
+<!--------------End Navigation --------------->
+
+</nav>
+
+<!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
+
+<div class="container-fluid gedf-wrapper">
+
+
+    <div class="row">
+        <div class="col-md-3" >
+
+
+            <div class="card" >
+
+
+
+                <div >
+                    <div>
+                        <div class="mr-1" position="relative">
+                            <img class="rounded-circle"  width="100"  src="https://picsum.photos/50/50" sec:authorize="isAuthenticated()">
+                            <!--th:text="${user.getEmail()}"-->
+                            <a href="/"> <!--th:href="@{'/user/' + @{user.getId()} + '/edit'}"--></a>
+                            </img>
+                        </div>
+
+                        <!--
+            <img onerror=this.src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEX" +
+            "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"
+            th:src="@{'/user/' + ${user.id} + '/profileimage'}"  width="130" class="rounded mb-2 img-thumbnail">
+            -->
+
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="h7 glyphicon-font=" sec:authorize="isAnonymous()">User Profile</div>
+
+                    <div class="h7 glyphicon-font=" th:text="${user.firstName + user.lastName}" sec:authorize="isAuthenticated()" ></div>
+
+                    <div class="h7 glyphicon-font=" sec:authorize="isAnonymous()">Biography</div>
+
+                    <div class="h7 text-muted" th:text="${user.userBio}" sec:authorize="isAuthenticated()">
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="h6 text-muted">Followers</div>
+                        <div class="h5" sec:authorize="isAuthenticated()">5.2342</div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="h6 text-muted">Following</div>
+                        <div class="h5" sec:authorize="isAuthenticated()">6758</div>
+                    </li>
+                    <li class="list-group-item" sec:authorize="isAuthenticated()" >jonhydelavega@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 gedf-main" >
+
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card" sec:authorize="isAuthenticated()">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab"
+                               aria-controls="posts" aria-selected="true">Make
+                                a publication</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images"
+                               aria-selected="false" href="#images">Images</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="videos-tab" data-toggle="tab" role="tab" aria-controls="videos"
+                               aria-selected="false" href="#videos">Video</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+
+                        <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                            <div class="form-group">
+                                <label class="sr-only" for="message">post</label>
+                                <textarea class="form-control" id="message" rows="1" placeholder="Title?"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                            <div class="form-group">
+                                <label class="sr-only" for="message">post</label>
+                                <textarea class="form-control" id="message" rows="3"
+                                          placeholder="What are you thinking?"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Upload image</label>
+                                </div>
+                            </div>
+                            <div class="py-4"></div>
+                        </div>
+
+                        <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Upload video</label>
+                                </div>
+                            </div>
+                            <div class="py-4"></div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="btn-toolbar justify-content-between">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary">share</button>
+                        </div>
+                        <div class="btn-group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="fa fa-globe"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Post /////-->
+
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card" sec:authorize="isAnonymous()">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-2">
+                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                            </div>
+                            <div class="ml-2">
+                                <div class="h5 m-0">Joris Dela Vega</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                    <div class="h6 dropdown-header">Configuration</div>
+                                    <a class="dropdown-item" href="#">Save</a>
+                                    <a class="dropdown-item" href="#">Hide</a>
+                                    <a class="dropdown-item" href="#">Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="text-muted h7 mb-2"><i class="fa fa-clock-o"></i>10 min ago</div>
+                    <a class="card-link" href="#">
+                        <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adip.</h5>
+                    </a>
+
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa
+                        praesentium esse magnam nemo dolor
+                        sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                </div>
+            </div>
+            <!-- Post /////-->
+
+            <!--
+             \\\\\\\Post
+            <div class="card gedf-card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-2">
+                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                            </div>
+                            <div class="ml-2">
+                                <div class="h5 m-0">Joris dela Vega </div>
+                                <div class="h7 text-muted"> jorisddaems@gmail.com</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                    <div class="h6 dropdown-header">Configuration</div>
+                                    <a class="dropdown-item" href="#">Save</a>
+                                    <a class="dropdown-item" href="#">Hide</a>
+                                    <a class="dropdown-item" href="#">Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="text-muted h7 mb-2"><i class="fa fa-clock-o"></i> 10 min ago</div>
+                    <a class="card-link" href="#">
+                        <h5 class="card-title"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit
+                            consectetur
+                            deserunt illo esse distinctio.</h5>
+                    </a>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam omnis nihil, aliquam est,
+                        voluptates officiis iure soluta
+                        alias vel odit, placeat reiciendis ut libero! Quas aliquid natus cumque quae repellendus. Lorem
+                        ipsum dolor sit amet consectetur adipisicing elit. Ipsa, excepturi. Doloremque, reprehenderit!
+                        Quos in maiores, soluta doloremque molestiae reiciendis libero expedita assumenda fuga quae.
+                        Consectetur id molestias itaque facere? Hic!
+                    </p>
+                    <div>
+                        <span class="badge badge-primary">JavaScript</span>
+                        <span class="badge badge-primary">Android</span>
+                        <span class="badge badge-primary">PHP</span>
+                        <span class="badge badge-primary">Node.js</span>
+                        <span class="badge badge-primary">Ruby</span>
+                        <span class="badge badge-primary">Paython</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                </div>
+            </div>
+            Post /////
+            \\\\\\\Post
+            <div class="card gedf-card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-2">
+                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                            </div>
+                            <div class="ml-2">
+                                <div class="h5 m-0">Joris Dela Vega</div>
+                                <div class="h7 text-muted"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                    <div class="h6 dropdown-header">Configuration</div>
+                                    <a class="dropdown-item" href="#">Save</a>
+                                    <a class="dropdown-item" href="#">Hide</a>
+                                    <a class="dropdown-item" href="#">Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="text-muted h7 mb-2"><i class="fa fa-clock-o"></i> Hace 40 min</div>
+                    <a class="card-link" href="#">
+                        <h5 class="card-title">Totam non adipisci hic! Possimus ducimus amet, dolores illo ipsum quos
+                            cum.</h5>
+                    </a>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sunt fugit reprehenderit
+                        consectetur exercitationem odio,
+                        quam nobis? Officiis, similique, harum voluptate, facilis voluptas pariatur dolorum tempora
+                        sapiente
+                        eius maxime quaerat.
+                        <a href="https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU"
+                           target="_blank">https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU</a>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                </div>
+            </div>
+             Post /////-->
+
+
+            <!-- Advertisements
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card gedf-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                                    card's content.</p>
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+                        <div class="card gedf-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                                    card's content.</p>
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

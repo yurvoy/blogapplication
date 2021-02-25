@@ -83,22 +83,6 @@ class UserRegistrationControllerTest {
         assertThat(registered, is("redirect:/registration?success"));
     }
 
-
-    @Test
-    void shouldNotRegisterExistingUser() throws Exception {
-        user1 = User.builder().id(1L).email("foofoo@gmail.com").build();
-
-        when(userService.findByEmail("foofoo@gmail.com")).thenReturn(user1);
-
-        String registered = userRegistrationController.registerUserAccount(user, mockBindingResult);
-
-        assertThat(registered, is("redirect:/registration?success"));
-
-        assertThat(registered, is("registration"));
-
-
-    }
-
     @Test
     void shouldStayOnRegistrationPageIfBindingErrors() throws Exception {
         when(mockBindingResult.hasErrors()).thenReturn(true);

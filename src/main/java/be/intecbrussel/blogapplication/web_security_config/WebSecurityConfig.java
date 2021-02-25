@@ -31,11 +31,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(
                         "/registration**",
+                        "/home**",
+                        "/login**",
                         "/forgotPassword**",
+                        "/404**",
+                        "/index**",
                         "/resetPassword**",
                         "/user/profile**",
                         "/user/updateProfile**",
                         "/user/uploadImage**",
+                        "/user/createPost**",
                         "/js/**",
                         "/css/**",
                         "/img/**",
@@ -50,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/loginUser?logout")
+                .logoutSuccessUrl("/home")
                 .permitAll();
 
     }
