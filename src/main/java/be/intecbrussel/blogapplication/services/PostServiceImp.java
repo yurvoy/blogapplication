@@ -7,6 +7,7 @@ import be.intecbrussel.blogapplication.web.CreatePostDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,7 @@ public class PostServiceImp implements PostService{
         Post post = new Post();
         post.setPostTitle(newPost.getPostTitle());
         post.setPostText(newPost.getPostText());
+        post.setPostTimeStamp(LocalDate.now());
 
         List<Post> posts = user.getPosts();
         posts.add(0,post);

@@ -2263,3 +2263,6 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/LUC
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:344)
 	... 127 more
+2021-02-25 11:14:50 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELETE *[*] FROM POSTS"; expected "identifier"; SQL statement:
+DELETE * FROM POSTS [42001-192]

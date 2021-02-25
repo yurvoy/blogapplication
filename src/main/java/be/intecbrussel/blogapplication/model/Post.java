@@ -26,17 +26,17 @@ public class Post implements Principal {
     private LocalDate postTimeStamp;
 
     @Builder
-    public Post(Long id, String postTitle, String postText) {
+    public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp) {
         this.id = id;
         this.postTitle = postTitle;
         this.postText = postText;
-        this.postTimeStamp = LocalDate.now();
+        this.postTimeStamp = postTimeStamp;
     }
 
     public Post(String postTitle, String postText) {
         this.postTitle = postTitle;
         this.postText = postText;
-        this.postTimeStamp = LocalDate.now();
+        this.postTimeStamp = getPostTimeStamp();
     }
 
     public Post() {

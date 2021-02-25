@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 
+
 @Data
 public class CreatePostDto {
 
@@ -12,5 +13,6 @@ public class CreatePostDto {
 
     @NotEmpty
     private String postText;
+
 
 }
