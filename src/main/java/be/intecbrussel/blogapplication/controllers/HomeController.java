@@ -41,10 +41,10 @@ public class HomeController implements ErrorController {
         return "user/index";
     }
 
-    @RequestMapping("/error")
+    /*@RequestMapping("/error")
     public String handleError() {
         return "redirect:/";
-    }
+    }*/
 
     @Override
     public String getErrorPath() {
