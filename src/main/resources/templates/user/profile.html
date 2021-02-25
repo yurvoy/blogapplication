@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-butors
-@jejobueno@michaelarayabe
-125 lines (106 sloc)  7.71 KB
-
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
 
@@ -121,6 +115,7 @@ butors
                     <div class="p-4 rounded shadow-sm bg-light">
                         <p class="font-italic mb-0" th:text="${post.postText}">Post Text</p>
                     </div>
+                    <p th:text="${post.postTimeStamp}">TimeStamp</p>
                     <img src="" alt="" class="img-fluid rounded shadow-sm">
                 </div>
             </div>

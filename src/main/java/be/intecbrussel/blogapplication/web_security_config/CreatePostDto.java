@@ -13,4 +13,5 @@ public class CreatePostDto {
     @NotEmpty
     private String postText;
 
+
 }
