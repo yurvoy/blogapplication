@@ -1,4 +1,4 @@
-package be.intecbrussel.blogapplication.web_secuity_config;
+package be.intecbrussel.blogapplication.web_security_config;
 
 import be.intecbrussel.blogapplication.services.UserService;
 import org.h2.server.web.WebServlet;

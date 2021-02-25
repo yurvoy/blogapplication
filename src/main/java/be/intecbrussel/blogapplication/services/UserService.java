@@ -1,7 +1,7 @@
 package be.intecbrussel.blogapplication.services;
 
 import be.intecbrussel.blogapplication.exceptions.UserNotFoundException;
-import be.intecbrussel.blogapplication.web_secuity_config.UserRegistrationDto;
+import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

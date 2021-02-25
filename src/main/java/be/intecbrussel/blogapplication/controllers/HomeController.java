@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 
 @Controller
-public class HomeController implements ErrorController {
+public class HomeController {
 
     private final UserService userService;
 
@@ -37,19 +37,20 @@ public class HomeController implements ErrorController {
         return "login";
     }
 
+    @GetMapping({"/logout"})
+    public String logout(Model model) {
+        return "home";
+    }
+
     @GetMapping("/user")
     public String userIndex() {
         return "user/index";
     }
 
-    @RequestMapping("/error")
-    public String handleError() {
-        return "redirect:/";
-    }
+    @RequestMapping("/404")
+    public String notFoundError(){
 
-    @Override
-    public String getErrorPath() {
-        return null;
+        return "404";
     }
 
 
