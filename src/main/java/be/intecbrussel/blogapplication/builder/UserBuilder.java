@@ -11,34 +11,30 @@ import java.util.Collection;
 public class UserBuilder {
 
     private Long id;
-    private String userEmail;
+    private String email;
     private String password;
     private String firstName;
     private String lastName;
     private LocalDate birthday;
     private String gender;
-    private Collection<Role> roles;
-    private Byte[] profileImage;
-    private String userBio;
 
-    public UserBuilder(){}
+    public UserBuilder() {
+    }
 
-    public UserBuilder(Long id){
+    public UserBuilder(Long id) {
         this.id = id;
     }
 
-    public UserBuilder(String userEmail){
-        this.userEmail = userEmail;
-    }
-
-    public UserBuilder(Long id, String userEmail, String password, String firstName, String lastName, Byte[] profileImage, String userBio) {
+    public UserBuilder(Long id, String email, String password, String firstName, String lastName, LocalDate birthday,
+                       String gender, String userBio, Byte[] profileImage) {
         this.id = id;
-        this.userEmail = userEmail;
+        this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.profileImage = profileImage;
-        this.userBio = userBio;
+        this.birthday = birthday;
+        this.gender = gender;
+
     }
 
     public UserBuilder setId(Long id) {
@@ -46,8 +42,8 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public UserBuilder setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -66,17 +62,19 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setProfileImage(Byte[] profileImage) {
-        this.profileImage = profileImage;
+    public UserBuilder setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
         return this;
     }
 
-    public UserBuilder setUserBio(String userBio) {
-        this.userBio = userBio;
+    public UserBuilder setGender(String gender) {
+        this.gender = gender;
         return this;
     }
+
+
 
     public User build(){
-        return new User(userEmail,password,firstName,lastName, birthday, gender, roles);
+        return new User(id, email, password, firstName, lastName, birthday, gender);
     }
 }
