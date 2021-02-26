@@ -106,7 +106,7 @@
                 <div class="card-body">
                     <div class="h7 glyphicon-font=" sec:authorize="isAnonymous()">User Profile</div>
 
-                    <div class="h7 glyphicon-font=" th:text="${user.firstName + user.lastName}"
+                    <div class="h7 glyphicon-font=" th:text="${user.firstName + ' ' + user.lastName}"
                          sec:authorize="isAuthenticated()"></div>
 
                     <div class="h7 glyphicon-font=" sec:authorize="isAnonymous()">Biography</div>
