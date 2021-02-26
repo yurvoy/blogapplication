@@ -1,3 +1,0 @@
-2021-02-23 09:55:25 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Data conversion error converting "'male' (USERS: GENDER INTEGER)"; SQL statement:
-insert into users (birthday, email, first_name, gender, last_name, password, profile_image, reset_password_token, user_bio, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) -- (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10) [22018-192]
