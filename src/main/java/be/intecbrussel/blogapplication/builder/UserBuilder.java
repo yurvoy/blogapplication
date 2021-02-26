@@ -23,6 +23,10 @@ public class UserBuilder {
 
     public UserBuilder(){}
 
+    public UserBuilder(Long id){
+        this.id = id;
+    }
+
     public UserBuilder(String userEmail){
         this.userEmail = userEmail;
     }
