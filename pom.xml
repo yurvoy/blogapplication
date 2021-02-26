@@ -110,8 +110,7 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
         </dependency>
-<<<<<<< HEAD
-=======
+
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
@@ -126,7 +125,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>5.2.4.Final</version>
         </dependency>
->>>>>>> UserServiceImplTest
 
     </dependencies>
 

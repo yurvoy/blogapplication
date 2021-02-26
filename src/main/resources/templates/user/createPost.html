@@ -38,11 +38,11 @@
                 <form th:object="${post}" th:action="@{'/user/' + ${user.getId()} + '/createPost'}" class="form-group" method="post">
                     <div class="form-group">
                         <label for="post-title" class="control-label">Title</label>
-                        <input class="form-control" rows="4" cols="50" th:field="*{postTitle}" id="post-title" name="comment" placeholder="What is the title?"></input>
+                        <input class="form-control" rows="4" cols="50" th:field="*{postTitle}" id="post-title" name="comment" placeholder="What is the title?" required="required"></input>
                     </div>
                     <div class="form-group">
                         <label for="post-text" class="control-label">Add some text</label>
-                        <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text" name="comment" placeholder="Wanna do you wanna share with us?"></textarea>
+                        <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text" name="comment" placeholder="Wanna do you wanna share with us?" required="required"></textarea>
                     </div>
                     <!--div class="form-group text-center">
                         <img onerror=this.src="https://st4.depositphotos.com/17828278/24401/v/600/depositphotos_244011872-stock-illustration-image-vector-symbol-missing-available.jpg" th:src="@{'/user/' + ${post.id} + '/postImage'}"  width="130" class="rounded mb-2 img-thumbnail">
@@ -72,6 +72,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/7ea262bad9.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
-<script src="js/app.js"></script>
 </body>
 </html>

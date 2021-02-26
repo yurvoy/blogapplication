@@ -7,10 +7,7 @@ import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -36,7 +33,7 @@ public class PostController {
 
         User existing = userService.findById(Long.parseLong(userId));
         if (existing == null) {
-            return "user/index";
+            return "redirect:/user/" + userId + "/profile";
         }
 
         model.addAttribute("user", userService.findById(Long.valueOf(userId)));
@@ -54,5 +51,10 @@ public class PostController {
 
         postService.savePost(Long.parseLong(userId), post);
         return "redirect:/user/" + userId + "/profile";
+    }
+
+    @PostMapping("/error")
+    public String error(){
+        return "redirect:/";
     }
 }

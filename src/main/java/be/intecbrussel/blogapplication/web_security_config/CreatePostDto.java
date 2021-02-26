@@ -2,15 +2,15 @@ package be.intecbrussel.blogapplication.web_security_config;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Data
 public class CreatePostDto {
 
-    @NotEmpty
+    @Size(max = 70, min = 1, message = "50 max characters")
     private String postTitle;
 
-    @NotEmpty
+    @Size(max = 500, min = 1, message = "400 max characters")
     private String postText;
 
 
