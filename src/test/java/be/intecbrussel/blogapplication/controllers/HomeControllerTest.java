@@ -56,7 +56,7 @@ class HomeControllerTest {
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("login"));
+                .andExpect(view().name("/user/frontpage"));
     }
 
     @Test
