@@ -52,7 +52,16 @@
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
             <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blog app</a>
+
+
+            <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
+                    font-color="black">
+                <a href="/" th:href="@{'/user/'+${user.getId()}+'/profile'}">Profile</a></buttom>
+
+
             <div class="navbar-nav ml-auto">
+
+
                 <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
                         font-color="black">
                     <a href="/" th:href="@{/login}">Log in</a></buttom>
