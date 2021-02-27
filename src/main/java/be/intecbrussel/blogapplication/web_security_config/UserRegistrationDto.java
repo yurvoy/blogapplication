@@ -12,26 +12,19 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class UserRegistrationDto {
 
-    @NotEmpty
     private String firstName;
 
-    @NotEmpty
     private String lastName;
 
-    @NotEmpty
     private String password;
 
-    @NotEmpty
     private String confirmPassword;
 
-    @NotEmpty
     private String birthday;
 
-    @NotEmpty
     private String gender;
 
     @Email
-    @NotEmpty
     private String email;
 
     @AssertTrue
