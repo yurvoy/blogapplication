@@ -66,42 +66,32 @@
 
                         <div class="col-lg-6" th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
                             <label for="firstName" class="control-label">First name</label>
-                            <input id="firstName" class="form-control" th:field="*{firstName}"/>
-                            <p class="error-message" th:each="error: ${#fields.errors('firstName')}" th:text="${error}">
-                                Validation error</p>
+                            <input id="firstName" class="form-control" th:field="*{firstName}" required/>
                         </div>
                         <div class="col-lg-6" th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
                             <label for="lastName" class="control-label">Last name</label>
-                            <input id="lastName" class="form-control" th:field="*{lastName}"/>
-                            <p class="error-message" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">
-                                Validation error</p>
+                            <input id="lastName" class="form-control" th:field="*{lastName}" required/>
                         </div>
                     </div>
 
                     <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
                         <label for="email" class="control-label">E-mail</label>
-                        <input id="email" class="form-control" th:field="*{email}"/>
-                        <p class="error-message" th:each="error : ${#fields.errors('email')}" th:text="${error}">
-                            Validation error</p>
+                        <input type="email" id="email" class="form-control" th:field="*{email}" required/>
                     </div>
                     <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
                         <label for="password" class="control-label">Password</label>
-                        <input id="password" class="form-control" type="password" th:field="*{password}"/>
-                        <p class="error-message" th:each="error : ${#fields.errors('password')}" th:text="${error}">
-                            Validation error</p>
+                        <input id="password" class="form-control" name="password" type="password" th:field="*{password}" required/>
                     </div>
                     <div class="form-group" th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
                         <label for="confirmPassword" class="control-label">Confirm password</label>
-                        <input id="confirmPassword" class="form-control" type="password" th:field="*{confirmPassword}"/>
-                        <p class="error-message" th:each="error : ${#fields.errors('confirmPassword')}"
-                           th:text="${error}">Validation error</p>
+                        <input id="confirmPassword" class="form-control" type="password" th:field="*{confirmPassword}" oninput="check(this)" required/>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <label>Birthday</label>
                             <div class="input-group date bdp-date"
                                  th:classappend="${#fields.hasErrors('birthday')}? 'has-error':''">
-                                <input type="date" class="form-control" th:field="*{birthday}"><span
+                                <input type="date" class="form-control" th:field="*{birthday}" required><span
                                     class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
@@ -128,12 +118,19 @@
                     </div>
 
                     <div class="form-group ml-4" th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
-                        <input type="checkbox" th:field="*{terms}" name="accept-terms" id="acept-terms">
+                        <input type="checkbox" th:field="*{terms}" name="accept-terms" id="acept-terms" required>
                         <label for="acept-terms">Accept Terms &amp; Services</label>
-                        <p class="error-message" th:each="error : ${#fields.errors('terms')}" th:text="${error}">
-                            Validation error
-                        </p>
                     </div>
+                    <script>
+                        function check(input) {
+                            if (input.value != document.getElementById('password').value) {
+                                input.setCustomValidity('Password Must be Matching.');
+                            } else {
+                                // input is valid -- reset the error message
+                                input.setCustomValidity('');
+                            }
+                        }
+                    </script>
                     <div class="col text-center">
                         <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
                             <span style="font-size:xx-large">Sing me up!</span></button>
