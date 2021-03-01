@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,19 @@ public class PostServiceImpl implements PostService{
             throw new RuntimeException("post not found");
         }
         return postOptional.get();
+    }
+
+    @Override
+    public List<Post> getTenPosts() {
+        List<Post> topTenPosts = new ArrayList<>();
+        for(int i = 0; i < 10; i++) {
+            if (postRepository.findAll().get(i) != null) {
+                topTenPosts.add(postRepository.findAll().get(i));
+            } else {
+                break;
+            }
+        }
+        return topTenPosts;
     }
 
 
