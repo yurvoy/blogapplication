@@ -32,6 +32,7 @@ public class PostServiceImpl implements PostService {
         post.setPostTitle(newPost.getPostTitle());
         post.setPostText(newPost.getPostText());
         post.setPostTimeStamp(LocalDate.now());
+        post.setAuthor(user);
 
         List<Post> posts = user.getPosts();
         posts.add(0,post);

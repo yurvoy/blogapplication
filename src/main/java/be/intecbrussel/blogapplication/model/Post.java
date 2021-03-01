@@ -23,14 +23,16 @@ public class Post implements Principal {
     private String postText;
     @Column
     private LocalDate postTimeStamp;
-
+    @ManyToOne
+    private User author;
 
     @Builder
-    public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp) {
+    public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp, User author) {
         this.id = id;
         this.postTitle = postTitle;
         this.postText = postText;
         this.postTimeStamp = postTimeStamp;
+        this.author = author;
     }
 
     public Post(String postTitle, String postText) {
@@ -50,7 +52,7 @@ public class Post implements Principal {
 
     @Override
     public String getName() {
-        return null;
+        return author.getFirstName() + " " + author.getLastName();
     }
 
     @Override

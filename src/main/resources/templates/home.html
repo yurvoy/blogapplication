@@ -73,9 +73,13 @@
             <div class="card gedf-card" th:each="post: ${topPosts}">
 
                 <div class="card-body">
-                    <div class="text-muted h7 mb-2"><i class="fa fa-clock-o" th:text="${post.postTimeStamp}"></i></div>
+                    <div class="text-muted h7 mb-2">
+                        <i class="fa fa-clock-o" th:text="${post.postTimeStamp}"></i>
+                        <i class="fa fa-clock-o"> | Posted by : </i>
+                        <i class="fa fa-clock-o" th:text="${post.getName()}"></i>
+                    </div>
                     <a class="card-link" href="#">
-                        <h5 class="card-title" th:text="${post.postTitle}"></h5>
+                        <h5 class="card-title" th:text="${post.postTitle}"> by </h5>
                     </a>
 
                     <p class="card-text" th:text="${post.postText}"></p>
