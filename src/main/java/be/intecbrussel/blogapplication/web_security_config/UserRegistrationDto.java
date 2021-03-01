@@ -1,15 +1,12 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
-@FieldMatch.List({
-        @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
-})
+
 @Data
 public class UserRegistrationDto {
 
@@ -30,5 +27,14 @@ public class UserRegistrationDto {
 
     @AssertTrue
     private Boolean terms;
+
+
+    public void setFirstName(String firstName) {
+        this.firstName = StringUtils.capitalize(firstName);
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = StringUtils.capitalize(lastName);
+    }
 
 }
