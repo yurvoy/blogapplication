@@ -30,7 +30,7 @@ public class HomeController implements ErrorController {
 
         if (principal == null){
             return "home";
-        }
+        }git checkout -b
         User user = userService.findByEmail(principal.getName());
 
         model.addAttribute("user", user);
