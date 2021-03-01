@@ -8,13 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final UserService userService;
@@ -51,15 +50,11 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> getTenPosts() {
-        List<Post> topTenPosts = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
-            if (postRepository.findAll().get(i) != null) {
-                topTenPosts.add(postRepository.findAll().get(i));
-            } else {
-                break;
-            }
-        }
+    public List<Post> getTopPosts() {
+        List<Post> topTenPosts = postRepository.findAll();
+        Collections.reverse(topTenPosts);
+        // return only last 10 posts
+        topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
         return topTenPosts;
     }
 

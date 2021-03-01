@@ -26,7 +26,7 @@ public class HomeController implements ErrorController {
     @RequestMapping({"","/", "/home", "/index"})
     public String root(Principal principal, Model model) {
 
-        model.addAttribute("posts", postService.getTenPosts());
+        model.addAttribute("topPosts", postService.getTopPosts());
 
         if (principal == null){
             return "home";

@@ -48,6 +48,22 @@
 
     </div>
 
+    <div class="py-4 px-4">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h5 class="mb-0">Recent posts</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+        </div>
+        <div class="col" th:each="post: ${topPosts}">
+            <div>
+                <p class="mb-0" td th:text="${post.postTitle}">This is a post</p>
+            </div>
+            <div class="p-4 rounded shadow-sm bg-light">
+                <p class="font-italic mb-0" th:text="${post.postText}">Post Text</p>
+            </div>
+            <p th:text="${post.postTimeStamp}">TimeStamp</p>
+            <img src="" alt="" class="img-fluid rounded shadow-sm">
+        </div>
+    </div>
+
 </body>
 
 </html>
