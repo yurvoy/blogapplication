@@ -123,7 +123,7 @@
                         <div class="h6 text-muted">Following</div>
                         <div class="h5" sec:authorize="isAuthenticated()">6758</div>
                     </li>
-                    <li class="list-group-item" sec:authorize="isAuthenticated()">jonhydelavega@gmail.com</li>
+                    <li class="list-group-item" sec:authorize="isAuthenticated()" th:text="${user.email}"></li>
                 </ul>
             </div>
         </div>

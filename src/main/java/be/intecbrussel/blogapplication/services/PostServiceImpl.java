@@ -53,7 +53,7 @@ public class PostServiceImpl implements PostService {
     public List<Post> getTopPosts() {
         List<Post> topTenPosts = postRepository.findAll();
         Collections.reverse(topTenPosts);
-        // return only last 10 posts
+        // return only 10 posts
         topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
         return topTenPosts;
     }

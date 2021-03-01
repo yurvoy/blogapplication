@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.Collection;
 
 @Data
 @Entity
@@ -24,6 +23,7 @@ public class Post implements Principal {
     private String postText;
     @Column
     private LocalDate postTimeStamp;
+
 
     @Builder
     public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp) {
