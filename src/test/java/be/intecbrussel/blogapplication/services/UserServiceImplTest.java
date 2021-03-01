@@ -1,6 +1,5 @@
 package be.intecbrussel.blogapplication.services;
 
-import be.intecbrussel.blogapplication.model.Role;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +8,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.security.Principal;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
