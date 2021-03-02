@@ -13,4 +13,5 @@ public class CreatePostDto {
     @Size(max = 500, min = 1, message = "Post : 500 max characters")
     private String postText;
 
+
 }

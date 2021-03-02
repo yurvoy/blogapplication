@@ -24,19 +24,23 @@ public class Post implements Principal {
     private String postText;
     @Column
     private LocalDate postTimeStamp;
+    @ManyToOne(fetch=FetchType.LAZY)
+    private User user;
 
     @Builder
-    public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp) {
+    public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp, User user) {
         this.id = id;
         this.postTitle = postTitle;
         this.postText = postText;
         this.postTimeStamp = postTimeStamp;
+        this.user = user;
     }
 
-    public Post(String postTitle, String postText) {
+    public Post(String postTitle, String postText, User user) {
         this.postTitle = postTitle;
         this.postText = postText;
         this.postTimeStamp = getPostTimeStamp();
+        this.user = user;
 
     }
     public Post() {
@@ -48,6 +52,10 @@ public class Post implements Principal {
         return id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public String getName() {
         return null;
@@ -57,5 +65,7 @@ public class Post implements Principal {
     public boolean implies(Subject subject) {
         return false;
     }
+
+
 }
 

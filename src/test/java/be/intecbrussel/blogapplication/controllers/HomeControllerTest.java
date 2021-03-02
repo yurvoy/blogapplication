@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.web_security_config.WebConfig;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
@@ -44,7 +45,6 @@ class HomeControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        controller = new HomeController(userService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setViewResolvers(webConfig.viewResolver())
                 .build();
