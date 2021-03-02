@@ -32,6 +32,7 @@ public class PostServiceImpl implements PostService{
         post.setPostTitle(newPost.getPostTitle());
         post.setPostText(newPost.getPostText());
         post.setPostTimeStamp(LocalDate.now());
+        post.setUser(user);
 
         List<Post> posts = user.getPosts();
         posts.add(0,post);
@@ -49,5 +50,14 @@ public class PostServiceImpl implements PostService{
         return postOptional.get();
     }
 
+    @Override
+    public List<Post> findAll() {
 
+        List<Post> posts = postRepository.findAll();
+
+        if (posts.size() == 0){
+            System.out.println("There are no post yet");
+        }
+        return posts;
+    }
 }
