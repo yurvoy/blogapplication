@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
@@ -10,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Optional;
 
 
 @Controller
@@ -56,5 +59,31 @@ public class PostController {
     @PostMapping("/error")
     public String error(){
         return "redirect:/";
+    }
+
+    @GetMapping("editPost/{id}")
+    public String editPost(@PathVariable Long id, Model model, Principal principal){
+
+        String user = "aUser";
+
+        if(principal != null){
+            user = principal.getName();
+        }
+
+        Post post = this.postService.findById(id);
+
+        if(post != null){
+            String thePost = post.getPostText();
+
+            if(user.equals(post.getUser().getEmail())){
+                model.addAttribute("post", thePost);
+                return "user/createPost";
+            }else{
+                return "403";
+            }
+        }else{
+            return "error";
+        }
+
     }
 }
