@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 
 @Controller
-public class HomeController implements ErrorController {
+public class HomeController {
 
     private final UserService userService;
 
@@ -24,7 +24,7 @@ public class HomeController implements ErrorController {
     @RequestMapping({"","/", "/home", "/index"})
     public String root(Principal principal, Model model) {
         if (principal == null){
-            return "/user/frontpage";
+            return "home";
         }
         User user = userService.findByEmail(principal.getName());
 
@@ -58,8 +58,4 @@ public class HomeController implements ErrorController {
         return "404";
     }
 
-    @Override
-    public String getErrorPath() {
-        return null;
-    }
 }
