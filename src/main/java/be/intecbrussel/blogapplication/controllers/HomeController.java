@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
-public class HomeController implements ErrorController {
+public class HomeController {
 
     private final UserService userService;
     private final PostService postService;
@@ -28,31 +30,31 @@ public class HomeController implements ErrorController {
         this.postService = postService;
     }
 
-    @RequestMapping({"","/", "/home", "/index"})
+    @RequestMapping({"","/", "/index", "/frontPage"})
     public String root(Principal principal, Model model) {
-        List<Post> posts = postService.findAll();
-
+        List<Post> topTenPosts = postService.findAll();
+        Collections.reverse(topTenPosts);
+        topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
+        model.addAttribute("posts", topTenPosts);
         if (principal == null){
-
-            model.addAttribute("posts", posts);
             return "/user/frontpage";
         }
 
         User user = userService.findByEmail(principal.getName());
         model.addAttribute("user", user);
 
-        return "index";
+        return "/user/frontpage";
     }
 
     @GetMapping({"/user/{userId}/frontpage"})
     public String showLoggedinUserFrontPage(@PathVariable Long userId, Model model) {
 
-        List<Post> posts = postService.findAll();
-        System.out.println("User ID is " + userId);
+        List<Post> topTenPosts = postService.findAll();
+        Collections.reverse(topTenPosts);
+        topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
 
         model.addAttribute("user", userService.findById(userId))
-                .addAttribute("posts",posts);
-
+                .addAttribute("posts",topTenPosts);
         return "/user/frontpage";
     }
 
@@ -64,7 +66,7 @@ public class HomeController implements ErrorController {
 
     @GetMapping({"/logout"})
     public String logout(Model model) {
-        return "home";
+        return "/user/frontPage";
     }
 
     @RequestMapping("/404")
@@ -73,8 +75,4 @@ public class HomeController implements ErrorController {
         return "404";
     }
 
-    @Override
-    public String getErrorPath() {
-        return null;
-    }
 }
