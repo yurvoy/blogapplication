@@ -23,3 +23,10 @@ os:
 cache:
   directories:
     - "$HOME/.m2/repository"
+
+deploy:
+  provider: heroku:git
+  app: blogify2
+  username: team2.intec.iot@gmail.com
+  password: intec_brussel2
+  edge: true
