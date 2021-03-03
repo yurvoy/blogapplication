@@ -6,7 +6,7 @@ install: true
 branches:
   only:
     - main
-
+git
 script: mvn clean package -DskipTests=true
 
 jdk:
