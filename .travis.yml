@@ -7,8 +7,6 @@ branches:
 script: mvn clean package -DskipTests=true
 jdk:
   - openjdk11
-  - openjdk8
-  - oraclejdk8
 os:
   - linux
   - osx
