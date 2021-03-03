@@ -1,7 +1,7 @@
 package be.intecbrussel.blogapplication.controllers;
 
 import be.intecbrussel.blogapplication.model.User;
-import be.intecbrussel.blogapplication.repositories.UserRepository;
+import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
@@ -16,15 +16,20 @@ import java.security.Principal;
 public class HomeController implements ErrorController {
 
     private final UserService userService;
+    private final PostService postService;
 
-    public HomeController(UserService userService) {
+    public HomeController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @RequestMapping({"","/", "/home", "/index"})
     public String root(Principal principal, Model model) {
+
+        model.addAttribute("posts", postService.getTenPosts());
+
         if (principal == null){
-            return "/user/frontpage";
+            return "home";
         }
         User user = userService.findByEmail(principal.getName());
 
