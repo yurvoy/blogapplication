@@ -76,8 +76,8 @@ public class PostController {
             String thePost = post.getPostText();
 
             if(user.equals(post.getUser().getEmail())){
-                model.addAttribute("post", thePost);
-                return "user/createPost";
+                model.addAttribute("post", post);
+                return "user/postForm";
             }else{
                 return "403";
             }
@@ -85,5 +85,12 @@ public class PostController {
             return "error";
         }
 
+    }
+
+    @PostMapping("editPost/{id}")
+    public String processUpdatePost(@PathVariable Long id, Principal principal, @ModelAttribute("post") CreatePostDto postForm){
+
+        postService.updatePost(id, principal, postForm);
+        return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
     }
 }
