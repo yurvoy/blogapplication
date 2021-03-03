@@ -1,0 +1,25 @@
+language: java
+
+# For maven projects, the default installation phase can be skipped
+install: true
+
+branches:
+  only:
+    - main
+
+script: mvn clean package -DskipTests=true
+
+jdk:
+  - openjdk11
+  - openjdk8
+  - oraclejdk8
+
+os:
+  - linux
+  - osx
+  - windows
+
+# Cache the maven repository to not need to download all dependencies on every build.
+cache:
+  directories:
+    - "$HOME/.m2/repository"

@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.Collection;
 
 @Data
 @Entity
@@ -24,7 +23,7 @@ public class Post implements Principal {
     private String postText;
     @Column
     private LocalDate postTimeStamp;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private User user;
 
     @Builder
@@ -36,11 +35,10 @@ public class Post implements Principal {
         this.user = user;
     }
 
-    public Post(String postTitle, String postText, User user) {
+    public Post(String postTitle, String postText) {
         this.postTitle = postTitle;
         this.postText = postText;
         this.postTimeStamp = getPostTimeStamp();
-        this.user = user;
 
     }
     public Post() {
@@ -52,20 +50,14 @@ public class Post implements Principal {
         return id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     @Override
     public String getName() {
-        return null;
+        return user.getFirstName() + " " + user.getLastName();
     }
 
     @Override
     public boolean implies(Subject subject) {
         return false;
     }
-
-
 }
 
