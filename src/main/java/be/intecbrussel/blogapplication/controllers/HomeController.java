@@ -27,7 +27,7 @@ public class HomeController implements ErrorController {
         this.postService = postService;
     }
 
-    @RequestMapping({"","/", "/home", "/index"})
+    @RequestMapping({"","/", "/index"})
     public String root(Principal principal, Model model) {
 
         List<Post> topTenPosts = postService.findAll();
@@ -42,7 +42,7 @@ public class HomeController implements ErrorController {
 
         model.addAttribute("user", user);
 
-        return "index";
+        return "/user/frontpage";
     }
 
     @GetMapping({"/user/{userId}/frontpage"})

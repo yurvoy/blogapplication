@@ -38,9 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/index**",
                         "/resetPassword**",
                         "/user/profile**",
+                        "/user/frontpage**",
                         "/user/updateProfile**",
                         "/user/uploadImage**",
                         "/user/createPost**",
+                        "/user/updatePost**",
+                        "/user/profile**",
                         "/js/**",
                         "/css/**",
                         "/img/**",
@@ -55,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/home")
+                .logoutSuccessUrl("/index")
                 .permitAll();
 
     }

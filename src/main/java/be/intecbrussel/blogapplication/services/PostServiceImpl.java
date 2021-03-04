@@ -7,6 +7,7 @@ import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -59,5 +60,19 @@ public class PostServiceImpl implements PostService{
             System.out.println("There are no post yet");
         }
         return posts;
+    }
+
+    @Override
+    public void updatePost(Long postId, Principal principal, CreatePostDto postForm) {
+        Optional<Post> post = postRepository.findById(postId);
+
+        if(postForm.getPostTitle()!= null) {
+            post.get().setPostTitle(postForm.getPostTitle());
+        }
+        if(postForm.getPostText() != null) {
+            post.get().setPostText(postForm.getPostText());
+        }
+
+        postRepository.save(post.get());
     }
 }

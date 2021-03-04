@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
@@ -52,6 +53,38 @@ public class PostController {
 
         postService.savePost(Long.parseLong(userId), post);
         return "redirect:/user/" + userId + "/profile";
+    }
+
+    @GetMapping("editPost/{id}")
+    public String editPost(@PathVariable Long id, Model model, Principal principal){
+
+        String user = "aUser";
+
+        if(principal != null){
+            user = principal.getName();
+        }
+
+        Post post = this.postService.findById(id);
+
+        if(post != null){
+
+            if(user.equals(post.getUser().getEmail())){
+                model.addAttribute("post", post);
+                return "user/updatePost";
+            }else{
+                return "403";
+            }
+        }else{
+            return "error";
+        }
+
+    }
+
+    @PostMapping("editPost/{id}")
+    public String processUpdatePost(@PathVariable Long id, Principal principal, @ModelAttribute("post") CreatePostDto postForm){
+
+        postService.updatePost(id, principal, postForm);
+        return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
     }
 
     @PostMapping("/error")
