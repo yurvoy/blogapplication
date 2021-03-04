@@ -12,5 +12,7 @@ public interface PostService {
     Post savePost(Long userId, CreatePostDto newPost);
 
     List<Post> findAll();
+
+    List<Post> getTopPosts();
 }
 

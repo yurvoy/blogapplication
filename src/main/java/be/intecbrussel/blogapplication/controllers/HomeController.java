@@ -1,6 +1,5 @@
 package be.intecbrussel.blogapplication.controllers;
 
-import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class HomeController implements ErrorController {
@@ -30,14 +26,11 @@ public class HomeController implements ErrorController {
     @RequestMapping({"","/", "/home", "/index"})
     public String root(Principal principal, Model model) {
 
-        List<Post> topTenPosts = postService.findAll();
-        Collections.reverse(topTenPosts);
-        topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
-        model.addAttribute("posts", topTenPosts);
-        if (principal == null){
-            return "/user/frontpage";
-        }
+        model.addAttribute("posts", postService.getTopPosts());
 
+        if (principal == null){
+            return "home";
+        }
         User user = userService.findByEmail(principal.getName());
 
         model.addAttribute("user", user);

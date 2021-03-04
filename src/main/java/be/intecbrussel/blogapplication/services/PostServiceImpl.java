@@ -8,8 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -59,5 +61,13 @@ public class PostServiceImpl implements PostService{
             System.out.println("There are no post yet");
         }
         return posts;
+    }
+    @Override
+    public List<Post> getTopPosts() {
+        List<Post> topTenPosts = postRepository.findAll();
+        Collections.reverse(topTenPosts);
+        // return only 10 posts
+        topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
+        return topTenPosts;
     }
 }
