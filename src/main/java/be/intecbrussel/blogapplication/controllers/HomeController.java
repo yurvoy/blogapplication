@@ -39,7 +39,6 @@ public class HomeController implements ErrorController {
         if (principal == null){
             return "/user/frontpage";
         }
-
         User user = userService.findByEmail(principal.getName());
 
         model.addAttribute("user", user);
@@ -56,7 +55,7 @@ public class HomeController implements ErrorController {
     }
 
 
-    @GetMapping({"/login", "/frontpage/login"})
+    @GetMapping({"/login"})
     public String login(Model model) {
         return "login";
     }
