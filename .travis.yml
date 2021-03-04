@@ -1,0 +1,23 @@
+language: java
+# For maven projects, the default installation phase can be skipped
+install: true
+branches:
+  only:
+    - main
+script: mvn clean package -DskipTests=true
+jdk:
+  - openjdk11
+os:
+  - linux
+  - osx
+  - windows
+# Cache the maven repository to not need to download all dependencies on every build.
+cache:
+  directories:
+    - "$HOME/.m2/repository"
+deploy:
+  provider: heroku:git
+  app: blogify2
+  username: team2.intec.iot@gmail.com
+  password: intec_brussel2
+  edge: true
