@@ -22,7 +22,6 @@ public class HomeController implements ErrorController {
 
     private final UserService userService;
     private final PostService postService;
-    private Model model;
 
     public HomeController(UserService userService, PostService postService) {
         this.userService = userService;
