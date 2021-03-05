@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class HomeController implements ErrorController {
+public class HomeController {
 
     private final UserService userService;
     private final PostService postService;
@@ -70,8 +70,5 @@ public class HomeController implements ErrorController {
         return "404";
     }
 
-    @Override
-    public String getErrorPath() {
-        return null;
-    }
+
 }
