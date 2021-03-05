@@ -4,7 +4,7 @@ install: true
 branches:
   only:
     - main
-script: mvn clean package -DskipTests=true
+script: mvn clean package -DskipTests=false
 jdk:
   - openjdk11
 os:
