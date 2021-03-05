@@ -7,11 +7,10 @@ import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -62,12 +61,18 @@ public class PostServiceImpl implements PostService{
         }
         return posts;
     }
+
     @Override
-    public List<Post> getTopPosts() {
-        List<Post> topTenPosts = postRepository.findAll();
-        Collections.reverse(topTenPosts);
-        // return only 10 posts
-        topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
-        return topTenPosts;
+    public void updatePost(Long postId, Principal principal, CreatePostDto postForm) {
+        Optional<Post> post = postRepository.findById(postId);
+
+        if(postForm.getPostTitle()!= null) {
+            post.get().setPostTitle(postForm.getPostTitle());
+        }
+        if(postForm.getPostText() != null) {
+            post.get().setPostText(postForm.getPostText());
+        }
+
+        postRepository.save(post.get());
     }
 }

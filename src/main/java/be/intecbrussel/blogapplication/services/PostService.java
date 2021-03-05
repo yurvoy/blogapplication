@@ -3,6 +3,7 @@ package be.intecbrussel.blogapplication.services;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface PostService {
@@ -13,6 +14,6 @@ public interface PostService {
 
     List<Post> findAll();
 
-    List<Post> getTopPosts();
+    void updatePost(Long postId, Principal principal, CreatePostDto postForm);
 }
 

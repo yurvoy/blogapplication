@@ -8,22 +8,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 
 @Controller
-public class HomeController implements ErrorController {
+public class HomeController {
 
     private final UserService userService;
     private final PostService postService;
+    private Model model;
 
     public HomeController(UserService userService, PostService postService) {
         this.userService = userService;
         this.postService = postService;
     }
 
-    @RequestMapping({"","/", "/home", "/index"})
+    @RequestMapping({"","/", "/index"})
     public String root(Principal principal, Model model) {
 
         model.addAttribute("posts", postService.getTopPosts());
@@ -35,7 +37,7 @@ public class HomeController implements ErrorController {
 
         model.addAttribute("user", user);
 
-        return "index";
+        return "/user/frontpage";
     }
 
     @GetMapping({"/user/{userId}/frontpage"})
@@ -47,7 +49,7 @@ public class HomeController implements ErrorController {
     }
 
 
-    @GetMapping({"/login", "/frontpage/login"})
+    @GetMapping({"/login"})
     public String login(Model model) {
         return "login";
     }
@@ -63,8 +65,5 @@ public class HomeController implements ErrorController {
         return "404";
     }
 
-    @Override
-    public String getErrorPath() {
-        return null;
-    }
+
 }
