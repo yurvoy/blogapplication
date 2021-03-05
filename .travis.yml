@@ -10,7 +10,7 @@ jdk:
 os:
   - linux
   - osx
-  - windows
+
 # Cache the maven repository to not need to download all dependencies on every build.
 cache:
   directories:
