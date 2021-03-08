@@ -1,6 +1,7 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
@@ -14,16 +15,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan
 public class WebConfig implements WebMvcConfigurer {
 
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/user").setViewName("redirect:/user/");
-//        registry.addViewController("/user/").setViewName("forward:/user/frontpage.html");
-//    }
-
+    @Bean
     public ViewResolver viewResolver()
     {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("src/main/resources/templates**/user*");
+        viewResolver.setPrefix("src/main/resources/templates");
         viewResolver.setSuffix(".html");
         viewResolver.setOrder(0);
         viewResolver.setExposeContextBeansAsAttributes(true);
