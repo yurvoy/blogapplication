@@ -27,20 +27,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         http.authorizeRequests()
                 .antMatchers(
-                        "/**",
-                        "/index**",
-                        "/registration**",
-                        "/login**",
-                        "/forgotPassword**",
-                        "/404**",
-                        "/resetPassword**",
-                        "/user/profile**",
-                        "/user/frontpage**",
-                        "/user/updateProfile**",
-                        "/user/uploadImage**",
-                        "/user/createPost**",
-                        "/user/updatePost**",
-                        "/user/profile**",
+                        "/",
+                        "/index",
+                        "/registration",
+                        "/login",
+                        "/forgotPassword",
+                        "/error",
+                        "/403",
+                        "/404",
+                        "/resetPassword",
+                        "/frontpage/**",
+                        "/updateProfile/**",
+                        "/uploadImage/**",
+                        "/createPost/**",
+                        "/updatePost/**",
+                        "/profile/**",
                         "/js/**",
                         "/css/**",
                         "/img/**",
@@ -50,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/user/frontpage")
                 .permitAll()
                 .and()
                 .logout()
