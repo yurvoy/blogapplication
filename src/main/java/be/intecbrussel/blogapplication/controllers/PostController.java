@@ -82,6 +82,16 @@ public class PostController {
 
     }
 
+    @GetMapping("/search")
+    public String postSearch(Model model, @Param("text") String text){
+
+        List<Post> postList = postService.findAll(text);
+        model.addAttribute("postList", postList);
+        model.addAttribute("text", text);
+
+        return "searchResult";
+    }
+
     @PostMapping("editPost/{id}")
     public String processUpdatePost(@PathVariable Long id, Principal principal, @ModelAttribute("post") CreatePostDto postForm){
 
