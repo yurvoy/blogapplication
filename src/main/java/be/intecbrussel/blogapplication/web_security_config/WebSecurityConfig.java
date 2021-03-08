@@ -23,31 +23,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/").permitAll().and()
+                .authorizeRequests().antMatchers("/console/**").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
+
         http.authorizeRequests()
                 .antMatchers(
-                        "/*",
-                        "/user/frontpage",
-                        "user/profile").permitAll()
-                .antMatchers(
-                        "/user/createPost",
-                        "/user/updatePost",
-                        "/user/updateProfile",
-                        "/user/uploadImage").authenticated()
+                        "/registration**",
+                        "/home**",
+                        "/login**",
+                        "/forgotPassword**",
+                        "/404**",
+                        "/index**",
+                        "/resetPassword**",
+                        "/user/profile**",
+                        "/user/frontpage**",
+                        "/user/updateProfile**",
+                        "/user/uploadImage**",
+                        "/user/createPost**",
+                        "/user/updatePost**",
+                        "/user/profile**",
+                        "/js/**",
+                        "/css/**",
+                        "/img/**",
+                        "/webjars/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/index")
                 .permitAll();
-        http.formLogin().defaultSuccessUrl("/", true);
+        http.formLogin().defaultSuccessUrl("/index", true);
+
+
     }
 
     @Bean

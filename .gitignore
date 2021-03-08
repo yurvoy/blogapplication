@@ -12,10 +12,11 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-
+src/main/resources/h2db/blogApp.trace.db
 # Generated files
 .idea/**/contentModel.xml
-
+src/main/resources/h2db/blogApp.mv.db
+C:
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
