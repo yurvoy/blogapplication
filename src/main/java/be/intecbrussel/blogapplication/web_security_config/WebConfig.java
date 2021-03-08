@@ -19,6 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
         viewResolver.setPrefix("classpath:templates/");
         viewResolver.setSuffix(".html");
         viewResolver.setOrder(0);
+        viewResolver.setExposeContextBeansAsAttributes(true);
         return viewResolver;
     }
 }
