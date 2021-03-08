@@ -37,13 +37,13 @@ public class HomeController {
         topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
         model.addAttribute("posts", topTenPosts);
         if (principal == null){
-            return "/user/frontpage";
+            return "user/frontpage";
         }
         User user = userService.findByEmail(principal.getName());
 
         model.addAttribute("user", user);
 
-        return "/user/frontpage";
+        return "user/frontpage";
     }
 
     @GetMapping({"/user/{userId}/frontpage"})
@@ -51,7 +51,7 @@ public class HomeController {
 
         //model.addAttribute("view", "user/frontpage");
         model.addAttribute("user", userService.findById(userId));
-        return "/user/frontpage";
+        return "user/frontpage";
     }
 
 
