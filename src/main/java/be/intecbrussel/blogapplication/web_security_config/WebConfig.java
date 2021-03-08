@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
     public ViewResolver viewResolver()
     {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("src/main/resources/templates");
+        viewResolver.setPrefix("src/main/resources/templates/");
         viewResolver.setSuffix(".html");
         viewResolver.setOrder(0);
         viewResolver.setExposeContextBeansAsAttributes(true);
