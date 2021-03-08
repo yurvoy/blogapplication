@@ -23,11 +23,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
         http.authorizeRequests()
                 .antMatchers(
+                        "/",
+                        "/index",
+                        "/registration",
+                        "/login",
+                        "/forgotPassword",
+                        "/404",
+                        "/resetPassword",
+                        "/user/profile",
+                        "/user/frontpage",
+                        "/user/updateProfile",
+                        "/user/uploadImage",
+                        "/user/createPost",
+                        "/user/updatePost",
+                        "/user/profile",
                         "/js/**",
                         "/css/**",
                         "/img/**",
+                        "/console/**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -39,8 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/index")
                 .permitAll();
+        http.formLogin().defaultSuccessUrl("/index", true);
+
     }
 
     @Bean
