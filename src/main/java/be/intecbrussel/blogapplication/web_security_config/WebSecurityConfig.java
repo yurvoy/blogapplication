@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/search",
                         "/home**",
                         "/login**",
+                        "/search",
                         "/forgotPassword**",
                         "/404**",
                         "/index**",
