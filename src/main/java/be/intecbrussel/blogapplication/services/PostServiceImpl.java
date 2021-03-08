@@ -3,6 +3,7 @@ package be.intecbrussel.blogapplication.services;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.PostRepository;
+import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,12 @@ public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public PostServiceImpl(UserService userService, PostRepository postRepository) {
+    public PostServiceImpl(UserService userService, PostRepository postRepository, UserRepository userRepository) {
         this.userService = userService;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -75,4 +78,38 @@ public class PostServiceImpl implements PostService{
 
         postRepository.save(post.get());
     }
+
+
+    @Override
+    public void deleteById(Long userId, Long idToDelete) {
+
+        log.debug("Deleting post: " + userId + ":" + idToDelete);
+
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            log.debug("found user");
+
+            Optional<Post> postOptional = user
+                    .getPosts()
+                    .stream()
+                    .filter(post -> post.getId().equals(idToDelete))
+                    .findFirst();
+
+            if(postOptional.isPresent()){
+                log.debug("found Post");
+                Post postToDelete = postOptional.get();
+                postToDelete.setPostText(null);
+
+                user.getPosts().remove(postOptional.get());
+                userRepository.save(user);
+            }
+        } else {
+            log.debug("User Id Not found. Id:" + userId);
+        }
+
+    }
+
+
 }

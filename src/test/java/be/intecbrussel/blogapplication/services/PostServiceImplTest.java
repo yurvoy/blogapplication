@@ -27,13 +27,16 @@ class PostServiceImplTest {
     @Mock
     PostRepository postRepository;
 
+    @Mock
+    UserRepository userRepository;
+
 
     @BeforeEach
     void setUp() {
 
         MockitoAnnotations.openMocks(this);
 
-        postService = new PostServiceImpl(userService, postRepository);
+        postService = new PostServiceImpl(userService, postRepository, userRepository);
     }
 
     @Test
