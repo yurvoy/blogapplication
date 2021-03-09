@@ -138,6 +138,12 @@ src/main/resources/application.properties
 src/main/resources/application-prod.properties
 .travis.yml
 
+### H2 ###
+/*DB.*
+*Db.properties
+*Db.script
+*.h2.data
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
