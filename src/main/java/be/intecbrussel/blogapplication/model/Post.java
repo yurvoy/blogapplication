@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,6 +28,9 @@ public class Post implements Principal {
     private LocalDate postTimeStamp;
     @ManyToOne(fetch=FetchType.LAZY)
     private User user;
+    @OneToMany
+    private List<User> likes;
+
 
     @Builder
     public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp, User user) {
@@ -34,6 +39,7 @@ public class Post implements Principal {
         this.postText = postText;
         this.postTimeStamp = postTimeStamp;
         this.user = user;
+        this.likes = new ArrayList<>();
     }
 
     public Post(String postTitle, String postText, User user) {
@@ -41,7 +47,7 @@ public class Post implements Principal {
         this.postText = postText;
         this.postTimeStamp = getPostTimeStamp();
         this.user = user;
-
+        this.likes = new ArrayList<>();
     }
     public Post() {
     }

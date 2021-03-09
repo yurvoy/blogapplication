@@ -87,6 +87,13 @@ public class PostController {
         return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
     }
 
+    @PostMapping("likePost/{id}")
+    public String likePost(@PathVariable Long id, Principal principal){
+
+        postService.likePost(id, principal);
+        return "user/frontpage";
+    }
+
     @PostMapping("/error")
     public String error(){
         return "redirect:/";
