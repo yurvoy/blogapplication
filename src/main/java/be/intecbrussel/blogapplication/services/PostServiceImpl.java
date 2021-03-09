@@ -81,11 +81,12 @@ public class PostServiceImpl implements PostService{
 
 
     @Override
-    public void deleteById(Long userId, Long idToDelete) {
+    public void deleteById(Long userId) {
 
-        log.debug("Deleting post: " + userId + ":" + idToDelete);
+        log.debug("Deleting post: " + userId);
 
-        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<User> userOptional = Optional.ofNullable(postRepository.findById(userId).get().getUser());
+
 
         if(userOptional.isPresent()){
             User user = userOptional.get();
@@ -94,7 +95,7 @@ public class PostServiceImpl implements PostService{
             Optional<Post> postOptional = user
                     .getPosts()
                     .stream()
-                    .filter(post -> post.getId().equals(idToDelete))
+                    .filter(post -> post.getId().equals(userId))
                     .findFirst();
 
             if(postOptional.isPresent()){

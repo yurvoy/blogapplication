@@ -16,6 +16,6 @@ public interface PostService {
 
     void updatePost(Long postId, Principal principal, CreatePostDto postForm);
 
-    void deleteById(Long along, Long along1);
+    void deleteById(Long along);
 }
 
