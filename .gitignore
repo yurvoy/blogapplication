@@ -133,6 +133,11 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
+### Sensitive Data ###
+src/main/resources/application.properties
+src/main/resources/application-prod.properties
+.travis.yml
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
