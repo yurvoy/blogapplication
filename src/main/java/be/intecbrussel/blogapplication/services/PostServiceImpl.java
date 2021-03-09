@@ -83,12 +83,15 @@ public class PostServiceImpl implements PostService{
     public void likePost(Long postId, Principal principal) {
         User user = userService.findByEmail(principal.getName());
         Optional<Post> post = postRepository.findById(postId);
-        boolean alreadyLiked = post.get().getLikes().contains(user);
+        List<User> likes = post.get().getLikes();
+
+        boolean alreadyLiked = likes.contains(user);
         if (alreadyLiked) {
-            post.get().getLikes().remove(user);
+            likes.remove(user);
         } else {
-            post.get().getLikes().add(user);
+            likes.add(user);
         }
+        post.get().setLikes(likes);
         postRepository.save(post.get());
     }
 
