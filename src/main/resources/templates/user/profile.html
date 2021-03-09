@@ -53,6 +53,12 @@
                        aria-label="Search" size="30" />
             </form>
 
+            <form th:action="@{/search}" method="get">
+                <input type="text" id="text" name = "text" class="form-control" placeholder="Search here" th:value="${text}" required
+                       aria-label="Search" size="30" />
+
+            </form>
+
 
             <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
                     font-color="black">
