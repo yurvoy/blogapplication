@@ -31,7 +31,7 @@ public class PostController {
     }
 
     @GetMapping("user/{userId}/createPost")
-    public String showUploadForm(@PathVariable String userId, Model model) {
+    public String showUploadForm(@PathVariable String userId, Model model){
 
         User existing = userService.findById(Long.parseLong(userId));
         if (existing == null) {
@@ -56,32 +56,32 @@ public class PostController {
     }
 
     @GetMapping("editPost/{id}")
-    public String editPost(@PathVariable Long id, Model model, Principal principal) {
+    public String editPost(@PathVariable Long id, Model model, Principal principal){
 
         String user = "aUser";
 
-        if (principal != null) {
+        if(principal != null){
             user = principal.getName();
         }
 
         Post post = this.postService.findById(id);
 
-        if (post != null) {
+        if(post != null){
 
-            if (user.equals(post.getUser().getEmail())) {
+            if(user.equals(post.getUser().getEmail())){
                 model.addAttribute("post", post);
                 return "user/updatePost";
-            } else {
+            }else{
                 return "403";
             }
-        } else {
+        }else{
             return "error";
         }
 
     }
 
     @PostMapping("editPost/{id}")
-    public String processUpdatePost(@PathVariable Long id, Principal principal, @ModelAttribute("post") CreatePostDto postForm) {
+    public String processUpdatePost(@PathVariable Long id, Principal principal, @ModelAttribute("post") CreatePostDto postForm){
 
         postService.updatePost(id, principal, postForm);
         return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
@@ -119,8 +119,15 @@ public class PostController {
     }
 
 
+    @PostMapping("likePost/{id}")
+    public String likePost(@PathVariable Long id, Principal principal){
+
+        postService.likePost(id, principal);
+        return "user/frontpage";
+    }
+
     @PostMapping("/error")
-    public String error() {
+    public String error(){
         return "redirect:/";
     }
 }

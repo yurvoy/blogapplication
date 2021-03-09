@@ -79,6 +79,25 @@ public class PostServiceImpl implements PostService{
         postRepository.save(post.get());
     }
 
+    @Override
+    public void likePost(Long postId, Principal principal) {
+        User user = userService.findByEmail(principal.getName());
+        Optional<Post> post = postRepository.findById(postId);
+        boolean alreadyLiked = post.get().getLikes().contains(user);
+        if (alreadyLiked) {
+            post.get().getLikes().remove(user);
+        } else {
+            post.get().getLikes().add(user);
+        }
+    }
+
+    @Override
+    public List<User> findLikes(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        return post.get().getLikes();
+    }
+
+
 
     @Override
     public void deleteById(Long userId) {
