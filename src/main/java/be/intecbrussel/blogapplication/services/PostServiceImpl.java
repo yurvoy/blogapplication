@@ -89,6 +89,7 @@ public class PostServiceImpl implements PostService{
         } else {
             post.get().getLikes().add(user);
         }
+        postRepository.save(post.get());
     }
 
     @Override

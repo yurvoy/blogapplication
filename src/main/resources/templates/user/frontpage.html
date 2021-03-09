@@ -217,8 +217,11 @@
 
                 </div>
                 <div class="card-body">
-                    <div class="text-muted h7 mb-2" th:text="${post.postTimeStamp}"><i class="fa fa-clock-o"></i>10 min
-                        ago
+                    <div class="text-muted h7 mb-2" th:text="${post.postTimeStamp}">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <div class="text-muted h7 mb-2" th:if="${not #lists.isEmpty(post.getLikes())}" th:text="${#lists.size(post.getLikes())}">
+                        <i class="fa fa-clock-o"> Likes</i>
                     </div>
                     <a class="card-link" href="#">
                         <h5 class="card-title" th:text="${post.postTitle}">Lorem ipsum dolor sit amet, consectetur
@@ -232,7 +235,10 @@
                     </p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                    <a class="card-link" href="/" th:href="@{'/likePost/' + ${post.getId()}}">
+                        <i class="fa fa-gittip" th:if="not ${#lists.contains(post.likes, user)}">Like</i> </a>
+                    <a href="#" class="card-link">
+                        <i class="fa fa-gittip" th:if="${#lists.contains(post.likes, user)}">Unlike</i> </a>
                     <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
                     <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                 </div>

@@ -120,10 +120,16 @@ public class PostController {
 
 
     @PostMapping("likePost/{id}")
+    @GetMapping("likePost/{id}")
     public String likePost(@PathVariable Long id, Principal principal){
 
+        if(principal == null){
+            return "redirect:/";
+        }
+
         postService.likePost(id, principal);
-        return "user/frontpage";
+        System.out.println("Post liked");
+        return "redirect:/";
     }
 
     @PostMapping("/error")
