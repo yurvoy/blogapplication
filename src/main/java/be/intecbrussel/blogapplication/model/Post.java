@@ -27,7 +27,7 @@ public class Post implements Principal {
     private LocalDate postTimeStamp;
     @ManyToOne(fetch=FetchType.LAZY)
     private User user;
-    @OneToMany
+    @ManyToMany
     private List<User> likes;
 
 

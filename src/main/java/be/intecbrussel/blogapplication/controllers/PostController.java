@@ -95,7 +95,6 @@ public class PostController {
         }
 
         postService.likePost(id, principal);
-        System.out.println("Post liked");
         return "redirect:/";
     }
 

@@ -18,7 +18,5 @@ public interface PostService {
     void updatePost(Long postId, Principal principal, CreatePostDto postForm);
 
     void likePost(Long postId, Principal principal);
-
-    List<User> findLikes (Long postId);
 }
 
