@@ -82,14 +82,24 @@ public class PostController {
 
     }
 
-    @GetMapping("/search")
-    public String postSearch(Model model, @Param("text") String text){
+    @GetMapping("search")
+    public String postSearch(Model model, @Param("text") String text, Principal principal, Long userId){
 
+
+        if(principal == null) {
+            List<Post> postList = postService.findAll(text);
+            model.addAttribute("postList", postList);
+            model.addAttribute("text", text);
+            return "user/frontpage";
+        }
+        User user = userService.findByEmail(principal.getName());
+        model.addAttribute("user", userService.findById(user.getId()));
         List<Post> postList = postService.findAll(text);
         model.addAttribute("postList", postList);
         model.addAttribute("text", text);
+        return "user/frontpage";
 
-        return "searchResult";
+
     }
 
     @PostMapping("editPost/{id}")
