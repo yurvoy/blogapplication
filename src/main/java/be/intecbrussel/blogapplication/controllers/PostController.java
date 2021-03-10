@@ -83,27 +83,6 @@ public class PostController {
 
     }
 
-    @GetMapping("search")
-    public String postSearch(Model model, @Param("text") String text, Principal principal){
-
-        List<Post> postList = postService.findAll(text);
-        model.addAttribute("postList", postList);
-        model.addAttribute("text", text);
-
-        if(principal != null) {
-            User user = userService.findByEmail(principal.getName());
-            model.addAttribute("user", userService.findById(user.getId()));
-        }
-
-        if(postList.isEmpty()){
-            return "searchNotFound";
-        }
-
-
-        return "user/frontpage";
-
-    }
-
     @PostMapping("editPost/{id}")
     public String processUpdatePost(@PathVariable Long id, Principal principal, @ModelAttribute("post") CreatePostDto postForm){
 
