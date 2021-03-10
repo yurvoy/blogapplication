@@ -129,6 +129,7 @@
         </div>
         <div class="col-md-6 gedf-main">
             <!--- \\\\\\\Dashboard-->
+            <div th:if="${#lists.isEmpty(postList)}">
             <div class="card gedf-card" sec:authorize="isAuthenticated()">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
@@ -190,6 +191,7 @@
                     </div>
                 </div>
             </div>
+            </div>
             <!-- Dashboard /////-->
             <!-- Begin Search result title -->
             <br>
@@ -227,9 +229,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div class="card-body">
+
+                <div class="card-body"><!--Begin Search Result body-->
                     <div class="text-muted h7 mb-2" th:text="${post.postTimeStamp}">
                         <i class="fa fa-clock-o"></i>
                     </div>
@@ -238,7 +240,8 @@
                     </a>
 
                     <p class="card-text" th:text="${post.postText}"></p>
-                </div>
+                </div> <!-- End of Search Result body -->
+
                 <div class="card-footer">
                     <a class="card-link"><i class="fa fa-gittip">
                         <span th:text="${#lists.size(post.getLikes())}"></span></i></a>
