@@ -55,7 +55,7 @@
                 <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
             </a>
 
-            <form th:action="@{search}" method="get">
+            <form th:action="@{/search}" method="get">
                 <input type="text" name="text" id="text" class="form-control" placeholder="Search here"
                        th:value="${text}" required
                        aria-label="Search" size="30"/>

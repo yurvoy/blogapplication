@@ -138,9 +138,15 @@ public class PostServiceImpl implements PostService{
             if(postOptional.isPresent()){
                 log.debug("found Post");
                 Post postToDelete = postOptional.get();
-                postToDelete.setPostText(null);
 
-                user.getPosts().remove(postOptional.get());
+
+
+                //postToDelete.setPostText(null);
+                user.getPosts().remove(postToDelete);
+                postRepository.delete(postToDelete);
+
+
+
                 userRepository.save(user);
             }
         } else {

@@ -117,12 +117,14 @@ public class PostController {
     @PostMapping("deletePost/{id}")
     public String processDeletePost(@PathVariable Long id) {
 
+        User user = new User();
+        user.setId(postService.findById(id).getUser().getId());
+
         postService.deleteById(id);
-        return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
+        return "redirect:/user/" + user.getId() + "/profile";
     }
 
 
-    @PostMapping("likePost/{id}")
     @GetMapping("likePost/{id}")
     public String likePost(@PathVariable Long id, Principal principal){
 
@@ -134,7 +136,7 @@ public class PostController {
         return "redirect:/";
     }
 
-    @GetMapping("search")
+    @GetMapping("/search")
     public String postSearch(Model model, @Param("text") String text, Principal principal){
 
         List<Post> postList = postService.findAll(text);

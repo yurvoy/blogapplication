@@ -48,8 +48,9 @@
             </a>
 
 
-            <form th:action="@{search}" method="get">
-                <input type="text" name = "text" id="text" class="form-control" placeholder="Search here" th:value="${text}" required
+            <form th:action="@{/search}" method="get">
+                <input type="text" name = "text" id="text" class="form-control" placeholder="Search here"
+                       th:value="${text}" required
                        aria-label="Search" size="30" />
             </form>
 
