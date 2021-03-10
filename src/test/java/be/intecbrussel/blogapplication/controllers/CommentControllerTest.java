@@ -77,7 +77,7 @@ public class CommentControllerTest {
     void simpleComment() throws Exception {
         when(mockBindingResult.hasErrors()).thenReturn(false);
         when(postService.findById(anyLong())).thenReturn(post);
-        String registered = commentController.createNewPost(post.getId().toString(), newComment, mockBindingResult);
+        String registered = commentController.createNewPost(post.getId().toString(), user.getId().toString(), newComment, mockBindingResult);
         assertThat(registered, is("redirect:/user/" + post.getUser().getId() + "/frontpage"));
     }
 
@@ -85,7 +85,7 @@ public class CommentControllerTest {
     void shouldStayOnRegistrationPageIfBindingErrors() throws Exception {
         when(mockBindingResult.hasErrors()).thenReturn(true);
 
-        String registered = commentController.createNewPost(post.getId().toString(), newComment, mockBindingResult);
+        String registered = commentController.createNewPost(post.getId().toString(), user.getId().toString(), newComment, mockBindingResult);
 
         assertThat(registered, is("user/frontpage"));
     }

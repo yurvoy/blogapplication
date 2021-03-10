@@ -31,18 +31,20 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("user/{postId}/createComment")
-    public String createNewPost(@PathVariable String postId, @ModelAttribute("comment") @Valid CreateCommentDto comment,
+    @PostMapping("user/{postId}/{userId}/createComment")
+    public String createNewPost(@PathVariable String postId, @PathVariable String userId, @ModelAttribute("comment") @Valid CreateCommentDto comment,
                                 BindingResult result) {
 
-        if (result.hasErrors()) {
+
+        Post post = postService.findById(Long.parseLong(postId));
+        User user = userService.findById(Long.parseLong(userId));
+        if (result.hasErrors() || user == null || post == null) {
             return "user/frontpage";
         }
-        Post post = postService.findById(Long.parseLong(postId));
 
-        commentService.saveComment(post.getId(), comment);
+        commentService.saveComment(post.getId(), user.getId(), comment);
 
-        return "redirect:/user/" + post.getUser().getId() + "/frontpage";
+        return "redirect:/";
     }
 
     @PostMapping("/error")

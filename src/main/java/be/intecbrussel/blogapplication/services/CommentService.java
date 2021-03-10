@@ -10,7 +10,7 @@ public interface CommentService {
 
     Comment findById(Long id);
 
-    Comment saveComment(Long postId, CreateCommentDto newComment);
+    Comment saveComment(Long postId, Long userId, CreateCommentDto newComment);
 
     List<Comment> findAll();
 }

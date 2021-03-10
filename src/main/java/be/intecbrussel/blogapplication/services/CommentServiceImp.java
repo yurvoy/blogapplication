@@ -39,9 +39,9 @@ public class CommentServiceImp implements CommentService{
     }
 
     @Override
-    public Comment saveComment(Long postId, CreateCommentDto newComment) {
+    public Comment saveComment(Long postId, Long userId, CreateCommentDto newComment) {
         Post post = postService.findById(postId);
-        User user = userService.findById(post.getUser().getId());
+        User user = userService.findById(userId);
 
         Comment comment = new Comment();
         comment.setCommentText(newComment.getCommentText());
