@@ -3,6 +3,7 @@ package be.intecbrussel.blogapplication.controllers;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.services.UserService;
+import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @ModelAttribute("comment")
+    public CreateCommentDto CreateCommentDto() {
+        return new CreateCommentDto();
     }
 
     @GetMapping({"user/{userId}/edit"})

@@ -232,11 +232,11 @@
                 </div>
                 <div class="card-footer">
                     <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-                    <a class="card-link" data-toggle="collapse" href="#collapseExample" role="button"
+                    <a class="card-link" data-toggle="collapse" th:href="'#collapseExample' + ${post.id}" role="button"
                        aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"></i> Comment</a>
                     <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                     <!--- start collapse comments div --->
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse" th:id="'collapseExample' + ${post.id}">
                         <!--- Start Post's comments list --->
                         <div class="card card-body mt-2 mb-0 pb-0">
                             <div id="ui">
