@@ -27,13 +27,16 @@ class PostServiceImplTest {
     @Mock
     PostRepository postRepository;
 
+    @Mock
+    UserRepository userRepository;
+
 
     @BeforeEach
     void setUp() {
 
         MockitoAnnotations.openMocks(this);
 
-        postService = new PostServiceImpl(userService, postRepository);
+        postService = new PostServiceImpl(userService, postRepository, userRepository);
     }
 
     @Test
@@ -100,7 +103,6 @@ class PostServiceImplTest {
 
         assertEquals(postList1.size(),2);
         verify(postRepository, times(1)).findAll();
-
 
     }
 }

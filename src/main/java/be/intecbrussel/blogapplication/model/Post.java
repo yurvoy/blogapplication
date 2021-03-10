@@ -23,14 +23,19 @@ public class Post implements Principal {
     @Lob
     @Column
     private String postText;
+
     @Column
     private LocalDateTime postTimeStamp;
+
     @ManyToOne(fetch=FetchType.LAZY)
     private User user;
+
     @ManyToMany
     private List<User> likes;
     @OneToMany
     private List<Comment> comments;
+
+
 
 
     @Builder
