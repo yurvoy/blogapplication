@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -29,7 +28,7 @@ public class PostController {
     }
 
     @ModelAttribute("post")
-    public CreatePostDto userRegistrationDto() {
+    public CreatePostDto CreatePostDto() {
         return new CreatePostDto();
     }
 
@@ -38,7 +37,7 @@ public class PostController {
 
         User existing = userService.findById(Long.parseLong(userId));
         if (existing == null) {
-            return "redirect:/user/" + userId + "/profile";
+            return "redirect:/index";
         }
 
         model.addAttribute("user", userService.findById(Long.valueOf(userId)));
@@ -96,7 +95,7 @@ public class PostController {
         if(principal != null){
             postService.likePost(id, principal);
         }
-        return "redirect:/";
+        return "redirect:/index";
     }
 
     @GetMapping("likeOwnPost/{id}")
@@ -129,8 +128,4 @@ public class PostController {
         return "user/frontpage";
     }
 
-    @PostMapping("/error")
-    public String error(){
-        return "redirect:/";
-    }
 }
