@@ -13,4 +13,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             + " OR p.postText LIKE %?1% order by LENGTH(p.postText)asc "
     )
     List<Post> search(String text);
+
 }

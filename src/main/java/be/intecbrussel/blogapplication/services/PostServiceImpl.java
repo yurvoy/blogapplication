@@ -5,8 +5,11 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.PostRepository;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;

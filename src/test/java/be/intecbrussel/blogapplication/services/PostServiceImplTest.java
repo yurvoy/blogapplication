@@ -6,6 +6,7 @@ import be.intecbrussel.blogapplication.repositories.PostRepository;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -99,7 +100,6 @@ class PostServiceImplTest {
 
         assertEquals(postList1.size(),2);
         verify(postRepository, times(1)).findAll();
-
 
     }
 }
