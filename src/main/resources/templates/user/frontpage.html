@@ -55,6 +55,12 @@
                 <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
             </a>
 
+            <form th:action="@{search}" method="get">
+                <input type="text" name="text" id="text" class="form-control" placeholder="Search here"
+                       th:value="${text}" required
+                       aria-label="Search" size="30"/>
+            </form>
+
 
             <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
                     font-color="black">
@@ -77,8 +83,6 @@
     </div>
 </nav>
 <!--------------End Navigation --------------->
-
-</nav>
 
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
 
@@ -124,7 +128,7 @@
             </div>
         </div>
         <div class="col-md-6 gedf-main">
-            <!--- \\\\\\\Post-->
+            <!--- \\\\\\\Dashboard-->
             <div class="card gedf-card" sec:authorize="isAuthenticated()">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
@@ -186,8 +190,13 @@
                     </div>
                 </div>
             </div>
-            <!-- Post /////-->
-
+            <!-- Dashboard /////-->
+            <!-- Begin Search result title -->
+            <br>
+            <div th:if="${not #lists.isEmpty(postList)}">
+                <h3>Your Search Results for : <span th:text="${text}"></span></h3>
+            </div>
+            <!-- End Search result title -->
             <!--- \\\\\\\Post-->
             <div class="card gedf-card mt-3" th:each="post: ${posts}">
                 <div class="card-header">
@@ -232,7 +241,7 @@
                 </div>
                 <div class="card-footer">
                     <a class="card-link"><i class="fa fa-gittip">
-                            <span th:text="${#lists.size(post.getLikes())}"></span></i></a>
+                        <span th:text="${#lists.size(post.getLikes())}"></span></i></a>
                     <a class="card-link" th:if="not ${#lists.contains(post.likes, user)}"
                        href="/" th:href="@{'/likePost/' + ${post.id}}">
                         <i class="fa fa-thumbs-up"> Like</i></a>
@@ -243,8 +252,10 @@
                     <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                 </div>
             </div>
+            <!--- \\\\\\\Post-->
         </div>
     </div>
+</div>
 </div>
 </body>
 
