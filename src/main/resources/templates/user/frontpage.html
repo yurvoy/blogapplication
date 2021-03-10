@@ -211,8 +211,11 @@
 
                 </div>
                 <div class="card-body">
-                    <div class="text-muted h7 mb-2" th:text="${post.postTimeStamp}"><i class="fa fa-clock-o"></i>10 min
-                        ago
+                    <div class="mb-2">
+                        <i class="text-muted" th:text="${'Posted on ' + #temporals.format(post.postTimeStamp,'dd-MM-yyyy')
+                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm')}"><i class="fa fa-clock-o"></i>10 min
+                            ago
+                        </i>
                     </div>
                     <a class="card-link" href="#">
                         <h5 class="card-title" th:text="${post.postTitle}">Lorem ipsum dolor sit amet, consectetur
@@ -253,9 +256,10 @@
                                         praesentium esse magnam nemo dolor
                                         sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
                                     </p>
-                                    <div class="text-muted h7 mb-2" th:text="${#temporals.format(comment.commentTimeStamp,'dd-MM-yyyy HH:mm:ss')}"><i class="fa fa-clock-o"></i>10 min
+                                    <i class="text-muted mb-2" th:text="${'Posted on ' + #temporals.format(comment.commentTimeStamp,'dd-MM-yyyy')
+                                        + ' at ' + #temporals.format(comment.commentTimeStamp,'HH:mm')}"><i class="fa fa-clock-o"></i>10 min
                                         ago
-                                    </div>
+                                    </i>
 
                                 </div>
                                 <!--- End post Comments list --->

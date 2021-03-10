@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.Clock;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +33,7 @@ public class PostServiceImpl implements PostService{
         Post post = new Post();
         post.setPostTitle(newPost.getPostTitle());
         post.setPostText(newPost.getPostText());
-        post.setPostTimeStamp(LocalDate.now());
+        post.setPostTimeStamp(LocalDateTime.now(Clock.systemUTC()));
         post.setUser(user);
 
         List<Post> posts = user.getPosts();
