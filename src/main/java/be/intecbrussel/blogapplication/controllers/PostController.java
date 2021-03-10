@@ -5,6 +5,7 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 
 @Controller
@@ -129,6 +131,25 @@ public class PostController {
 
         postService.likePost(id, principal);
         return "redirect:/";
+    }
+
+    @GetMapping("search")
+    public String postSearch(Model model, @Param("text") String text, Principal principal){
+
+        List<Post> postList = postService.findAll(text);
+        model.addAttribute("posts", postList);
+        model.addAttribute("postList", postList);
+        model.addAttribute("text", text);
+
+        if(principal != null) {
+            User user = userService.findByEmail(principal.getName());
+            model.addAttribute("user", userService.findById(user.getId()));
+        }
+
+        if(postList.isEmpty()){
+            return "searchNotFound";
+        }
+        return "user/frontpage";
     }
 
     @PostMapping("/error")

@@ -66,6 +66,17 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    public List<Post> findAll(String text) {
+
+        if(text != null){
+
+            return postRepository.search(text);
+
+        }
+        return postRepository.findAll();
+    }
+
+    @Override
     public void updatePost(Long postId, Principal principal, CreatePostDto postForm) {
         Optional<Post> post = postRepository.findById(postId);
 

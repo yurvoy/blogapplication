@@ -15,6 +15,8 @@ public interface PostService {
 
     List<Post> findAll();
 
+    List<Post> findAll(String text);
+
     void updatePost(Long postId, Principal principal, CreatePostDto postForm);
 
     void likePost(Long postId, Principal principal);
