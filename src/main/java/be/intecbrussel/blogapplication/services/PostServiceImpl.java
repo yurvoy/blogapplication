@@ -3,10 +3,14 @@ package be.intecbrussel.blogapplication.services;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.PostRepository;
+import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,10 +22,12 @@ public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public PostServiceImpl(UserService userService, PostRepository postRepository) {
+    public PostServiceImpl(UserService userService, PostRepository postRepository, UserRepository userRepository) {
         this.userService = userService;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -102,5 +108,52 @@ public class PostServiceImpl implements PostService{
         post.get().setLikes(likes);
         postRepository.save(post.get());
     }
+
+    @Override
+    public List<User> findLikes(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        return post.get().getLikes();
+    }
+
+
+
+    @Override
+    public void deleteById(Long userId) {
+
+        log.debug("Deleting post: " + userId);
+
+        Optional<User> userOptional = Optional.ofNullable(postRepository.findById(userId).get().getUser());
+
+
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            log.debug("found user");
+
+            Optional<Post> postOptional = user
+                    .getPosts()
+                    .stream()
+                    .filter(post -> post.getId().equals(userId))
+                    .findFirst();
+
+            if(postOptional.isPresent()){
+                log.debug("found Post");
+                Post postToDelete = postOptional.get();
+
+
+
+                //postToDelete.setPostText(null);
+                user.getPosts().remove(postToDelete);
+                postRepository.delete(postToDelete);
+
+
+
+                userRepository.save(user);
+            }
+        } else {
+            log.debug("User Id Not found. Id:" + userId);
+        }
+
+    }
+
 
 }

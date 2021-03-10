@@ -5,6 +5,7 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-
+@Slf4j
 @Controller
 public class PostController {
 
@@ -90,6 +91,7 @@ public class PostController {
         return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
     }
 
+
     @GetMapping("likePost/{id}")
     public String likePost(@PathVariable Long id, Principal principal){
 
@@ -110,7 +112,42 @@ public class PostController {
         return "redirect:/user/" + userId + "/profile";
     }
 
-    @GetMapping("search")
+    @GetMapping("deletePost/{id}")
+    public String deletePost(@PathVariable Long id, Model model, Principal principal) {
+
+        String user = "aUser";
+
+        if (principal != null) {
+            user = principal.getName();
+        }
+
+        Post post = this.postService.findById(id);
+
+        if (post != null) {
+
+            if (user.equals(post.getUser().getEmail())) {
+                model.addAttribute("post", post);
+                return "user/deletePost";
+            } else {
+                return "403";
+            }
+        } else {
+            return "error";
+        }
+    }
+
+    @PostMapping("deletePost/{id}")
+    public String processDeletePost(@PathVariable Long id) {
+
+        User user = new User();
+        user.setId(postService.findById(id).getUser().getId());
+
+        postService.deleteById(id);
+        return "redirect:/user/" + user.getId() + "/profile";
+    }
+
+
+    @GetMapping("/search")
     public String postSearch(Model model, @Param("text") String text, Principal principal){
 
         List<Post> postList = postService.findAll(text);

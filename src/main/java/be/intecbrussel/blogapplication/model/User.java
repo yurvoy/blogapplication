@@ -39,6 +39,7 @@ public class User implements Principal {
     private Byte[] profileImage;
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_roles",
@@ -47,7 +48,8 @@ public class User implements Principal {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Post> posts;
 
 
