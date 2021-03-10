@@ -44,7 +44,7 @@ public class CommentController {
 
         commentService.saveComment(post.getId(), user.getId(), comment);
 
-        return "redirect:/";
+        return "redirect:/index";
     }
 
     @PostMapping("/error")
