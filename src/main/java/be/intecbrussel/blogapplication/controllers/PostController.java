@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -92,12 +93,21 @@ public class PostController {
     @GetMapping("likePost/{id}")
     public String likePost(@PathVariable Long id, Principal principal){
 
-        if(principal == null){
-            return "redirect:/";
+        if(principal != null){
+            postService.likePost(id, principal);
         }
-
-        postService.likePost(id, principal);
         return "redirect:/";
+    }
+
+    @GetMapping("likeOwnPost/{id}")
+    public String likeOwnPost(@PathVariable Long id, Principal principal){
+        Post post = postService.findById(id);
+        Long userId = post.getUser().getId();
+
+        if(principal != null){
+            postService.likePost(id, principal);
+        }
+        return "redirect:/user/" + userId + "/profile";
     }
 
     @GetMapping("search")

@@ -157,10 +157,10 @@
                 <a class="card-link"><i class="fa fa-gittip">
                     <span th:text="${#lists.size(post.getLikes())}"></span></i></a>
                 <a class="card-link" th:if="not ${#lists.contains(post.likes, user)}"
-                   href="/" th:href="@{'/likePost/' + ${post.id}}">
+                   href="/" th:href="@{'/likeOwnPost/' + ${post.id}}">
                     <i class="fa fa-thumbs-up"> Like</i></a>
                 <a class="card-link" th:if="${#lists.contains(post.likes, user)}"
-                   href="/" th:href="@{'/likePost/' + ${post.id}}">
+                   href="/" th:href="@{'/likeOwnPost/' + ${post.id}}">
                     <i class="fa fa-thumbs-down"> Unlike</i></a>
                 <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
                 <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
