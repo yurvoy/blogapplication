@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,intellij+all,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,intellij+all,maven
 
@@ -12,10 +11,11 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-
+src/main/resources/h2db/blogApp.trace.db
 # Generated files
 .idea/**/contentModel.xml
-
+src/main/resources/h2db/blogApp.mv.db
+C:
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
@@ -170,4 +170,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij+all,maven
+# End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij+all,mavental.com/developers/gitignore/api/windows,macos,intellij+all,maven
