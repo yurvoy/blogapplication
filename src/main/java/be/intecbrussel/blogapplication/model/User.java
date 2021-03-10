@@ -47,6 +47,7 @@ public class User implements Principal {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
     @OneToMany
     private List<Post> posts;
 

@@ -5,6 +5,7 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-
+@Slf4j
 @Controller
 public class PostController {
 
@@ -93,6 +94,11 @@ public class PostController {
             User user = userService.findByEmail(principal.getName());
             model.addAttribute("user", userService.findById(user.getId()));
         }
+
+        if(postList.isEmpty()){
+            return "searchNotFound";
+        }
+
 
         return "user/frontpage";
 
