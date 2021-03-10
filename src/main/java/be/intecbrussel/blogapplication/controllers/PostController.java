@@ -26,7 +26,7 @@ public class PostController {
     }
 
     @ModelAttribute("post")
-    public CreatePostDto userRegistrationDto() {
+    public CreatePostDto CreatePostDto() {
         return new CreatePostDto();
     }
 
@@ -35,12 +35,12 @@ public class PostController {
 
         User existing = userService.findById(Long.parseLong(userId));
         if (existing == null) {
-            return "redirect:/user/" + userId + "/profile";
+            return "redirect:/index";
         }
 
         model.addAttribute("user", userService.findById(Long.valueOf(userId)));
-
         return "user/createPost";
+
     }
 
     @PostMapping("user/{userId}/createPost")
@@ -87,8 +87,4 @@ public class PostController {
         return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
     }
 
-    @PostMapping("/error")
-    public String error(){
-        return "redirect:/";
-    }
 }

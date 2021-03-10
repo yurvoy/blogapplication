@@ -49,6 +49,8 @@ public class User implements Principal {
     private Collection<Role> roles;
     @OneToMany
     private List<Post> posts;
+    @OneToMany
+    private List<Comment> comments;
 
 
     @Builder

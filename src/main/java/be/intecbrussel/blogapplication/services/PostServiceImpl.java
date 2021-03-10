@@ -26,7 +26,6 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post savePost(Long userId, CreatePostDto newPost) {
-        System.out.println("this is the user Id " + userId);
         User user = userService.findById(userId);
 
         Post post = new Post();

@@ -8,6 +8,7 @@ import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,6 +27,8 @@ public class Post implements Principal {
     private LocalDate postTimeStamp;
     @ManyToOne(fetch=FetchType.LAZY)
     private User user;
+    @OneToMany
+    private List<Comment> comments;
 
     @Builder
     public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp, User user) {

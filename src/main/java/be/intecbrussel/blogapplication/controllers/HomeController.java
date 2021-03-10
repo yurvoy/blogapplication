@@ -4,13 +4,12 @@ import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
+import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
+import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -27,6 +26,11 @@ public class HomeController {
     public HomeController(UserService userService, PostService postService) {
         this.userService = userService;
         this.postService = postService;
+    }
+
+    @ModelAttribute("comment")
+    public CreateCommentDto CreatePostDto() {
+        return new CreateCommentDto();
     }
 
     @RequestMapping({"","/", "/index"})
