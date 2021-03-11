@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.security.Principal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +25,21 @@ public class Post implements Principal {
     private String postText;
 
     @Column
-    private LocalDate postTimeStamp;
+    private LocalDateTime postTimeStamp;
 
     @ManyToOne(fetch=FetchType.LAZY)
     private User user;
 
     @ManyToMany
     private List<User> likes;
+    @OneToMany
+    private List<Comment> comments;
+
+
 
 
     @Builder
-    public Post(Long id, String postTitle, String postText, LocalDate postTimeStamp, User user) {
+    public Post(Long id, String postTitle, String postText, LocalDateTime postTimeStamp, User user) {
         this.id = id;
         this.postTitle = postTitle;
         this.postText = postText;

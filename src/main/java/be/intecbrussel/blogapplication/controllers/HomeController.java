@@ -1,16 +1,15 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.Comment;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
+import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -49,7 +48,6 @@ public class HomeController {
     @GetMapping({"/user/{userId}/frontpage"})
     public String showLoggedinUserFrontPage(@PathVariable Long userId, Model model) {
 
-        //model.addAttribute("view", "user/frontpage");
         model.addAttribute("user", userService.findById(userId));
         return "user/frontpage";
     }
@@ -60,9 +58,10 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping({"/logout"})
-    public String logout(Model model) {
-        return "home";
+
+    @ModelAttribute("comment")
+    public CreateCommentDto CreatePostDto() {
+        return new CreateCommentDto();
     }
 
     @RequestMapping("/404")

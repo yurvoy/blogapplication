@@ -29,37 +29,46 @@ public class PostController {
     }
 
     @ModelAttribute("post")
-    public CreatePostDto userRegistrationDto() {
+    public CreatePostDto CreatePostDto() {
         return new CreatePostDto();
     }
 
     @GetMapping("user/{userId}/createPost")
-    public String showUploadForm(@PathVariable String userId, Model model){
+    public String showUploadForm(@PathVariable Long userId, Principal principal, Model model){
 
-        User existing = userService.findById(Long.parseLong(userId));
-        if (existing == null) {
-            return "redirect:/user/" + userId + "/profile";
+        User existing = userService.findById(userId);
+        User visitor = userService.findByEmail(principal.getName());
+        if (existing == null || existing != visitor) {
+            return "redirect:/index";
         }
 
-        model.addAttribute("user", userService.findById(Long.valueOf(userId)));
+        model.addAttribute("user", userService.findById(userId));
 
         return "user/createPost";
     }
 
     @PostMapping("user/{userId}/createPost")
-    public String createNewPost(@PathVariable String userId, @ModelAttribute("post") @Valid CreatePostDto post,
+    public String createNewPost(@PathVariable Long userId, @ModelAttribute("post") @Valid CreatePostDto post,
                                 BindingResult result) {
 
         if (result.hasErrors()) {
             return "user/createPost";
         }
 
-        postService.savePost(Long.parseLong(userId), post);
+        postService.savePost(userId, post);
         return "redirect:/user/" + userId + "/profile";
     }
 
     @GetMapping("editPost/{id}")
     public String editPost(@PathVariable Long id, Model model, Principal principal){
+
+        Post post = this.postService.findById(id);
+
+        User postUser = post.getUser();
+        User visitor =  userService.findByEmail(principal.getName());
+        if (postUser != visitor) {
+            return "redirect:/index";
+        }
 
         String user = "aUser";
 
@@ -67,10 +76,7 @@ public class PostController {
             user = principal.getName();
         }
 
-        Post post = this.postService.findById(id);
-
         if(post != null){
-
             if(user.equals(post.getUser().getEmail())){
                 model.addAttribute("post", post);
                 return "user/updatePost";
@@ -90,16 +96,43 @@ public class PostController {
         return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
     }
 
+
+    @GetMapping("likePost/{id}")
+    public String likePost(@PathVariable Long id, Principal principal){
+
+        if(principal != null){
+            postService.likePost(id, principal);
+        }
+        return "redirect:/index";
+    }
+
+    @GetMapping("likeOwnPost/{id}")
+    public String likeOwnPost(@PathVariable Long id, Principal principal){
+        Post post = postService.findById(id);
+        Long userId = post.getUser().getId();
+
+        if(principal != null){
+            postService.likePost(id, principal);
+        }
+        return "redirect:/user/" + userId + "/profile";
+    }
+
     @GetMapping("deletePost/{id}")
     public String deletePost(@PathVariable Long id, Model model, Principal principal) {
+
+        Post post = this.postService.findById(id);
+
+        User postUser = post.getUser();
+        User visitor =  userService.findByEmail(principal.getName());
+        if (postUser != visitor) {
+            return "redirect:/index";
+        }
 
         String user = "aUser";
 
         if (principal != null) {
             user = principal.getName();
         }
-
-        Post post = this.postService.findById(id);
 
         if (post != null) {
 
@@ -125,17 +158,6 @@ public class PostController {
     }
 
 
-    @GetMapping("likePost/{id}")
-    public String likePost(@PathVariable Long id, Principal principal){
-
-        if(principal == null){
-            return "redirect:/";
-        }
-
-        postService.likePost(id, principal);
-        return "redirect:/";
-    }
-
     @GetMapping("/search")
     public String postSearch(Model model, @Param("text") String text, Principal principal){
 
@@ -155,8 +177,4 @@ public class PostController {
         return "user/frontpage";
     }
 
-    @PostMapping("/error")
-    public String error(){
-        return "redirect:/";
-    }
 }

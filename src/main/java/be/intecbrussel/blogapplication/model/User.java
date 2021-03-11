@@ -51,6 +51,8 @@ public class User implements Principal {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Post> posts;
+    @OneToMany
+    private List<Comment> comments;
 
 
     @Builder
