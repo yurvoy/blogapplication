@@ -299,11 +299,10 @@
                                 </div>
                                 <!--- End post Comments list --->
                                 <!--- start comments form --->
-                                <form th:object="${comment}"
-                                      th:action="@{'/user/' + ${post.id} + '/' + ${user.id} + '/createComment'}"
+                                <form th:action="@{'/user/' + ${post.id} + '/' + ${user.id} + '/createComment'}"
                                       class="form-group mt-4" method="post" sec:authorize="isAuthenticated()">
                                     <div class="form-group">
-                                        <textarea class="form-control" rows="2" cols="50" th:field="*{commentText}"
+                                        <textarea class="form-control" rows="2" cols="50" name="commentText"
                                                   placeholder="What do you think about?" required></textarea>
                                     </div>
                                     <div class="text-left">

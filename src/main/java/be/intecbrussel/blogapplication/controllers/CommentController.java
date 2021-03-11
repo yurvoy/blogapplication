@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.Comment;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.CommentService;
@@ -7,6 +8,7 @@ import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,9 +30,8 @@ public class CommentController {
     }
 
     @PostMapping("user/{postId}/{userId}/createComment")
-    public String createNewPost(@PathVariable Long postId, @PathVariable Long userId, @ModelAttribute("comment") @Valid CreateCommentDto comment,
-                                BindingResult result) {
-
+    public String createNewPost(@PathVariable Long postId, @PathVariable Long userId, @Valid @ModelAttribute("comment")
+            CreateCommentDto comment, BindingResult result) {
 
         Post post = postService.findById(postId);
         User user = userService.findById(userId);
@@ -44,7 +45,7 @@ public class CommentController {
     }
 
     @PostMapping("/error")
-    public String error(){
+    public String error() {
         return "redirect:/";
     }
 }

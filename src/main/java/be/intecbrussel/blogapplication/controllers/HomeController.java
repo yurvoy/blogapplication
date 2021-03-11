@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.Comment;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
