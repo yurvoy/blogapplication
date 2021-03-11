@@ -63,7 +63,10 @@ public class PostController {
     public String editPost(@PathVariable Long id, Model model, Principal principal){
 
         Post post = this.postService.findById(id);
-        if (principal.getName() != post.getUser().getEmail()) {
+
+        User postUser = post.getUser();
+        User visitor =  userService.findByEmail(principal.getName());
+        if (postUser != visitor) {
             return "redirect:/index";
         }
 
@@ -74,7 +77,6 @@ public class PostController {
         }
 
         if(post != null){
-
             if(user.equals(post.getUser().getEmail())){
                 model.addAttribute("post", post);
                 return "user/updatePost";
@@ -118,15 +120,18 @@ public class PostController {
     @GetMapping("deletePost/{id}")
     public String deletePost(@PathVariable Long id, Model model, Principal principal) {
 
+        Post post = this.postService.findById(id);
+
+        User postUser = post.getUser();
+        User visitor =  userService.findByEmail(principal.getName());
+        if (postUser != visitor) {
+            return "redirect:/index";
+        }
+
         String user = "aUser";
 
         if (principal != null) {
             user = principal.getName();
-        }
-
-        Post post = this.postService.findById(id);
-        if (principal.getName() != post.getUser().getEmail()) {
-            return "redirect:/index";
         }
 
         if (post != null) {
