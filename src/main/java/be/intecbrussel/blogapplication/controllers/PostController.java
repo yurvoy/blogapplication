@@ -37,7 +37,8 @@ public class PostController {
     public String showUploadForm(@PathVariable Long userId, Principal principal, Model model){
 
         User existing = userService.findById(userId);
-        if (existing == null || principal.getName() != existing.getEmail()) {
+        User visitor = userService.findByEmail(principal.getName());
+        if (existing == null || existing != visitor) {
             return "redirect:/index";
         }
 

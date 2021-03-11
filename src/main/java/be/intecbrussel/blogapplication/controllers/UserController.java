@@ -26,7 +26,8 @@ public class UserController {
     public String updateProfile(@PathVariable Long userId, Model model, Principal principal){
 
         User existing = userService.findById(userId);
-        if (existing == null || principal.getName() != existing.getEmail()) {
+        User visitor = userService.findByEmail(principal.getName());
+        if (existing == null || existing != visitor) {
             return "redirect:/index";
         }
 
