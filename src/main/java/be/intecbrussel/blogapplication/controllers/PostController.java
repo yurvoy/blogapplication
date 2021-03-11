@@ -61,16 +61,15 @@ public class PostController {
     @GetMapping("editPost/{id}")
     public String editPost(@PathVariable Long id, Model model, Principal principal){
 
+        Post post = this.postService.findById(id);
+        if (principal.getName() != post.getUser().getEmail()) {
+            return "redirect:/index";
+        }
+
         String user = "aUser";
 
         if(principal != null){
             user = principal.getName();
-        }
-
-        Post post = this.postService.findById(id);
-        User existing = userService.findById(post.getUser().getId());
-        if (existing == null || principal.getName() != existing.getEmail()) {
-            return "redirect:/index";
         }
 
         if(post != null){
@@ -125,8 +124,7 @@ public class PostController {
         }
 
         Post post = this.postService.findById(id);
-        User existing = userService.findById(post.getUser().getId());
-        if (existing == null || principal.getName() != existing.getEmail()) {
+        if (principal.getName() != post.getUser().getEmail()) {
             return "redirect:/index";
         }
 

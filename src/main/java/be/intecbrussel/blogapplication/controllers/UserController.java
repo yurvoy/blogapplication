@@ -46,12 +46,11 @@ public class UserController {
     @GetMapping("user/{userId}/profile")
     public String showProfile(@PathVariable Long userId, Model model, Principal principal) {
 
-        User existing = userService.findById(userId);
-
-        User user = userService.findByEmail(principal.getName());
-        model.addAttribute("profileId", userId);
-        model.addAttribute("user", user);
+        User userProfile = userService.findById(userId);
+        User userVisitor = userService.findByEmail(principal.getName());
         model.addAttribute("view", "user/profile");
+        model.addAttribute("userVisitor", userVisitor);
+        model.addAttribute("user", userProfile);
         return "user/profile";
     }
 
