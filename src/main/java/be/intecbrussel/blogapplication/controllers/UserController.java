@@ -47,11 +47,10 @@ public class UserController {
     public String showProfile(@PathVariable Long userId, Model model, Principal principal) {
 
         User existing = userService.findById(userId);
-        if (existing != null || principal.getName() == existing.getEmail()) {
-            User user = userService.findById(userId);
-            model.addAttribute("user", user);
-        }
 
+        User user = userService.findByEmail(principal.getName());
+        model.addAttribute("profileId", userId);
+        model.addAttribute("user", user);
         model.addAttribute("view", "user/profile");
         return "user/profile";
     }
