@@ -44,7 +44,7 @@ public class UserController {
         User user = userService.findById(userId);
         model.addAttribute("view", "user/profile");
         model.addAttribute("user", user);
-        return "/user/profile";
+        return "user/profile";
     }
 
 }

@@ -21,4 +21,5 @@ public class WebConfig implements WebMvcConfigurer {
         viewResolver.setOrder(0);
         return viewResolver;
     }
+
 }

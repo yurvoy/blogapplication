@@ -31,8 +31,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(
                         "/registration**",
+                        "/search",
                         "/home**",
+                        "/",
+                        "/console/",
                         "/login**",
+                        "/search",
                         "/forgotPassword**",
                         "/404**",
                         "/index**",
@@ -61,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/index")
                 .permitAll();
         http.formLogin().defaultSuccessUrl("/index", true);
+
 
     }
 

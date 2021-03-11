@@ -5,6 +5,8 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,8 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
-
+@Slf4j
 @Controller
 public class PostController {
 
@@ -31,7 +34,7 @@ public class PostController {
     }
 
     @GetMapping("user/{userId}/createPost")
-    public String showUploadForm(@PathVariable String userId, Model model) {
+    public String showUploadForm(@PathVariable String userId, Model model){
 
         User existing = userService.findById(Long.parseLong(userId));
         if (existing == null) {
@@ -56,32 +59,32 @@ public class PostController {
     }
 
     @GetMapping("editPost/{id}")
-    public String editPost(@PathVariable Long id, Model model, Principal principal) {
+    public String editPost(@PathVariable Long id, Model model, Principal principal){
 
         String user = "aUser";
 
-        if (principal != null) {
+        if(principal != null){
             user = principal.getName();
         }
 
         Post post = this.postService.findById(id);
 
-        if (post != null) {
+        if(post != null){
 
-            if (user.equals(post.getUser().getEmail())) {
+            if(user.equals(post.getUser().getEmail())){
                 model.addAttribute("post", post);
                 return "user/updatePost";
-            } else {
+            }else{
                 return "403";
             }
-        } else {
+        }else{
             return "error";
         }
 
     }
 
     @PostMapping("editPost/{id}")
-    public String processUpdatePost(@PathVariable Long id, Principal principal, @ModelAttribute("post") CreatePostDto postForm) {
+    public String processUpdatePost(@PathVariable Long id, Principal principal, @ModelAttribute("post") CreatePostDto postForm){
 
         postService.updatePost(id, principal, postForm);
         return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
@@ -114,13 +117,46 @@ public class PostController {
     @PostMapping("deletePost/{id}")
     public String processDeletePost(@PathVariable Long id) {
 
+        User user = new User();
+        user.setId(postService.findById(id).getUser().getId());
+
         postService.deleteById(id);
-        return "redirect:/user/" + postService.findById(id).getUser().getId() + "/profile";
+        return "redirect:/user/" + user.getId() + "/profile";
     }
 
 
+    @GetMapping("likePost/{id}")
+    public String likePost(@PathVariable Long id, Principal principal){
+
+        if(principal == null){
+            return "redirect:/";
+        }
+
+        postService.likePost(id, principal);
+        return "redirect:/";
+    }
+
+    @GetMapping("/search")
+    public String postSearch(Model model, @Param("text") String text, Principal principal){
+
+        List<Post> postList = postService.findAll(text);
+        model.addAttribute("posts", postList);
+        model.addAttribute("postList", postList);
+        model.addAttribute("text", text);
+
+        if(principal != null) {
+            User user = userService.findByEmail(principal.getName());
+            model.addAttribute("user", userService.findById(user.getId()));
+        }
+
+        if(postList.isEmpty()){
+            return "searchNotFound";
+        }
+        return "user/frontpage";
+    }
+
     @PostMapping("/error")
-    public String error() {
+    public String error(){
         return "redirect:/";
     }
 }

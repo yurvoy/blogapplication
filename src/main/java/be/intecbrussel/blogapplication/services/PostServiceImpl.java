@@ -6,8 +6,11 @@ import be.intecbrussel.blogapplication.repositories.PostRepository;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -66,6 +69,17 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    public List<Post> findAll(String text) {
+
+        if(text != null){
+
+            return postRepository.search(text);
+
+        }
+        return postRepository.findAll();
+    }
+
+    @Override
     public void updatePost(Long postId, Principal principal, CreatePostDto postForm) {
         Optional<Post> post = postRepository.findById(postId);
 
@@ -78,6 +92,29 @@ public class PostServiceImpl implements PostService{
 
         postRepository.save(post.get());
     }
+
+    @Override
+    public void likePost(Long postId, Principal principal) {
+        User user = userService.findByEmail(principal.getName());
+        Optional<Post> post = postRepository.findById(postId);
+        List<User> likes = post.get().getLikes();
+
+        boolean alreadyLiked = likes.contains(user);
+        if (alreadyLiked) {
+            likes.remove(user);
+        } else {
+            likes.add(user);
+        }
+        post.get().setLikes(likes);
+        postRepository.save(post.get());
+    }
+
+    @Override
+    public List<User> findLikes(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        return post.get().getLikes();
+    }
+
 
 
     @Override
@@ -101,9 +138,15 @@ public class PostServiceImpl implements PostService{
             if(postOptional.isPresent()){
                 log.debug("found Post");
                 Post postToDelete = postOptional.get();
-                postToDelete.setPostText(null);
 
-                user.getPosts().remove(postOptional.get());
+
+
+                //postToDelete.setPostText(null);
+                user.getPosts().remove(postToDelete);
+                postRepository.delete(postToDelete);
+
+
+
                 userRepository.save(user);
             }
         } else {

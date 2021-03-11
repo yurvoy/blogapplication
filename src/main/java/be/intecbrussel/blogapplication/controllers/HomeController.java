@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
@@ -36,13 +37,13 @@ public class HomeController {
         topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
         model.addAttribute("posts", topTenPosts);
         if (principal == null){
-            return "/user/frontpage";
+            return "user/frontpage";
         }
         User user = userService.findByEmail(principal.getName());
 
         model.addAttribute("user", user);
 
-        return "/user/frontpage";
+        return "user/frontpage";
     }
 
     @GetMapping({"/user/{userId}/frontpage"})
@@ -50,7 +51,7 @@ public class HomeController {
 
         //model.addAttribute("view", "user/frontpage");
         model.addAttribute("user", userService.findById(userId));
-        return "/user/frontpage";
+        return "user/frontpage";
     }
 
 
@@ -69,6 +70,8 @@ public class HomeController {
 
         return "404";
     }
+
+
 
 
 }

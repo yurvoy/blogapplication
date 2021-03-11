@@ -8,6 +8,7 @@
 
     <title>Profile</title>
 
+    <script src="https://kit.fontawesome.com/51a5fc685f.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -42,12 +43,21 @@
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blog app</a>
+            <a class="navbar-brand" href="#" th:href="@{/index}">
+                <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
+            </a>
+
+
+            <form th:action="@{/search}" method="get">
+                <input type="text" name = "text" id="text" class="form-control" placeholder="Search here"
+                       th:value="${text}" required
+                       aria-label="Search" size="30" />
+            </form>
 
 
             <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
                     font-color="black">
-                <a href="/" th:href="@{'/user/'+${user.getId()}+'/frontpage'}">Frontpage</a></buttom>
+                <a href="/" th:href="@{/index}">Frontpage</a></buttom>
 
 
 
@@ -146,7 +156,14 @@
                 </p>
             </div>
             <div class="card-footer">
-                <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                <a class="card-link"><i class="fa fa-gittip">
+                    <span th:text="${#lists.size(post.getLikes())}"></span></i></a>
+                <a class="card-link" th:if="not ${#lists.contains(post.likes, user)}"
+                   href="/" th:href="@{'/likePost/' + ${post.id}}">
+                    <i class="fa fa-thumbs-up"> Like</i></a>
+                <a class="card-link" th:if="${#lists.contains(post.likes, user)}"
+                   href="/" th:href="@{'/likePost/' + ${post.id}}">
+                    <i class="fa fa-thumbs-down"> Unlike</i></a>
                 <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
                 <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
             </div>
