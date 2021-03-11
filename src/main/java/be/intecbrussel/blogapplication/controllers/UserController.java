@@ -23,7 +23,12 @@ public class UserController {
     }
 
     @GetMapping({"user/{userId}/edit"})
-    public String updateProfile(@PathVariable Long userId, Model model){
+    public String updateProfile(@PathVariable Long userId, Model model, Principal principal){
+
+        User existing = userService.findById(userId);
+        if (existing == null || principal.getName() != existing.getEmail()) {
+            return "redirect:/index";
+        }
 
         model.addAttribute("user", userService.findById(userId));
         return "user/updateProfile";
@@ -39,11 +44,15 @@ public class UserController {
 
 
     @GetMapping("user/{userId}/profile")
-    public String showProfile(@PathVariable Long userId, Model model) {
+    public String showProfile(@PathVariable Long userId, Model model, Principal principal) {
 
-        User user = userService.findById(userId);
+        User existing = userService.findById(userId);
+        if (existing != null || principal.getName() == existing.getEmail()) {
+            User user = userService.findById(userId);
+            model.addAttribute("user", user);
+        }
+
         model.addAttribute("view", "user/profile");
-        model.addAttribute("user", user);
         return "user/profile";
     }
 

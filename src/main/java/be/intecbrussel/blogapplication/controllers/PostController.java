@@ -34,11 +34,10 @@ public class PostController {
     }
 
     @GetMapping("user/{userId}/createPost")
-    public String showUploadForm(@PathVariable Long userId, Model model){
+    public String showUploadForm(@PathVariable Long userId, Principal principal, Model model){
 
         User existing = userService.findById(userId);
-
-        if (existing == null) {
+        if (existing == null || principal.getName() != existing.getEmail()) {
             return "redirect:/index";
         }
 
@@ -48,14 +47,14 @@ public class PostController {
     }
 
     @PostMapping("user/{userId}/createPost")
-    public String createNewPost(@PathVariable String userId, @ModelAttribute("post") @Valid CreatePostDto post,
+    public String createNewPost(@PathVariable Long userId, @ModelAttribute("post") @Valid CreatePostDto post,
                                 BindingResult result) {
 
         if (result.hasErrors()) {
             return "user/createPost";
         }
 
-        postService.savePost(Long.parseLong(userId), post);
+        postService.savePost(userId, post);
         return "redirect:/user/" + userId + "/profile";
     }
 
@@ -69,6 +68,10 @@ public class PostController {
         }
 
         Post post = this.postService.findById(id);
+        User existing = userService.findById(post.getUser().getId());
+        if (existing == null || principal.getName() != existing.getEmail()) {
+            return "redirect:/index";
+        }
 
         if(post != null){
 
@@ -122,6 +125,10 @@ public class PostController {
         }
 
         Post post = this.postService.findById(id);
+        User existing = userService.findById(post.getUser().getId());
+        if (existing == null || principal.getName() != existing.getEmail()) {
+            return "redirect:/index";
+        }
 
         if (post != null) {
 
