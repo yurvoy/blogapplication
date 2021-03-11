@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class CommentController {
@@ -46,10 +47,10 @@ public class CommentController {
 
     @PostMapping("user/{postId}/{userId}/profileComment")
     public String createNewComment(@PathVariable Long postId, @PathVariable Long userId, @Valid @ModelAttribute("comment")
-            CreateCommentDto comment, BindingResult result) {
+            CreateCommentDto comment, BindingResult result, Principal principal) {
 
         Post post = postService.findById(postId);
-        User user = userService.findById(userId);
+        User user = userService.findByEmail(principal.getName());
         if (result.hasErrors() || user == null || post == null) {
             return "user/profile";
         }
