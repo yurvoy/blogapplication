@@ -103,7 +103,58 @@ class PostServiceImplTest {
 
         assertEquals(postList1.size(),2);
         verify(postRepository, times(1)).findAll();
+    }
 
+    @Test
+    void updatePost(){
+
+        Post post = new Post();
+        post.setId(1L);
+        post.setPostTitle("TitlebeforeUpdate");
+        Optional<Post> postOptional = Optional.of(post);
+
+        CreatePostDto postForm = new CreatePostDto();
+        postForm.setPostTitle("TitleafterUpdate");
+
+        when(postRepository.findById(anyLong())).thenReturn(postOptional);
+
+        post.setPostTitle(postForm.getPostTitle());
+
+        assertEquals(post.getPostTitle(), "TitleafterUpdate");
+        verify(postRepository, never()).findAll();
+    }
+
+    @Test
+    void deleteById(){
+
+        User user = new User();
+        user.setId(1L);
+
+        Post post = new Post();
+        Post post1 = new Post();
+        Post post2 = new Post();
+
+        List<Post> listPost = new ArrayList<>();
+        listPost.add(post);
+        listPost.add(post1);
+        listPost.add(post2);
+
+        user.setPosts(listPost);
+
+        Optional<Post> postOptional = Optional.of(post);
+
+        when(postRepository.findById(anyLong())).thenReturn(postOptional);
+
+        listPost.remove(post);
+
+        assertNotNull(postOptional, "post is not null");
+        assertEquals(listPost.size(),2);
+        assertEquals(listPost.get(1), post1);
+        verify(postRepository, never()).findAll();
 
     }
+
+
+
+
 }
