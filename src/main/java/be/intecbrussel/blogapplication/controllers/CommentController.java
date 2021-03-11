@@ -44,6 +44,21 @@ public class CommentController {
         return "redirect:/index";
     }
 
+    @PostMapping("user/{postId}/{userId}/profileComment")
+    public String createNewComment(@PathVariable Long postId, @PathVariable Long userId, @Valid @ModelAttribute("comment")
+            CreateCommentDto comment, BindingResult result) {
+
+        Post post = postService.findById(postId);
+        User user = userService.findById(userId);
+        if (result.hasErrors() || user == null || post == null) {
+            return "user/profile";
+        }
+
+        commentService.saveComment(post.getId(), user.getId(), comment);
+
+        return "redirect:/user/" + userId + "/profile";
+    }
+
     @PostMapping("/error")
     public String error() {
         return "redirect:/";
