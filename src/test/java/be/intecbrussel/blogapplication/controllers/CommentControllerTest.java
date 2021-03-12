@@ -75,7 +75,7 @@ public class CommentControllerTest {
         when(mockBindingResult.hasErrors()).thenReturn(false);
         when(postService.findById(anyLong())).thenReturn(post);
         String registered = commentController.createNewPost(post.getId(), user.getId(), newComment, mockBindingResult);
-        assertThat(registered, is("redirect:/"));
+        assertThat(registered, is("user/frontpage"));
     }
 
     @Test
