@@ -42,7 +42,8 @@ public class PostController {
         }
         postService.savePost(userId, post);
 
-        if (pageIndicator == "profile"){
+        System.out.println(pageIndicator);
+        if (pageIndicator.equals("profgile")){
             return "redirect:/user/" + userId + "/profile";
         } else {
             return "redirect:/";
