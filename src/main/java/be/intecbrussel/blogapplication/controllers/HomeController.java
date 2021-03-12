@@ -6,6 +6,7 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
+import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,8 +61,14 @@ public class HomeController {
 
 
     @ModelAttribute("comment")
-    public CreateCommentDto CreatePostDto() {
+    public CreateCommentDto CreateCommentDto() {
         return new CreateCommentDto();
+    }
+
+
+    @ModelAttribute("post")
+    public CreatePostDto CreatePostDto() {
+        return new CreatePostDto();
     }
 
     @RequestMapping("/404")
