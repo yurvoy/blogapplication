@@ -3,6 +3,8 @@ package be.intecbrussel.blogapplication.controllers;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.services.UserService;
+import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
+import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +45,6 @@ public class UserController {
     }
 
 
-
     @GetMapping("user/{userId}/profile")
     public String showProfile(@PathVariable Long userId, Model model, Principal principal) {
 
@@ -53,6 +54,17 @@ public class UserController {
         model.addAttribute("userVisitor", userVisitor);
         model.addAttribute("user", userProfile);
         return "user/profile";
+    }
+
+    @ModelAttribute("comment")
+    public CreateCommentDto CreateCommentDto() {
+        return new CreateCommentDto();
+    }
+
+
+    @ModelAttribute("post")
+    public CreatePostDto CreatePostDto() {
+        return new CreatePostDto();
     }
 
 }

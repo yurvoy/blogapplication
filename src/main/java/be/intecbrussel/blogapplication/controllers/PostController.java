@@ -28,23 +28,28 @@ public class PostController {
         this.postService = postService;
     }
 
+
     @ModelAttribute("post")
     public CreatePostDto CreatePostDto() {
         return new CreatePostDto();
     }
 
-    @GetMapping("user/{userId}/createPost")
-    public String showUploadForm(@PathVariable Long userId, Principal principal, Model model){
+    @PostMapping("user/{userId}/createPost/{pageIndicator}")
+    public String createNewPost(@PathVariable Long userId, @PathVariable String pageIndicator, @ModelAttribute("post") @Valid CreatePostDto post,
+                                BindingResult result) {
 
-        User existing = userService.findById(userId);
-        User visitor = userService.findByEmail(principal.getName());
-        if (existing == null || existing != visitor) {
-            return "redirect:/index";
+        if (result.hasErrors()) {
+            return "redirect:/";
+        }
+        postService.savePost(userId, post);
+
+        System.out.println(pageIndicator);
+        if (pageIndicator.equals("profile")){
+            return "redirect:/user/" + userId + "/profile";
+        } else {
+            return "redirect:/";
         }
 
-        model.addAttribute("user", userService.findById(userId));
-
-        return "user/createPost";
     }
 
     @PostMapping("user/{userId}/createPost")
@@ -52,7 +57,7 @@ public class PostController {
                                 BindingResult result) {
 
         if (result.hasErrors()) {
-            return "user/createPost";
+            return "redirect:/";
         }
 
         postService.savePost(userId, post);
