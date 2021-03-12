@@ -39,7 +39,7 @@ public class PostController {
                                 BindingResult result) {
 
         if (result.hasErrors()) {
-            return "user/createPost";
+            return "redirect:/";
         }
         postService.savePost(userId, post);
 
@@ -57,7 +57,7 @@ public class PostController {
                                 BindingResult result) {
 
         if (result.hasErrors()) {
-            return "user/createPost";
+            return "redirect:/";
         }
 
         postService.savePost(userId, post);
