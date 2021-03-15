@@ -15,21 +15,25 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.BindingResult;
 
+import java.security.Principal;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
 @ExtendWith(MockitoExtension.class)
 public class CommentControllerTest {
-
-    @MockBean
-    private BindingResult mockBindingResult;
 
     @Mock
     private CommentService commentService;
@@ -40,12 +44,7 @@ public class CommentControllerTest {
     private PostService postService;
 
     @InjectMocks
-    private CommentController commentController;
-
-    @InjectMocks
     private WebConfig webConfig;
-
-    CreateCommentDto newComment;
 
     Post post;
 
@@ -53,8 +52,14 @@ public class CommentControllerTest {
 
     MockMvc mockMvc;
 
+    Principal mockPrincipal;
+
     @BeforeEach
     void setUp() {
+
+
+        mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("abc@gmail.com");
 
         CommentController commentController = new CommentController(userService, postService, commentService);
         mockMvc = MockMvcBuilders
@@ -64,26 +69,48 @@ public class CommentControllerTest {
 
         post = new Post();
         user = new User();
+        user.setId(1L);
         post.setId(1L);
         post.setUser(user);
 
-        mockBindingResult = mock(BindingResult.class);
     }
 
     @Test
-    void simpleComment() throws Exception {
-        when(mockBindingResult.hasErrors()).thenReturn(false);
+    void simpleProfileComment() throws Exception {
         when(postService.findById(anyLong())).thenReturn(post);
-        String registered = commentController.createNewPost(post.getId(), user.getId(), newComment, mockBindingResult);
-        assertThat(registered, is("user/frontpage"));
+        when(userService.findByEmail(any())).thenReturn(user);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/user/" + post.getId() + "/" + user.getId() + "/profileComment")
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("redirect:/user/" + user.getId() + "/profile"));
+    }
+
+    @Test
+    void simpleFrontPageComment() throws Exception {
+        when(postService.findById(anyLong())).thenReturn(post);
+        when(userService.findById(any())).thenReturn(user);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/user/" + post.getId() + "/" + user.getId() + "/createComment")
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("redirect:/index"));
     }
 
     @Test
     void shouldStayOnFrontPageIfBindingErrors() throws Exception {
-        when(mockBindingResult.hasErrors()).thenReturn(true);
 
-        String registered = commentController.createNewPost(post.getId(), user.getId(), newComment, mockBindingResult);
+        when(postService.findById(anyLong())).thenReturn(post);
 
-        assertThat(registered, is("user/frontpage"));
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/user/" + post.getId() + "/" + user.getId() + "/profileComment")
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("user/profile"));
     }
 }
