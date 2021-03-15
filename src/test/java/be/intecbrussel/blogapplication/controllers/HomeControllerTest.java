@@ -70,7 +70,7 @@ class HomeControllerTest {
                 .andExpect(view().name("user/frontpage"));
     }
 
-    /*
+
     @Test
     void loggedInUserRoot() throws Exception {
 
@@ -90,7 +90,7 @@ class HomeControllerTest {
         assertEquals("user/frontpage",viewName);
     }
 
-     */
+
 
     @Test
     void login() throws Exception {
