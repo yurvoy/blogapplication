@@ -6,8 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.TestPropertySource;
@@ -16,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,33 +28,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-@TestPropertySource(
-        locations = "classpath:application-integrationtest.properties")
+@DataJpaTest
+@ComponentScan(basePackageClasses = be.intecbrussel.blogapplication.repositories.PostRepository.class)
 class PostRepositoryTest {
 
 
     @Autowired
     private PostRepository repository;
 
-    /*
-    @Test
-    public void testFindByName() {
-        repository.save(new Currency("USD", "United States Dollar", 2L));
-        Optional<Currency> c = repository.findById("USD");
-        assertEquals("United States Dollar", c.get().getCcyNm());
-    }
-
-     */
-
-
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     void search() {
+
         Post post = new Post();
         Post post1 = new Post();
         post.setPostTitle("this post");
@@ -64,8 +52,10 @@ class PostRepositoryTest {
         List<Post> postOptional = repository.search("this post");
 
 
-        assertEquals(postOptional.get(1), post);
+        assertEquals(postOptional.get(0).getPostTitle(), post.getPostTitle());
+        assertEquals(posts.size(), repository.count());
         assertEquals(posts.size(), 2);
         assertEquals(repository.count(), 2);
+
     }
 }
