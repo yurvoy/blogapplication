@@ -154,7 +154,69 @@ class PostServiceImplTest {
 
     }
 
+    @Test
+    void likePost(){
 
+        User user = new User();
+        user.setEmail("jef@gmail.com");
+
+        Post post = new Post();
+        post.setId(1L);
+
+        List<User> likes = new ArrayList<>();
+
+        Optional<Post> postOptional = Optional.of(post);
+
+        if (!likes.contains(user)) {
+
+            likes.add(user);
+            post.setLikes(likes);
+
+        } else {
+
+            likes.remove(user);
+            post.setLikes(likes);
+        }
+
+        when(postRepository.findById(anyLong())).thenReturn(postOptional);
+        when(postRepository.save(any())).thenReturn(postOptional);
+
+
+        List<User> likesList = postOptional.get().getLikes();
+
+
+        assertEquals(post.getLikes(),likesList);
+        assertNotNull(postOptional, "post is not null");
+        verify(postRepository, never()).findAll();
+
+    }
+
+    @Test
+    void findLikes(){
+
+        Post post = new Post();
+        post.setId(1L);
+
+        List<User> userList = new ArrayList<>();
+        User user = new User();
+        user.setId(1L);
+        User user1 = new User();
+        userList.add(user1);
+        userList.add(user);
+        post.setLikes(userList);
+
+        Optional<Post> postOptional = Optional.of(post);
+
+        when(postRepository.findById(anyLong())).thenReturn(postOptional);
+
+        List<User> likeList = postOptional.get().getLikes();
+
+
+        assertEquals(likeList.size(), userList.size());
+        assertEquals(userList.size(), 2);
+        assertEquals(likeList.get(1).getId(), 1);
+
+    }
 
 
 }
