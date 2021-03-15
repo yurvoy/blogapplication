@@ -79,7 +79,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldStayOnRegistrationPageIfBindingErrors() throws Exception {
+    void shouldStayOnFrontPageIfBindingErrors() throws Exception {
         when(mockBindingResult.hasErrors()).thenReturn(true);
 
         String registered = commentController.createNewPost(post.getId(), user.getId(), newComment, mockBindingResult);
