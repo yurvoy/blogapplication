@@ -34,7 +34,7 @@ class ImageControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         controller = new ImageController(imageService, userService);
 
