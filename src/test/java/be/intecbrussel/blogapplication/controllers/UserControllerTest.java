@@ -7,22 +7,42 @@ import be.intecbrussel.blogapplication.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.ArgumentMatchers.anyLong;
+import java.security.Principal;
+import java.security.SecureRandom;
+import java.util.Arrays;
+
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-@ExtendWith(MockitoExtension.class)
+@RunWith(SpringRunner.class)
 class UserControllerTest {
 
     @InjectMocks
@@ -38,8 +58,13 @@ class UserControllerTest {
 
     User user;
 
+    Principal mockPrincipal;
+
+
     @BeforeEach
     void setUp() {
+        mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("abc@gmail.com");
 
         MockitoAnnotations.openMocks(this);
         user = User.builder().id(1L).email("abc@gmail.com").password("abcdef").build();
@@ -52,9 +77,15 @@ class UserControllerTest {
 
     @Test
     void updateProfile() throws Exception {
-        when(userService.findById(1L)).thenReturn(user);
 
-        mockMvc.perform(get("/user/" + user.getId() +"/edit"))
+        when(userService.findById(1L)).thenReturn(user);
+        when(userService.findByEmail(any())).thenReturn(user);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/user/" + user.getId() +"/edit")
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/updateProfile"))
                 .andExpect(model().attributeExists("user"));
@@ -72,11 +103,16 @@ class UserControllerTest {
     @Test
     void showProfile() throws Exception {
 
-        when(userService.findById(anyLong())).thenReturn(user);
+        when(userService.findById(1L)).thenReturn(user);
+        when(userService.findByEmail(any())).thenReturn(user);
 
-        mockMvc.perform(get("/user/1/profile"))
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/user/1/profile")
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/profile"));
+                .andExpect(view().name("user/profile"));
 
     }
 
