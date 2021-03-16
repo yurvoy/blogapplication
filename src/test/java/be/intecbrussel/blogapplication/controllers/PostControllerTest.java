@@ -74,7 +74,7 @@ public class PostControllerTest {
 
     @Test
     public void createNewPost() throws Exception{
-        when(userService.findById(anyLong())).thenReturn(user);
+        when(userService.findByEmail(any())).thenReturn(user);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/user/" + user.getId() + "/createPost")
@@ -87,7 +87,7 @@ public class PostControllerTest {
 
     @Test
     public void editPost() throws Exception {
-        when(postService.findById(any())).thenReturn(post);
+        when(postService.findById(anyLong())).thenReturn(post);
 
         mockMvc.perform(get("/editPost/" + post.getId()))
                 .andExpect(status().isOk())
