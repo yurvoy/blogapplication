@@ -115,11 +115,26 @@
                                 </h5>
                             </div>
                             <div th:id="'headingPost' + ${post.id}" id="accordionPost" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    <p class="card-text" th:text="${post.postText}">Post Text</p>
-                                    <div class="mb-2 d-flex justify-content-between">
-                                        <div class="text-right">
-                                            <a class="btn btn-link" th:href="@{'/editPost/' + ${post.id}}">Edit</a>
+                                <div class="card-body d-flex justify-content-between">
+                                    <p class="card-text text-truncate" th:text="${post.postText}">
+                                        Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec rutrum congue
+                                        leo eget malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+                                        posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit
+                                        amet ligula. Nulla quis lorem ut libero malesuada feugiat. Donec sollicitudin molestie
+                                        malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac diam
+                                        sit amet quam vehicula elementum sed sit amet dui. Vivamus magna justo, lacinia eget
+                                        consectetur sed, convallis at tellus.
+                                    </p>
+                                    <div class="dropdown">
+                                        <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i class="fa fa-ellipsis-h"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                            <div class="h6 dropdown-header">Configuration</div>
+                                            <a class="dropdown-item" href="/" th:href="@{'/editPost/' + ${post.getId()}}">Edit</a>
+                                            <a class="dropdown-item" href="/"
+                                               th:href="@{'/deletePost/' + ${post.getId()}}">Delete</a>
                                         </div>
                                     </div>
                                 </div>
