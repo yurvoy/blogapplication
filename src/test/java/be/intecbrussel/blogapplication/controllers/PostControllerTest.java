@@ -71,14 +71,13 @@ public class PostControllerTest {
 
     @Test
     public void createNewPost() throws Exception{
-        when(userService.findByEmail(any())).thenReturn(user);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/user/" + user.getId() + "/createPost")
                 .principal(mockPrincipal);
 
         mockMvc.perform(requestBuilder)
-                .andExpect(view().name("user/" + user.getId() + "/profile"));
+                .andExpect(view().name("redirect:/user/" + user.getId() + "/profile"));
     }
 
 
