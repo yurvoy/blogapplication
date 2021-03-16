@@ -1,31 +1,35 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.WebConfig;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PostControllerTest {
 
     @InjectMocks
@@ -44,6 +48,8 @@ public class PostControllerTest {
 
     User user;
 
+    Post post;
+
     Principal mockPrincipal;
 
     @BeforeEach
@@ -52,29 +58,40 @@ public class PostControllerTest {
         when(mockPrincipal.getName()).thenReturn("abc@gmail.com");
 
         MockitoAnnotations.openMocks(this);
-        user = User.builder().id(1L).email("abc@gmail.com").password("abcdef").build();
         postController = new PostController(userService, postService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(postController)
                 .setViewResolvers(webConfig.viewResolver())
                 .build();
+
+        post = new Post();
+        user = new User();
+        user.setId(1L);
+        post.setId(1L);
+        post.setUser(user);
     }
 
 
     @Test
-    public void createNewPost() {
+    public void createNewPost() throws Exception{
+        when(userService.findById(anyLong())).thenReturn(user);
+
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/user/" + user.getId() +"/createPost")
+                .post("/user/" + user.getId() + "/createPost")
                 .principal(mockPrincipal);
 
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("user/frontpage"));
     }
 
-    @Test
-    public void testCreateNewPost() {
-    }
 
     @Test
-    public void editPost() {
+    public void editPost() throws Exception {
+        when(postService.findById(any())).thenReturn(post);
+
+        mockMvc.perform(get("/editPost/" + post.getId()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/updatePost"));;
     }
 
     @Test
