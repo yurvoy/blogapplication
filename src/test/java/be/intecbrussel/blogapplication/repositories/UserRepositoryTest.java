@@ -5,10 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.mockito.Mockito.*;
@@ -31,6 +29,7 @@ public class UserRepositoryTest {
         user.setEmail("test@gmail.com");
         userRepository.save(user);
 
+        when(userRepository.findByEmail(anyString())).thenReturn(user);
         User result = userRepository.findByEmail("test@gmail.com");
         Assert.assertNotNull("The object you enter return null", result);
 
@@ -48,6 +47,7 @@ public class UserRepositoryTest {
         user.setResetPasswordToken("fake-token");
         userRepository.save(user);
 
+        when(userRepository.findByResetPasswordToken(anyString())).thenReturn(user);
         User result = userRepository.findByResetPasswordToken("fake-token");
         Assert.assertNotNull("The object you enter return null", result);
 
