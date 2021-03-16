@@ -36,9 +36,11 @@
             min-height: 100vh
         }
 
-        .rounded-circle {
-            margin: 10px 0px 0px 10px;
-
+        .block-with-text {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
         }
     </style>
 
@@ -116,7 +118,7 @@
                             </div>
                             <div th:id="'headingPost' + ${post.id}" id="accordionPost" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                 <div class="card-body d-flex justify-content-between">
-                                    <p class="card-text text-truncate" th:text="${post.postText}">
+                                    <p class="block-with-text" th:text="${post.postText}">
                                         Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec rutrum congue
                                         leo eget malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
                                         posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit

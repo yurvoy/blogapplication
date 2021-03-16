@@ -52,18 +52,6 @@ public class PostController {
 
     }
 
-    @PostMapping("user/{userId}/createPost")
-    public String createNewPost(@PathVariable Long userId, @ModelAttribute("post") @Valid CreatePostDto post,
-                                BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "redirect:/";
-        }
-
-        postService.savePost(userId, post);
-        return "redirect:/user/" + userId + "/profile";
-    }
-
     @GetMapping("editPost/{id}")
     public String editPost(@PathVariable Long id, Model model, Principal principal){
 

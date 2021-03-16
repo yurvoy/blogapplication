@@ -155,9 +155,9 @@
                                  aria-labelledby="posts-tab">
                                 <div class="form-group">
                                     <div>
-                                        <div class="form-group">
+                                        <div class="form-group" th:classappend="${#fields.hasErrors('postTitle')}? 'has-error':''">
                                             <textarea class="form-control" th:field="*{postTitle}" id="post-title" rows="1"
-                                                      placeholder="Title?"></textarea>
+                                                      placeholder="Title?" required></textarea>
                                         </div>
                                         <div class="form-group">
                                             <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text" placeholder="Wanna do you wanna share with us?" required></textarea>
