@@ -28,5 +28,9 @@ public interface UserService extends UserDetailsService{
 
     void updatePassword(User user, String newPassword);
 
+    User getLoggedInUser();
+
+    void save(User user);
+
 
 }
