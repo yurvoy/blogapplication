@@ -49,7 +49,6 @@ class UserServiceImplTest {
         assertNotNull(userReturned, "user is not null");
         verify(userRepository, times(1)).findById(1L);
         verify(userRepository, never()).findAll();
-
     }
 
     @Test
