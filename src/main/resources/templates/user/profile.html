@@ -111,10 +111,10 @@
                                  th:src="@{'/user/' + ${user.id} + '/profileimage'}" width="130"
                                  class="rounded mb-2 img-thumbnail">
                         </div>
-                        <form th:action="@{/follow/} + ${user.email}"  method="post">
+                        <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(currentUser)}" method="post">
                             <button style="float:right" type="Submit" class="btn btn-lg btn-success">Follow</button>
                         </form>
-                        <form th:action="@{/unfollow/} + ${user.email}" method="post">
+                        <form th:action="@{/unfollow/} + ${user.email}" th:if="${following}" method="post">
                             <button style="float:right" type="Submit" class="btn btn-lg btn-primary unfollow_btn">UnFollow</button>
                         </form>
 

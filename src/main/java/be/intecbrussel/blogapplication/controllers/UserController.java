@@ -55,6 +55,22 @@ public class UserController {
         model.addAttribute("view", "user/profile");
         model.addAttribute("userVisitor", userVisitor);
         model.addAttribute("user", userProfile);
+
+        List<User> following = userVisitor.getFollowing();
+
+        boolean isFollowing = false;
+        for (User followedUser : following) {
+            if (followedUser.getEmail().equals(userProfile.getEmail())) {
+                isFollowing = true;
+                break;
+            }
+        }
+
+        model.addAttribute("currentUser", userVisitor);
+        model.addAttribute("following", isFollowing);
+
+
+
         return "user/profile";
     }
 
