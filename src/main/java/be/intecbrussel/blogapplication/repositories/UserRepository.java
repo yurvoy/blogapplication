@@ -15,8 +15,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByResetPasswordToken(String token);
 
-    @Query("SELECT u FROM User u WHERE u.email LIKE %?1%"
-    )
-    List<User> search(String email);
 
 }

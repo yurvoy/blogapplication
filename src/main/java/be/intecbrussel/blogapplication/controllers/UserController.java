@@ -9,13 +9,11 @@ import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -76,25 +74,6 @@ public class UserController {
         return "user/profile";
     }
 
-    @GetMapping("/userSearch")
-    public String postSearch(Model model, @Param("email") String email, Principal principal){
-
-        List<User> userList = userService.findUsers(email);
-
-        model.addAttribute("email", email);
-        model.addAttribute("userList", userList);
-
-        if(principal != null) {
-            User user = userService.findByEmail(principal.getName());
-            model.addAttribute("user", userService.findById(user.getId()));
-        }
-
-        if(userList.isEmpty()){
-            return "searchNotFound";
-        }
-        return "user/frontpage";
-    }
-
     @ModelAttribute("comment")
     public CreateCommentDto CreateCommentDto() {
         return new CreateCommentDto();
@@ -106,8 +85,8 @@ public class UserController {
         return new CreatePostDto();
     }
 
-    @PostMapping(value = "/follow/{userEmail}")
-    public String follow(@PathVariable(value="userEmail") String userEmail,
+    @PostMapping("/follow/{userEmail}")
+    public String follow(@PathVariable("userEmail") String userEmail,
                          HttpServletRequest request) {
         User loggedInUser = userService.getLoggedInUser();
         User userToFollow = userService.findByEmail(userEmail);
@@ -122,8 +101,8 @@ public class UserController {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @PostMapping(value = "/unfollow/{userEmail}")
-    public String unfollow(@PathVariable(value="userEmail") String userEmail, HttpServletRequest request) {
+    @PostMapping("/unfollow/{userEmail}")
+    public String unfollow(@PathVariable("userEmail") String userEmail, HttpServletRequest request) {
         User loggedInUser = userService.getLoggedInUser();
         User userToUnfollow = userService.findByEmail(userEmail);
         List<User> followers = userToUnfollow.getFollowers();
@@ -132,6 +111,47 @@ public class UserController {
         userService.save(userToUnfollow);
 
         return "redirect:" + request.getHeader("Referer");
+    }
+
+    @GetMapping("/users")
+    public String getUsers(@RequestParam(value = "filter", required = false) String filter, Model model) {
+        List<User> users;
+
+        User loggedInUser = userService.getLoggedInUser();
+
+        List<User> usersFollowing = loggedInUser.getFollowing();
+        List<User> usersFollowers = loggedInUser.getFollowers();
+        if (filter == null) {
+            filter = "all";
+        }
+        if (filter.equalsIgnoreCase("followers")) {
+            users = usersFollowers;
+            model.addAttribute("filter", "followers");
+        } else if (filter.equalsIgnoreCase("following")) {
+            users = usersFollowing;
+            model.addAttribute("filter", "following");
+        } else {
+            users = userService.findAll();
+            model.addAttribute("filter", "all");
+        }
+        model.addAttribute("users", users);
+
+        SetFollowingStatus(users, usersFollowing, model);
+
+        return "users";
+    }
+
+    private void SetFollowingStatus(List<User> users, List<User> usersFollowing, Model model) {
+        HashMap<String, Boolean> followingStatus = new HashMap<>();
+        String email = userService.getLoggedInUser().getEmail();
+        for (User user : users) {
+            if (usersFollowing.contains(user)) {
+                followingStatus.put(user.getEmail(), true);
+            } else if (!user.getEmail().equals(email)) {
+                followingStatus.put(user.getEmail(), false);
+            }
+        }
+        model.addAttribute("followingStatus", followingStatus);
     }
 
 

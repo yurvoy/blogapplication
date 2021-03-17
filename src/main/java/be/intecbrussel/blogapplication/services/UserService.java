@@ -31,9 +31,9 @@ public interface UserService extends UserDetailsService{
 
     User getLoggedInUser();
 
-    List<User> findUsers(String email);
-
     void save(User user);
+
+    List<User> findAll();
 
 
 }

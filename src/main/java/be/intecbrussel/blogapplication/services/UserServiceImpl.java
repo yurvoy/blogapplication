@@ -140,11 +140,8 @@ public class UserServiceImpl implements UserService {
         return findByEmail(loggedInUseremail);
     }
 
-    @Override
-    public List<User> findUsers(String email){
-        if(email != null){
-            return userRepository.search(email);
-        }
+
+    public List<User> findAll(){
         return userRepository.findAll();
     }
 

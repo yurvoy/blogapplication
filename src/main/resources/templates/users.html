@@ -64,12 +64,6 @@
             </form>
 
 
-            <form th:action="@{/userSearch}" method="get">
-                <input type="text" name="email" id="email" class="form-control" placeholder="Search here"
-                       th:value="${email}" required
-                       aria-label="Search" size="30"/>
-            </form>
-
             <div class="card-body" th:each="user: ${userList}"><!--Begin Search Result body-->
 
                 <a class="card-link" href="#">
@@ -96,6 +90,48 @@
     </div>
 </nav>
 <!--------------End Navigation --------------->
+<div class="container-fluid">
+    <ul class="nav nav-tabs">
+        <li role="presentation" th:classappend="${filter == 'all'}">
+            <a href="/users">All &nbsp; |  </a></li>
+        <li role="presentation" th:classappend="${filter == 'followers'}">
+            <a href="/users?filter=followers">&nbsp; Followers &nbsp; | </a></li>
+        <li role="presentation" th:classappend="${filter == 'following'}">
+            <a href="/users?filter=following">&nbsp; Following</a></li>
+    </ul><br/>
+
+    <div class="list-group" th:each="user:${users}">
+        <a th:href="@{/user/} + ${user.getId()} + ${'/profile'}" class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="col col-sm-6">
+                    <h5 class="mb-1" style="color: #00aced"><i></i> <span th:text="${user.email}"></span></h5>
+                    <h5 class="mb-1"><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span> <span th:if="${!followingStatus.containsKey(user.email)}">(Me)</span></h5></h5>
+                </div>
+                <div class="col col-sm-2 col-sm-offset-4 text-right">
+
+                    <form th:action="@{/follow/} + ${user.email}" th:if="${followingStatus.containsKey(user.email)
+				&& !followingStatus.get(user.email)}" method="post">
+
+                        <button style="float:right" type="Submit" class="btn btn-md btn-success">Follow</button>
+
+                    </form>
+
+                    <form th:action="@{/unfollow/} + ${user.email}" th:if="${followingStatus.containsKey(user.email)
+				&& followingStatus.get(user.email)}" method="post">
+
+                        <button style="float:right" type="Submit" class="btn btn-md btn-primary unfollow_btn">Following</button>
+
+                    </form>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div th:if="${#lists.isEmpty(users) and filter == 'followers'}" style="text-align: center;"><h3>You don't have any followers</h3>
+</div>
+<div th:if="${#lists.isEmpty(users) and filter == 'following'}" style="text-align: center;"><h3>You're not following anyone</h3>
+</div>
 
 </body>
 </html>

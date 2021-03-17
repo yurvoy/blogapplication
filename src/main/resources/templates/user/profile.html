@@ -64,13 +64,6 @@
                        aria-label="Search" size="30"/>
             </form>
 
-
-            <form th:action="@{/userSearch}" method="get">
-                <input type="text" name="email" id="email" class="form-control" placeholder="Search here"
-                       th:value="${email}" required
-                       aria-label="Search" size="30"/>
-            </form>
-
             <div class="card-body" th:each="user: ${userList}"><!--Begin Search Result body-->
 
                 <a class="card-link" href="#">
