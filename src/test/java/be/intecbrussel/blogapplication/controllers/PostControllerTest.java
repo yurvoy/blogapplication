@@ -10,11 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,17 +18,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
-
-import static org.junit.Assert.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -134,18 +124,6 @@ public class PostControllerTest {
     }
 
     @Test
-    public void postSearch() {
-    }
-}
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/editPost/" + post.getId())
-                .principal(mockPrincipal);
-
-        mockMvc.perform(requestBuilder)
-                .andExpect(view().name("redirect:/index"));
-    }
-
-    @Test
     public void reviewPosts() throws Exception{
 
         when(userService.findById(1L)).thenReturn(user);
@@ -159,6 +137,4 @@ public class PostControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(view().name("user/configuration/reviewPosts"));
     }
-
-
 }

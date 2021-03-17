@@ -171,7 +171,7 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}/reviewPosts")
-    public String updateProfile(@PathVariable Long userId, Model model, Principal principal){
+    public String reviewwPosts(@PathVariable Long userId, Model model, Principal principal){
 
         User existing = userService.findById(userId);
         User visitor = userService.findByEmail(principal.getName());
