@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 
 
 @Controller
@@ -65,6 +67,34 @@ public class UserController {
     @ModelAttribute("post")
     public CreatePostDto CreatePostDto() {
         return new CreatePostDto();
+    }
+
+    @PostMapping(value = "/follow/{userEmail}")
+    public String follow(@PathVariable(value="userEmail") String userEmail,
+                         HttpServletRequest request, Model model) {
+        User loggedInUser = userService.getLoggedInUser();
+        User userToFollow = userService.findByEmail(userEmail);
+        List<User> followers = userToFollow.getFollowers();
+
+        followers.add(loggedInUser);
+        userToFollow.setFollowers(followers);
+        userService.save(userToFollow);
+
+
+
+        return "redirect:" + request.getHeader("Referer");
+    }
+
+    @PostMapping(value = "/unfollow/{userEmail}")
+    public String unfollow(@PathVariable(value="userEmail") String userEmail, HttpServletRequest request, Model model) {
+        User loggedInUser = userService.getLoggedInUser();
+        User userToUnfollow = userService.findByEmail(userEmail);
+        List<User> followers = userToUnfollow.getFollowers();
+        followers.remove(loggedInUser);
+        userToUnfollow.setFollowers(followers);
+        userService.save(userToUnfollow);
+
+        return "redirect:" + request.getHeader("Referer");
     }
 
 }
