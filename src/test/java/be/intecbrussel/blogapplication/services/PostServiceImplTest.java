@@ -1,9 +1,12 @@
 package be.intecbrussel.blogapplication.services;
 
+import be.intecbrussel.blogapplication.model.Comment;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
+import be.intecbrussel.blogapplication.repositories.CommentRepository;
 import be.intecbrussel.blogapplication.repositories.PostRepository;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
+import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,21 +34,36 @@ class PostServiceImplTest {
     UserRepository userRepository;
 
 
+    Comment comment;
+    User user;
+    Post post;
+
+
     @BeforeEach
     void setUp() {
 
         MockitoAnnotations.openMocks(this);
 
         postService = new PostServiceImpl(userService, postRepository, userRepository);
-    }
+
+
+            user = new User();
+            user.setId(1L);
+            user.setEmail("mock@gmail.com");
+            user.setPassword("newpassword");
+
+            post = new Post();
+            post.setId(1L);
+            post.setUser(user);
+
+            comment = new Comment();
+            comment.setId(1L);
+            comment.setCommentText("This is a comment test");
+        }
+
 
     @Test
     void savePost() {
-
-        User user = new User();
-        user.setId(1L);
-
-        Post post = new Post();
 
         CreatePostDto postDto = new CreatePostDto();
         postDto.setPostTitle("this title");
@@ -71,6 +89,7 @@ class PostServiceImplTest {
 
     }
 
+
     @Test
     void findById() {
 
@@ -87,6 +106,7 @@ class PostServiceImplTest {
         verify(postRepository, never()).findAll();
 
     }
+
 
     @Test
     void findAll() {
