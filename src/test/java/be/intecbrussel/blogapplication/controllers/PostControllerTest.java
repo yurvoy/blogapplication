@@ -93,7 +93,6 @@ public class PostControllerTest {
                 .andExpect(view().name("redirect:/"));
     }
 
-
     @Test
     public void editPost() throws Exception {
         when(postService.findById(anyLong())).thenReturn(post);
@@ -101,26 +100,6 @@ public class PostControllerTest {
         mockMvc.perform(get("/editPost/" + post.getId()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/updatePost"));;
-    }
-
-    @Test
-    public void processUpdatePost() {
-    }
-
-    @Test
-    public void likePost() {
-    }
-
-    @Test
-    public void likeOwnPost() {
-    }
-
-    @Test
-    public void deletePost() {
-    }
-
-    @Test
-    public void processDeletePost() {
     }
 
     @Test
