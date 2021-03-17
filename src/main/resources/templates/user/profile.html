@@ -125,15 +125,9 @@
 
             </div>
             <div class="bg-light p-4 d-flex justify-content-end text-center ">
+
                 <ul class="list-inline mb-0">
-                    <div class="col p-0 text-left">
-                        <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(currentUser)}" method="post">
-                            <button style="float:right" type="Submit" class="btn btn-lg btn-success">Follow</button>
-                        </form>
-                        <form th:action="@{/unfollow/} + ${user.email}" th:if="${following}" method="post">
-                            <button style="float:right" type="Submit" class="btn btn-lg btn-primary unfollow_btn">UnFollow</button>
-                        </form>
-                    </div>
+
 
                     <li class="list-inline-item">
                         <h5 class="font-weight-bold mb-0 d-block" th:text="${user.posts.size()}">215</h5><small class="text-muted"> <i
@@ -147,8 +141,17 @@
                         <h5 class="font-weight-bold mb-0 d-block" th:text="${user.getFollowing().size()}"></h5><small class="text-muted"> <i
                             class="fas fa-user mr-1" ></i>Following</small>
                     </li>
+                    <div class="col p-0 text-left">
+                        <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(currentUser)}" method="post">
+                            <button style="float:right" type="Submit" class="btn btn-lg btn-success">Follow</button>
+                        </form>
+                        <form th:action="@{/unfollow/} + ${user.email}" th:if="${following}" method="post">
+                            <button style="float:right" type="Submit" class="btn btn-lg btn-primary unfollow_btn">UnFollow</button>
+                        </form>
+                    </div>
                 </ul>
             </div>
+
 
             <div class="px-4 py-3">
                 <h5 class="mb-0">About</h5>
