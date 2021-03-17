@@ -94,26 +94,86 @@ public class PostControllerTest {
     }
 
     @Test
-    public void processUpdatePost() {
+    public void processUpdatePost() throws Exception {
+        when(postService.findById(anyLong())).thenReturn(post);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/editPost/" + post.getId())
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("redirect:/user/" + user.getId() + "/profile"));
     }
 
     @Test
-    public void likePost() {
+    public void likePost() throws Exception {
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/likePost/" + post.getId())
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("redirect:/index"));
     }
 
     @Test
-    public void likeOwnPost() {
+    public void likeOwnPost() throws Exception {
+        when(postService.findById(anyLong())).thenReturn(post);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/likeOwnPost/" + post.getId())
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("redirect:/user/" + user.getId() + "/profile"));
     }
 
     @Test
-    public void deletePost() {
+    public void deletePost() throws Exception {
+        when(postService.findById(anyLong())).thenReturn(post);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/deletePost/" + post.getId())
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("redirect:/index"));
     }
 
     @Test
-    public void processDeletePost() {
+    public void processDeletePost() throws Exception {
+        when(postService.findById(anyLong())).thenReturn(post);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/deletePost/" + post.getId())
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("redirect:/index"));
     }
 
     @Test
-    public void postSearch() {
+    public void postSearch() throws Exception {
+        when(userService.findById(1L)).thenReturn(user);
+        when(userService.findByEmail(any())).thenReturn(user);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/search")
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("searchNotFound"));
+    }
+
+    @Test
+    public void reviewPosts() throws Exception{
+        when(userService.findById(1L)).thenReturn(user);
+        when(userService.findByEmail(any())).thenReturn(user);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/user/" + user.getId() + "/reviewPosts")
+                .principal(mockPrincipal);
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("user/configuration/reviewPosts"));
     }
 }
