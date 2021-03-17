@@ -65,6 +65,20 @@
             </form>
 
 
+            <form th:action="@{/userSearch}" method="get">
+                <input type="text" name="email" id="email" class="form-control" placeholder="Search here"
+                       th:value="${email}" required
+                       aria-label="Search" size="30"/>
+            </form>
+
+            <div class="card-body" th:each="user: ${userList}"><!--Begin Search Result body-->
+
+                <a class="card-link" href="#">
+                    <h5 class="card-title" th:text="${user.getEmail()}"></h5>
+                </a>
+            </div> <!-- End of Search Result body -->
+
+
             <ul class="navbar-nav ml-auto">
                 <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
                         font-color="black">
@@ -82,8 +96,6 @@
         </div>
     </div>
 </nav>
-
-
 <!--------------End Navigation --------------->
 
 
@@ -212,7 +224,6 @@
                             </div>
                             <div class="py-4"></div>
                         </div>
-
 
                     </div>
                     <div class="btn-toolbar justify-content-between">

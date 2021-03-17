@@ -1,6 +1,7 @@
 package be.intecbrussel.blogapplication.repositories;
 
 import be.intecbrussel.blogapplication.model.Post;
+import be.intecbrussel.blogapplication.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,5 +14,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             + " OR p.postText LIKE %?1% order by LENGTH(p.postText)asc "
     )
     List<Post> search(String text);
+    
 
 }

@@ -1,10 +1,12 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,6 +76,25 @@ public class UserController {
         return "user/profile";
     }
 
+    @GetMapping("/userSearch")
+    public String postSearch(Model model, @Param("email") String email, Principal principal){
+
+        List<User> userList = userService.findUsers(email);
+
+        model.addAttribute("email", email);
+        model.addAttribute("userList", userList);
+
+        if(principal != null) {
+            User user = userService.findByEmail(principal.getName());
+            model.addAttribute("user", userService.findById(user.getId()));
+        }
+
+        if(userList.isEmpty()){
+            return "searchNotFound";
+        }
+        return "user/frontpage";
+    }
+
     @ModelAttribute("comment")
     public CreateCommentDto CreateCommentDto() {
         return new CreateCommentDto();
@@ -112,5 +133,7 @@ public class UserController {
 
         return "redirect:" + request.getHeader("Referer");
     }
+
+
 
 }

@@ -24,5 +24,7 @@ public interface PostService {
     List<User> findLikes (Long postId);
 
     void deleteById(Long along);
+
+
 }
 

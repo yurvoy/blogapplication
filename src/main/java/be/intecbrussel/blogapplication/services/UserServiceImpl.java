@@ -18,6 +18,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -138,6 +139,15 @@ public class UserServiceImpl implements UserService {
 
         return findByEmail(loggedInUseremail);
     }
+
+    @Override
+    public List<User> findUsers(String email){
+        if(email != null){
+            return userRepository.search(email);
+        }
+        return userRepository.findAll();
+    }
+
 
 
 
