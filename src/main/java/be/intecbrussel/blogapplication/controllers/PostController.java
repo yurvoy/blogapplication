@@ -155,11 +155,11 @@ public class PostController {
     @PostMapping("deletePost/{id}")
     public String processDeletePost(@PathVariable Long id) {
 
-        User user = new User();
-        user.setId(postService.findById(id).getUser().getId());
+        Post postToDelete = postService.findById(id);
+        Long userId = postToDelete.getUser().getId();
 
         postService.deleteById(id);
-        return "redirect:/user/" + user.getId() + "/profile";
+        return "redirect:/user/" + userId + "/profile";
     }
 
 

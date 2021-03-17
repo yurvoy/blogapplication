@@ -49,9 +49,9 @@ public class User implements Principal {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Post> posts;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Comment> comments;
 
 

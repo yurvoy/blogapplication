@@ -14,10 +14,10 @@ public class Comment {
     @Column
     private Long id;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private User user;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private Post post;
 
     @Lob

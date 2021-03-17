@@ -30,9 +30,9 @@ public class Post implements Principal {
     @ManyToOne(fetch=FetchType.LAZY)
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.LAZY)
     private List<User> likes;
-    @OneToMany
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
 
