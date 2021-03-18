@@ -150,8 +150,8 @@ class UserControllerTest {
         when(userService.findByEmail(any())).thenReturn(nonLoggedInUser);
         assertEquals(listOfFollowers.get(0), user);
 
-        //listOfFollowers.remove(user);
-        //assertEquals(listOfFollowers.contains(user), eq(false));
+        listOfFollowers.remove(user);
+        assertEquals(listOfFollowers.contains(user), false);
 
     }
 
