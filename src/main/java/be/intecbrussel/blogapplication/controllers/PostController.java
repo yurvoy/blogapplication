@@ -52,18 +52,6 @@ public class PostController {
 
     }
 
-    @PostMapping("user/{userId}/createPost")
-    public String createNewPost(@PathVariable Long userId, @ModelAttribute("post") @Valid CreatePostDto post,
-                                BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "redirect:/";
-        }
-
-        postService.savePost(userId, post);
-        return "redirect:/user/" + userId + "/profile";
-    }
-
     @GetMapping("editPost/{id}")
     public String editPost(@PathVariable Long id, Model model, Principal principal){
 
@@ -155,11 +143,11 @@ public class PostController {
     @PostMapping("deletePost/{id}")
     public String processDeletePost(@PathVariable Long id) {
 
-        Post postToDelete = postService.findById(id);
-        Long userId = postToDelete.getUser().getId();
+        User user = new User();
+        user.setId(postService.findById(id).getUser().getId());
 
         postService.deleteById(id);
-        return "redirect:/user/" + userId + "/profile";
+        return "redirect:/user/" + user.getId() + "/profile";
     }
 
 
@@ -194,5 +182,4 @@ public class PostController {
         model.addAttribute("user", userService.findById(userId));
         return "user/configuration/reviewPosts";
     }
-
 }

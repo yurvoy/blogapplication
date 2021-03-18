@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -22,6 +23,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
@@ -53,6 +56,7 @@ public class PostControllerTest {
         mockPrincipal = mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("abc@gmail.com");
 
+        MockitoAnnotations.openMocks(this);
         postController = new PostController(userService, postService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(postController)
@@ -68,14 +72,25 @@ public class PostControllerTest {
 
 
     @Test
-    public void createNewPost() throws Exception{
+    public void createNewPostFromProfile() throws Exception{
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/user/" + user.getId() + "/createPost")
+                .post("/user/" + user.getId() + "/createPost/profile")
                 .principal(mockPrincipal);
 
         mockMvc.perform(requestBuilder)
                 .andExpect(view().name("redirect:/user/" + user.getId() + "/profile"));
+    }
+
+    @Test
+    public void createNewPostFromFrontPage() throws Exception{
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/user/" + user.getId() + "/createPost/frontpage")
+                .principal(mockPrincipal);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(view().name("redirect:/"));
     }
 
 
@@ -171,6 +186,7 @@ public class PostControllerTest {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/user/" + user.getId() + "/reviewPosts")
                 .principal(mockPrincipal);
+
         mockMvc.perform(requestBuilder)
                 .andExpect(view().name("user/configuration/reviewPosts"));
     }

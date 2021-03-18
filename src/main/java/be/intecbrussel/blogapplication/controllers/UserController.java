@@ -2,7 +2,6 @@ package be.intecbrussel.blogapplication.controllers;
 
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
-import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
