@@ -1,9 +1,12 @@
 package be.intecbrussel.blogapplication.services;
 
+import be.intecbrussel.blogapplication.model.Comment;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
+import be.intecbrussel.blogapplication.repositories.CommentRepository;
 import be.intecbrussel.blogapplication.repositories.PostRepository;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
+import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,21 +34,36 @@ class PostServiceImplTest {
     UserRepository userRepository;
 
 
+    Comment comment;
+    User user;
+    Post post;
+
+
     @BeforeEach
     void setUp() {
 
         MockitoAnnotations.openMocks(this);
 
         postService = new PostServiceImpl(userService, postRepository, userRepository);
-    }
+
+
+            user = new User();
+            user.setId(1L);
+            user.setEmail("mock@gmail.com");
+            user.setPassword("newpassword");
+
+            post = new Post();
+            post.setId(1L);
+            post.setUser(user);
+
+            comment = new Comment();
+            comment.setId(1L);
+            comment.setCommentText("This is a comment test");
+        }
+
 
     @Test
     void savePost() {
-
-        User user = new User();
-        user.setId(1L);
-
-        Post post = new Post();
 
         CreatePostDto postDto = new CreatePostDto();
         postDto.setPostTitle("this title");
@@ -71,6 +89,7 @@ class PostServiceImplTest {
 
     }
 
+
     @Test
     void findById() {
 
@@ -87,6 +106,7 @@ class PostServiceImplTest {
         verify(postRepository, never()).findAll();
 
     }
+
 
     @Test
     void findAll() {
@@ -154,7 +174,69 @@ class PostServiceImplTest {
 
     }
 
+    @Test
+    void likePost(){
 
+        User user = new User();
+        user.setEmail("jef@gmail.com");
+
+        Post post = new Post();
+        post.setId(1L);
+
+        List<User> likes = new ArrayList<>();
+
+        Optional<Post> postOptional = Optional.of(post);
+
+        if (!likes.contains(user)) {
+
+            likes.add(user);
+            post.setLikes(likes);
+
+        } else {
+
+            likes.remove(user);
+            post.setLikes(likes);
+        }
+
+        when(postRepository.findById(anyLong())).thenReturn(postOptional);
+        when(postRepository.save(any())).thenReturn(postOptional);
+
+
+        List<User> likesList = postOptional.get().getLikes();
+
+
+        assertEquals(post.getLikes(),likesList);
+        assertNotNull(postOptional, "post is not null");
+        verify(postRepository, never()).findAll();
+
+    }
+
+    @Test
+    void findLikes(){
+
+        Post post = new Post();
+        post.setId(1L);
+
+        List<User> userList = new ArrayList<>();
+        User user = new User();
+        user.setId(1L);
+        User user1 = new User();
+        userList.add(user1);
+        userList.add(user);
+        post.setLikes(userList);
+
+        Optional<Post> postOptional = Optional.of(post);
+
+        when(postRepository.findById(anyLong())).thenReturn(postOptional);
+
+        List<User> likeList = postOptional.get().getLikes();
+
+
+        assertEquals(likeList.size(), userList.size());
+        assertEquals(userList.size(), 2);
+        assertEquals(likeList.get(1).getId(), 1);
+
+    }
 
 
 }
