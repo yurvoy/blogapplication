@@ -91,13 +91,13 @@
 </nav>
 <!--------------End Navigation --------------->
 <div class="container-fluid">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs mt-2">
         <li role="presentation" th:classappend="${filter == 'all'}">
-            <a href="/users">All &nbsp; |  </a></li>
+            <a class="text-white" href="/users">All &nbsp; |  </a></li>
         <li role="presentation" th:classappend="${filter == 'followers'}">
-            <a href="/users?filter=followers">&nbsp; Followers &nbsp; | </a></li>
+            <a class="text-white" href="/users?filter=followers">&nbsp; Followers &nbsp; | </a></li>
         <li role="presentation" th:classappend="${filter == 'following'}">
-            <a href="/users?filter=following">&nbsp; Following</a></li>
+            <a class="text-white" href="/users?filter=following">&nbsp; Following</a></li>
     </ul><br/>
 
     <div class="list-group" th:each="user:${users}">
@@ -128,9 +128,9 @@
     </div>
 </div>
 
-<div th:if="${#lists.isEmpty(users) and filter == 'followers'}" style="text-align: center;"><h3>You don't have any followers</h3>
+<div th:if="${#lists.isEmpty(users) and filter == 'followers'}" style="text-align: center; color: white"><h3>You don't have any followers</h3>
 </div>
-<div th:if="${#lists.isEmpty(users) and filter == 'following'}" style="text-align: center;"><h3>You're not following anyone</h3>
+<div th:if="${#lists.isEmpty(users) and filter == 'following'}" style="text-align: center; color: white"><h3>You're not following anyone</h3>
 </div>
 
 </body>
