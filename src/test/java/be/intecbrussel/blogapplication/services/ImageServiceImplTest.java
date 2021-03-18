@@ -1,57 +1,99 @@
 package be.intecbrussel.blogapplication.services;
 
+import be.intecbrussel.blogapplication.controllers.ImageController;
 import be.intecbrussel.blogapplication.model.User;
-import be.intecbrussel.blogapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.IOException;
-import java.util.Optional;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class ImageServiceImplTest {
+class ImageControllerTest {
 
     @Mock
-    UserRepository userRepository;
-
     ImageService imageService;
+
+    @Mock
+    UserService userService;
+
+    ImageController controller;
+
+    MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
-        imageService = new ImageServiceImpl(userRepository);
+        controller = new ImageController(imageService, userService);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .build();
     }
 
     @Test
-    void saveImageFile() throws IOException {
-
-        Long id = 1L;
-        MultipartFile multipartFile = new MockMultipartFile("fileToUpload", "testing.txt", "text/plain",
-                "some test text".getBytes());
-
+    void showUploadForm() throws Exception {
         User user = new User();
-        user.setId(id);
-        Optional<User> userOptional = Optional.of(user);
+        user.setId(1L);
 
-        when(userRepository.findById(anyLong())).thenReturn(userOptional);
-        ArgumentCaptor<User> argumentCaptor = ArgumentCaptor.forClass(User.class);
+        when(userService.findById(anyLong())).thenReturn(user);
 
-        imageService.saveImageFile(id, multipartFile);
+        mockMvc.perform(get("/user/1/image"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("user"));
 
-        verify(userRepository, times(1)).save(argumentCaptor.capture());
+        verify(userService, times(1)).findById(anyLong());
+    }
 
-        User savedUser = argumentCaptor.getValue()  ;
+    @Test
+    void handleImage() throws Exception {
+        MockMultipartFile multipartFile = new MockMultipartFile("fileToUpload","test.txt","text/plain","some text".getBytes());
 
-        assertEquals(multipartFile.getBytes().length, savedUser.getProfileImage().length);
+        mockMvc.perform(multipart("/user/1/image").file(multipartFile))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/user/1/edit"));
+
+        verify(imageService, times(1)).saveImageFile(anyLong(), any());
+
+    }
+
+    @Test
+    void renderImageFromDB() throws Exception {
+        User user = new User();
+        user.setId(1L);
+
+        String str = "Fake Image Text";
+        Byte[] bytesBoxed = new Byte[str.getBytes().length];
+
+        int i = 0;
+
+        for(byte primByte: str.getBytes()){
+            bytesBoxed[i++] = primByte;
+        }
+
+        user.setProfileImage(bytesBoxed);
+
+        when(userService.findById(anyLong())).thenReturn(user);
+
+        MockHttpServletResponse response = mockMvc.perform(get("/user/1/profileimage"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        byte[] responseBytes = response.getContentAsByteArray();
+
+        assertEquals(str.getBytes().length, responseBytes.length);
+
+
 
     }
 }
