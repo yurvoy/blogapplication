@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>Blogify: Review your posts</title>
+
+    <script src="https://kit.fontawesome.com/51a5fc685f.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <!--- style sheet page -->
+    <style>
+        .profile-head {
+            transform: translateY(5rem)
+        }
+
+        .cover {
+            background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
+            background-size: cover;
+            background-repeat: no-repeat
+        }
+
+        body {
+            background: #654ea3;
+            background: linear-gradient(to right, #e96443, #904e95);
+            min-height: 100vh
+        }
+
+        .block-with-text {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+
+</head>
+
+<body>
+<!--------------Navigation--------------->
+
+<!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
+
+<nav class="navbar bg-white navbar-expand shadow">
+    <div class="container">
+        <div class="collapse navbar-collapse p-2" id="navbarResponsive">
+            <a class="navbar-brand" href="#" th:href="@{/index}">
+                <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
+            </a>
+
+            <!--form th:action="@{/search}" method="get">
+                <input type="text" name="text" id="text" class="form-control" placeholder="Search here"
+                       th:value="${text}" required
+                       aria-label="Search" size="30"/>
+            </form-->
+
+            <div class="navbar-nav ml-auto">
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
+                        font-color="black">
+                    <a href="/" th:href="@{'/user/'+${user.getId()}+'/profile'}">Profile</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
+                        font-color="black">
+                    <a href="/" th:href="@{/login}">Log in</a></buttom>
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()"
+                        font-color="black">
+                    <a href="/" th:href="@{/registration}">Register</a></buttom>
+
+                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()"
+                        font-color="black">
+                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
+            </div>
+        </div>
+    </div>
+</nav>
+<!--------------End Navigation --------------->
+
+
+<div class="container-fluid gedf-wrapper">
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 gedf-main">
+            <!--- Posts showing accordion panel-->
+            <div class="card gedf-card mt-3">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="ml-2">
+                                <div class="h5 m-0">
+                                    <h2>Review your Posts</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body"><!--Begin Search Result body-->
+                    <div id="accordion">
+                        <div class="card"  th:each="post: ${user.posts}">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#accordionPost" th:data-target="'#headingPost' + ${post.id}" aria-expanded="false" aria-controls="collapseTwo">
+                                        <i class="text-muted" th:text="${#temporals.format(post.postTimeStamp,'dd-MM-yyyy')
+                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm ')}">10 min
+                                            ago
+                                        </i><span th:text="${post.postTitle}">Title Post</span>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div th:id="'headingPost' + ${post.id}" id="accordionPost" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body d-flex justify-content-between">
+                                    <p class="block-with-text" th:text="${post.postText}">
+                                        Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec rutrum congue
+                                        leo eget malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+                                        posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit
+                                        amet ligula. Nulla quis lorem ut libero malesuada feugiat. Donec sollicitudin molestie
+                                        malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac diam
+                                        sit amet quam vehicula elementum sed sit amet dui. Vivamus magna justo, lacinia eget
+                                        consectetur sed, convallis at tellus.
+                                    </p>
+                                    <div class="dropdown">
+                                        <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                            <div class="h6 dropdown-header">Configuration</div>
+                                            <a class="dropdown-item" href="/" th:href="@{'/editPost/' + ${post.getId()}}">Edit</a>
+                                            <a class="dropdown-item" href="/"
+                                               th:href="@{'/deletePost/' + ${post.getId()}}">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of Search Result body -->
+
+
+            </div>
+            <!--- \\\\\\\Post-->
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
