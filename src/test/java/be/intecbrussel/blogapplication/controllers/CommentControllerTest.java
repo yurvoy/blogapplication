@@ -35,6 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class CommentControllerTest {
 
+    @MockBean
+    private BindingResult mockBindingResult;
+
     @Mock
     private CommentService commentService;
 
@@ -44,7 +47,12 @@ public class CommentControllerTest {
     private PostService postService;
 
     @InjectMocks
+    private CommentController commentController;
+
+    @InjectMocks
     private WebConfig webConfig;
+
+    CreateCommentDto newComment;
 
     Post post;
 
@@ -69,7 +77,6 @@ public class CommentControllerTest {
 
         post = new Post();
         user = new User();
-        user.setId(1L);
         post.setId(1L);
         post.setUser(user);
 

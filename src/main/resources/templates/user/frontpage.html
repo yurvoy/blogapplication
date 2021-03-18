@@ -106,7 +106,10 @@
                                                             th:href="@{'/user/' + ${user.getId()} + '/profile'}"
                                                             th:text="${user.firstName + ' ' + user.lastName}">See your profile</a></span>
 
-                        <br><br>
+                        <br>
+                        <span class="h7 glyphicon-font="><a href="/"
+                                                            th:href="@{'/users/'}"
+                                                            th:text="'Search Members' ">See your profile</a></span><br><br>
                         <div class="h7 glyphicon-font=">Biography</div>
 
                         <div class="h7 text-muted" th:text="${user.userBio}"></div>
@@ -114,11 +117,11 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <div class="h6 text-muted">Followers</div>
-                            <div class="h5">5.2342</div>
+                            <div class="h5" th:text="${user.getFollowers().size()}">5.2342</div>
                         </li>
                         <li class="list-group-item">
                             <div class="h6 text-muted">Following</div>
-                            <div class="h5">6758</div>
+                            <div class="h5" th:text="${user.getFollowing().size()}">6758</div>
                         </li>
                         <li class="list-group-item" th:text="${user.email}">user email</li>
                     </ul>

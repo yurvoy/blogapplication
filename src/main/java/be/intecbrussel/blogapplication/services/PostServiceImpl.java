@@ -79,6 +79,7 @@ public class PostServiceImpl implements PostService{
         return postRepository.findAll();
     }
 
+
     @Override
     public void updatePost(Long postId, Principal principal, CreatePostDto postForm) {
         Optional<Post> post = postRepository.findById(postId);

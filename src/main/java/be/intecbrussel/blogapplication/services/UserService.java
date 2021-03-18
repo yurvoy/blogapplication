@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.security.Principal;
+import java.util.List;
 
 
 @Service
@@ -27,6 +28,12 @@ public interface UserService extends UserDetailsService{
     User getByResetPasswordToken(String token);
 
     void updatePassword(User user, String newPassword);
+
+    User getLoggedInUser();
+
+    void save(User user);
+
+    List<User> findAll();
 
 
 }

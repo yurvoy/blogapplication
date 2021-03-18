@@ -4,6 +4,9 @@ import be.intecbrussel.blogapplication.web_security_config.WebConfig;
 
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
+import org.apache.catalina.connector.Connector;
+import org.apache.catalina.connector.Request;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,18 +29,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.security.Principal;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -59,6 +71,9 @@ class UserControllerTest {
     User user;
 
     Principal mockPrincipal;
+
+    @Mock
+    JButton follow;
 
 
     @BeforeEach
@@ -115,6 +130,43 @@ class UserControllerTest {
                 .andExpect(view().name("user/profile"));
 
     }
+
+    @Test
+    void followUser() throws Exception{
+
+        User nonLoggedInUser = new User();
+        List<User> listOfFollowers = new ArrayList<>();
+        listOfFollowers.add(user);
+        nonLoggedInUser.setId(1L);
+
+        when(userService.findByEmail(any())).thenReturn(nonLoggedInUser);
+        assertNotEquals(nonLoggedInUser, user);
+
+        Optional<User> userOptional1 = Optional.of(user);
+
+        userOptional1.ifPresent(x->x.setFollowers(listOfFollowers));
+
+        assertEquals(listOfFollowers.get(0), user);
+
+    }
+
+    @Test
+    void unfollowUser() throws Exception{
+        User nonLoggedInUser = new User();
+        List<User> listOfFollowers = new ArrayList<>();
+        listOfFollowers.add(user);
+        nonLoggedInUser.setId(1L);
+
+        when(userService.findByEmail(any())).thenReturn(nonLoggedInUser);
+        assertEquals(listOfFollowers.get(0), user);
+
+        listOfFollowers.remove(user);
+        assertEquals(listOfFollowers.contains(user), eq(false));
+
+
+
+    }
+
 
 
 }

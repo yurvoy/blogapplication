@@ -54,6 +54,13 @@ public class User implements Principal {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Comment> comments;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_follower", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    private List<User> followers;
+
+    @ManyToMany(mappedBy="followers")
+    private List<User> following;
+
 
     @Builder
     public User(Long id, String email, String password, String firstName, String lastName, LocalDate birthday, String gender) {
