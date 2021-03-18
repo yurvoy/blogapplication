@@ -195,5 +195,4 @@ public class PostController {
         return "user/configuration/reviewPosts";
     }
 
-
 }
