@@ -18,12 +18,9 @@ import org.springframework.ui.Model;
 import java.security.Principal;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 class HomeControllerTest {
@@ -67,30 +64,22 @@ class HomeControllerTest {
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("user/frontpage"));
+                .andExpect(view().name("user/frontpage"))
+                .andExpect(model().attributeExists("posts"));
     }
 
-    /*
     @Test
     void loggedInUserRoot() throws Exception {
 
-        User user = new User();
-        user.setId(1L);
-
-        when(userService.findById(anyLong())).thenReturn(user);
-
-        // misschien op deze manier??
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/frontpage"));
-        //
 
         String viewName = controller.root(principal, model);
 
         assertEquals("user/frontpage",viewName);
     }
 
-     */
 
     @Test
     void login() throws Exception {

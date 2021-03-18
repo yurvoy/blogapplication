@@ -182,6 +182,18 @@ public class PostController {
         return "user/frontpage";
     }
 
+    @GetMapping("/user/{userId}/reviewPosts")
+    public String reviewPosts(@PathVariable Long userId, Model model, Principal principal){
+
+        User existing = userService.findById(userId);
+        User visitor = userService.findByEmail(principal.getName());
+        if (existing == null || existing != visitor) {
+            return "redirect:/index";
+        }
+
+        model.addAttribute("user", userService.findById(userId));
+        return "user/configuration/reviewPosts";
+    }
 
 
 }
