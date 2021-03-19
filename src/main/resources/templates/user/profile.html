@@ -235,7 +235,9 @@
         <!--- End Post form -->
 
         <!---- Posts from user ----------->
-
+        <div th:if="${#lists.isEmpty(user.posts)}">
+            <h3 class="text-white">There are no posts yet... :(</h3>
+        </div>
         <div class="card gedf-card mt-3" th:each="post: ${user.posts}">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">

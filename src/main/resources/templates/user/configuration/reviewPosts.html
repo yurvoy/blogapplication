@@ -105,6 +105,9 @@
                 </div>
                 <div class="card-body"><!--Begin Search Result body-->
                     <div id="accordion">
+                        <div th:if="${#lists.isEmpty(user.posts)}">
+                            <h4><i class="text-secondary">There are no posts yet... :(</i></h4>
+                        </div>
                         <div class="card"  th:each="post: ${user.posts}">
                             <div class="card-header">
                                 <h5 class="mb-0">

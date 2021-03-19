@@ -207,9 +207,12 @@
             <!-- Begin Search result title -->
             <br>
             <div th:if="${not #lists.isEmpty(postList)}">
-                <h3>Your Search Results for : <span th:text="${text}"></span></h3>
+                <h3 class="text-white">Your Search Results for : <span th:text="${text}"></span></h3>
             </div>
             <!-- End Search result title -->
+            <div th:if="${#lists.isEmpty(posts)}">
+                <h3 class="text-white">There are no posts yet... :(</h3>
+            </div>
             <!--- \\\\\\\Post-->
             <div class="card gedf-card mt-3" th:each="post: ${posts}">
                 <div class="card-header">

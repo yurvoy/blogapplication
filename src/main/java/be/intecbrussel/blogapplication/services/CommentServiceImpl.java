@@ -44,6 +44,9 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = new Comment();
         comment.setCommentText(newComment.getCommentText());
         comment.setCommentTimeStamp(LocalDateTime.now(Clock.systemUTC()));
+        // This code is a change to use the actual computer from the computer. Otherwise it uses UTC
+        // which is one hour less than belgium
+        //comment.setCommentTimeStamp(LocalDateTime.now(Clock.systemDefaultZone()));
         comment.setPost(post);
         comment.setUser(user);
 
