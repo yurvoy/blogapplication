@@ -67,16 +67,10 @@
 
             <ul class="navbar-nav ml-auto">
 
-                    <a href="/" th:href="@{/index}"> <button class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
+
+                    <a href="/" th:href="@{/index}" > <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
                                                                       th:text="Frontpage"></button></a>
-
-                    <a href="/" th:href="@{/login}"> <button class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
-                                                                   th:text="Login"></button></a>
-
-                    <a href="/" th:href="@{/registration}"><button class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()"
-                                                                   th:text="Register"></button></a>
-
-                    <a href="/" th:href="@{/logout}"><button class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()"
+                    <a href="/" th:href="@{/logout}" ><button class="ml-auto btn btn-outline-secondary btn-lg"
                                                                    th:text="Logout"></button></a>
             </ul>
         </div>
