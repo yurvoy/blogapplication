@@ -110,6 +110,19 @@ public class PostController {
         return "redirect:/user/" + userId + "/profile";
     }
 
+
+    @GetMapping("addTag/{id}")
+    public String addTag(@PathVariable Long id, Principal principal, CreatePostDto tag){
+        Post post = postService.findById(id);
+        Long userId = post.getUser().getId();
+
+
+        if(principal != null){
+            postService.savePost(id, tag);
+        }
+        return "redirect:/user/" + userId + "/profile";
+    }
+
     @GetMapping("deletePost/{id}")
     public String deletePost(@PathVariable Long id, Model model, Principal principal) {
 

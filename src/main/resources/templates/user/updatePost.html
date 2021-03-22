@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8"/>
     <title>New Post</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+          integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
+          crossorigin="anonymous"/>
 </head>
+
+<style>
+    .post-tag, .post-tag:visited, .job-preferences-mobile .-section .location-results .geo-tag {
+        color: #39739d;
+        background: #e1ecf4;
+        border: 1px solid #e1ecf4;
+        margin: 0 2px 2px 0;
+        text-decoration: none;
+        text-align: center;
+        font-weight: normal;
+        display: inline-block;
+        font-size: 11px;
+        padding: 3px 5px;
+        white-space: nowrap;
+        text-shadow: none;
+        border-radius: 25px;
+        border-radius: 0;
+    }
+</style>
 <body>
 <!--------------Navigation--------------->
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
@@ -13,7 +37,8 @@
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
             <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blogify</a>
-            <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
+            <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()"
+                    font-color="black">
                 <a href="/" th:href="@{/logout}">Logout</a></buttom>
             </ul>
         </div>
@@ -35,15 +60,40 @@
         <div class="col-lg-3"></div>
         <div class=" pb-3 pt-5 pr-5 pl-5 col-lg-6 border border-dark rounded">
             <div id="ui">
-                <form th:object="${post}" th:action="@{'/editPost/' + ${post.getId()}}" class="form-group" method="post">
+                <form th:object="${post}" th:action="@{'/editPost/' + ${post.getId()}}" class="form-group"
+                      method="post">
                     <div class="form-group">
                         <label for="post-title" class="control-label">Title</label>
-                        <input class="form-control" rows="4" cols="50" th:field="*{postTitle}" id="post-title" placeholder="What is the title?" required></input>
+                        <input class="form-control" rows="4" cols="50" th:field="*{postTitle}" id="post-title"
+                               placeholder="What is the title?" required></input>
                     </div>
                     <div class="form-group">
-                        <label for="post-text" class="control-label">Add some text</label>
-                        <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text" placeholder="Wanna do you wanna share with us?" required></textarea>
+                        <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text"
+                                  placeholder="Wanna do you wanna share with us?" required></textarea>
                     </div>
+
+
+                    <div class="form-group">
+                        <input class="form-control" rows="4" cols="50" th:field="*{tags}" id="post-tag"
+                               placeholder="What is your tag?" required></input>
+                        <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
+
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div class="col-sm-3 col-sm-offset-3">
+
+                                <a class="card-link" th:if="not ${#lists.contains(post.tags, userVisitor)}"
+                                   href="/" th:href="@{'/addTag/' + ${post.id}}">
+
+                                    <span type="submit" name="tag-click" class="form-control btn btn-primary"
+                                          th:field="${post.getTags()}" id="tag-title"> </span></a>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="col text-center">
                         <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
                             <span style="font-size:xx-large">Edit Post</span></button>
@@ -64,8 +114,12 @@
     </div>
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/7ea262bad9.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
+        integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
+        crossorigin="anonymous"></script>
 </body>
 </html>

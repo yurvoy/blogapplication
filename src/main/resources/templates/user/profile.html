@@ -42,6 +42,24 @@
             background: linear-gradient(to right, #e96443, #904e95);
             min-height: 100vh
         }
+
+        .post-tag, .post-tag:visited, .job-preferences-mobile .-section .location-results .geo-tag {
+            color: #39739d;
+            background: #e1ecf4;
+            border: 1px solid #e1ecf4;
+            margin: 0 2px 2px 0;
+            text-decoration: none;
+            text-align: center;
+            font-weight: normal;
+            display: inline-block;
+            font-size: 11px;
+            padding: 3px 5px;
+            white-space: nowrap;
+            text-shadow: none;
+            border-radius: 25px;
+            border-radius: 0;
+        }
+
     </style>
 
 </head>
@@ -93,15 +111,19 @@
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 cover">
                 <div class="text-right">
-                    <div class="dropdown" sec:authorize="isAuthenticated()" th:if="${userVisitor.getId() == user.getId()}">
-                        <button class="btn btn-link mt-2 pr-0 dropdown-toggle" style="color:white" type="button" id="gedf-drop2"
+                    <div class="dropdown" sec:authorize="isAuthenticated()"
+                         th:if="${userVisitor.getId() == user.getId()}">
+                        <button class="btn btn-link mt-2 pr-0 dropdown-toggle" style="color:white" type="button"
+                                id="gedf-drop2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-cog"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop2">
                             <div class="h6 dropdown-header">Configuration</div>
-                            <a class="dropdown-item" href="/" th:href="@{'/user/' + ${userVisitor.getId()} + '/edit'}">Edit profile</a>
-                            <a class="dropdown-item" href="/" th:href="@{'/user/' + ${userVisitor.getId()} + '/reviewPosts'}">Review Posts</a>
+                            <a class="dropdown-item" href="/" th:href="@{'/user/' + ${userVisitor.getId()} + '/edit'}">Edit
+                                profile</a>
+                            <a class="dropdown-item" href="/"
+                               th:href="@{'/user/' + ${userVisitor.getId()} + '/reviewPosts'}">Review Posts</a>
                         </div>
                     </div>
                 </div>
@@ -119,11 +141,16 @@
                                 th:text="${user.lastName}"></span></h4>
                         <p class="small mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Stockholm</p>
                         <div class="col p-0">
-                            <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(currentUser)}" method="post">
-                                <button style="float:right; width: 80px" type="Submit" class="btn btn-xs btn-success">Follow</button>
+                            <form th:action="@{/follow/} + ${user.email}"
+                                  th:if="${!following and !user.equals(currentUser)}" method="post">
+                                <button style="float:right; width: 80px" type="Submit" class="btn btn-xs btn-success">
+                                    Follow
+                                </button>
                             </form>
                             <form th:action="@{/unfollow/} + ${user.email}" th:if="${following}" method="post">
-                                <button style="float:right; width: 80px" type="Submit"  class="btn btn-xs btn-primary unfollow_btn pl-0 pr-0 text-center">Unfollow</button>
+                                <button style="float:right; width: 80px" type="Submit"
+                                        class="btn btn-xs btn-primary unfollow_btn pl-0 pr-0 text-center">Unfollow
+                                </button>
                             </form>
                         </div>
 
@@ -136,16 +163,19 @@
 
 
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block" th:text="${user.posts.size()}">215</h5><small class="text-muted"> <i
+                        <h5 class="font-weight-bold mb-0 d-block" th:text="${user.posts.size()}">215</h5><small
+                            class="text-muted"> <i
                             class="fas fa-image mr-1"></i>Posts</small>
                     </li>
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block" th:text="${user.getFollowers().size()}"></h5><small class="text-muted"> <i
-                            class="fas fa-user mr-1" ></i>Followers</small>
+                        <h5 class="font-weight-bold mb-0 d-block" th:text="${user.getFollowers().size()}"></h5><small
+                            class="text-muted"> <i
+                            class="fas fa-user mr-1"></i>Followers</small>
                     </li>
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block" th:text="${user.getFollowing().size()}"></h5><small class="text-muted"> <i
-                            class="fas fa-user mr-1" ></i>Following</small>
+                        <h5 class="font-weight-bold mb-0 d-block" th:text="${user.getFollowing().size()}"></h5><small
+                            class="text-muted"> <i
+                            class="fas fa-user mr-1"></i>Following</small>
                     </li>
                 </ul>
             </div>
@@ -194,6 +224,13 @@
                                                   id="post-text" placeholder="Wanna do you wanna share with us?"
                                                   required></textarea>
                                     </div>
+
+                                    <div class="form-group">
+                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}" id="post-tag"
+                                                      placeholder="What is your tag?" required></textarea>
+                                        <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -269,8 +306,13 @@
                     <h5 class="card-title" th:text="${post.postTitle}"></h5>
                 </a>
 
-                <p class="card-text" th:text="${post.postText}">
-                </p>
+                <p class="card-text" th:text="${post.postText}"></p>
+
+
+                <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
+
+
+
             </div>
             <div class="card-footer">
                 <a class="card-link"><i class="fa fa-gittip">
