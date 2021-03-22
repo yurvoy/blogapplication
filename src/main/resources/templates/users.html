@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
 
@@ -73,18 +73,18 @@
 
 
             <ul class="navbar-nav ml-auto">
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
-                        font-color="black">
-                    <a href="/" th:href="@{/index}">Frontpage</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
-                        font-color="black">
-                    <a href="/" th:href="@{/login}">Log in</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()"
-                        font-color="black">
-                    <a href="/" th:href="@{/registration}">Register</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()"
-                        font-color="black">
-                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
+
+                    <a href="/" th:href="@{/index}"> <button class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
+                                                                      th:text="Frontpage"></button></a>
+
+                    <a href="/" th:href="@{/login}"><button class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
+                                                                   th:text="Login"></button></a>
+
+                    <a href="/" th:href="@{/registration}"> <button class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()"
+                                                                            th:text="Register"></button></a>
+
+                    <a href="/" th:href="@{/logout}"> <button class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()"
+                                                                    th:text="Logout"></button></a>
             </ul>
         </div>
     </div>
