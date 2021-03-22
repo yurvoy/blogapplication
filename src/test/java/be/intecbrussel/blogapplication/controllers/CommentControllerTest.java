@@ -30,12 +30,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CommentControllerTest {
 
     @Mock
-    private CommentService commentService;
+    private CommentController commentController;
 
     @Mock
     private UserService userService;
     @Mock
     private PostService postService;
+    @Mock
+    private CommentService commentService;
 
     @InjectMocks
     private WebConfig webConfig;
@@ -50,12 +52,10 @@ public class CommentControllerTest {
 
     @BeforeEach
     void setUp() {
-
-
         mockPrincipal = mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("abc@gmail.com");
 
-        CommentController commentController = new CommentController(userService, postService, commentService);
+        commentController = new CommentController(userService, postService, commentService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(commentController)
                 .setViewResolvers(webConfig.viewResolver())
@@ -85,7 +85,7 @@ public class CommentControllerTest {
     @Test
     void simpleFrontPageComment() throws Exception {
         when(postService.findById(anyLong())).thenReturn(post);
-        when(userService.findById(any())).thenReturn(user);
+        when(userService.findById(anyLong())).thenReturn(user);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/user/" + post.getId() + "/" + user.getId() + "/createComment")
@@ -97,7 +97,6 @@ public class CommentControllerTest {
 
     @Test
     void shouldStayOnFrontPageIfBindingErrors() throws Exception {
-
         when(postService.findById(anyLong())).thenReturn(post);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders

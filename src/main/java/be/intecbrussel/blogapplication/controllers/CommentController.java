@@ -1,6 +1,5 @@
 package be.intecbrussel.blogapplication.controllers;
 
-import be.intecbrussel.blogapplication.model.Comment;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.CommentService;
@@ -8,7 +7,6 @@ import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
