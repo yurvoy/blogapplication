@@ -1,10 +1,10 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Email;
+import javax.validation.constraints.*;
 
 
 @Data
@@ -18,9 +18,13 @@ public class UserRegistrationDto {
 
     private String confirmPassword;
 
+    //@Pattern(regexp = "\\\\d{2}-\\\\d{2}-\\\\d{4}", message = "not allowed")
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "Please enter birth date")
     private String birthday;
 
     private String gender;
+
 
     @Email
     private String email;
