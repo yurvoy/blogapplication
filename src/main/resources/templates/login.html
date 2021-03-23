@@ -66,8 +66,19 @@
             </form>
         </div>
     </div>
+    <div class="row col-md-6 col-md-offset-3">
+        <a class="btn btn-outline-dark btn-lg btn-block" th:href="@{/oauth2/authorization/github}">
+            <span style="font-size: 2em; vertical-align: middle"><i class="fa fa-github-square"></i></span>
+            <span>Login with <strong>Github</strong></span>
+        </a>
+        <a class="btn btn-outline-dark btn-lg btn-block" th:href="@{/oauth2/authorization/google}">
+            <span style="font-size: 2em; vertical-align: middle"><i class="fa fa-google-square"></i></span>
+            <span>Login with <strong>Google</strong></span>
+        </a>
+    </div>
 
 
 </div>
+
 </body>
 </html>

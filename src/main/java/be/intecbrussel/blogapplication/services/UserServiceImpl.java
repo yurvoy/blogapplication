@@ -2,6 +2,7 @@ package be.intecbrussel.blogapplication.services;
 
 
 import be.intecbrussel.blogapplication.exceptions.UserNotFoundException;
+import be.intecbrussel.blogapplication.model.AuthProvider;
 import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.Role;
 import be.intecbrussel.blogapplication.model.User;
@@ -145,7 +146,24 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public void createNewOAuth2User(String email, String name, AuthProvider provider) {
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setFirstName(name);
+        newUser.setLastName("");
+        newUser.setAuthProvider(provider);
 
+        userRepository.save(newUser);
+    }
+
+    @Override
+    public void updateOAuth2User(User user, String name, AuthProvider provider) {
+        user.setFirstName(name);
+        user.setAuthProvider(provider);
+
+        userRepository.save(user);
+    }
 
 
 }

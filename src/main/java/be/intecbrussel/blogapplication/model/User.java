@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -61,6 +62,10 @@ public class User implements Principal {
     @ManyToMany(mappedBy="followers")
     private List<User> following;
 
+    @Enumerated
+    @Column(name = "auth_provider")
+    private AuthProvider authProvider;
+
 
     @Builder
     public User(Long id, String email, String password, String firstName, String lastName, LocalDate birthday, String gender) {
@@ -84,6 +89,10 @@ public class User implements Principal {
     }
 
     public User() {
+        posts = new ArrayList<>();
+        comments = new ArrayList<>();
+        followers = new ArrayList<>();
+        following = new ArrayList<>();
     }
 
     @Override

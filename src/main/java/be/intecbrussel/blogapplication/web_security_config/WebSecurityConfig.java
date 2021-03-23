@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
+import be.intecbrussel.blogapplication.services.OAuth2Service;
 import be.intecbrussel.blogapplication.services.UserService;
 import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,21 +23,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OAuth2Service oAuth2Service;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+
+        http.headers().frameOptions().disable();
+
         http.authorizeRequests().antMatchers("/").permitAll().and()
                 .authorizeRequests().antMatchers("/console/**").permitAll();
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
 
         http.authorizeRequests()
                 .antMatchers(
                         "/registration**",
+                        "/oauth2/**",
                         "/search",
                         "/home**",
                         "/",
                         "/console/",
                         "/login**",
+                        "/oAuthLogin**",
                         "/search",
                         "/forgotPassword**",
                         "/404**",
@@ -55,8 +67,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                    .loginPage("/login")
+                .and()
+                .oauth2Login()
+                    .loginPage("/login")
+                    .userInfoEndpoint().userService(oAuth2Service)
+                    .and()
+                    .successHandler(oAuth2LoginSuccessHandler)
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
@@ -88,10 +105,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    ServletRegistrationBean h2servletRegistration(){
-        ServletRegistrationBean registration = new ServletRegistrationBean( new org.h2.server.web.WebServlet());
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+    ServletRegistrationBean h2servletRegistration() {
+        ServletRegistrationBean registration = new ServletRegistrationBean(new org.h2.server.web.WebServlet());
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
         registrationBean.addUrlMappings("/console/*");
         return registrationBean;
     }
+
 }
