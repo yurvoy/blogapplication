@@ -2,9 +2,13 @@ package be.intecbrussel.blogapplication.model;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.security.auth.Subject;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -27,6 +31,7 @@ public class User implements Principal {
     private String firstName;
     @Column
     private String lastName;
+
     @Column
     private LocalDate birthday;
     @Column

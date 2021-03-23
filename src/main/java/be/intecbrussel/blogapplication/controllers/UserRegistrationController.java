@@ -6,13 +6,16 @@ import be.intecbrussel.blogapplication.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.Validator;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/registration")
-public class UserRegistrationController {
+public class UserRegistrationController{
 
     private final UserService userService;
 
@@ -35,12 +38,14 @@ public class UserRegistrationController {
                                       BindingResult result) {
 
         User existing = userService.findByEmail(userDto.getEmail());
+
         if (existing != null) {
-            result.rejectValue("email","existingMail", "There is already an account registered with that email");
+            //result.rejectValue("email","existingMail", "There is already an account registered with that email");
             return "registration";
         }
 
         if (result.hasErrors()) {
+            result.rejectValue("email","existingMail", "There is already an account registered with that email");
             return "registration";
         }
 
