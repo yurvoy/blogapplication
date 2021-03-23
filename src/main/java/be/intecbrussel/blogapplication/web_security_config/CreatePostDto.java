@@ -14,7 +14,7 @@ public class CreatePostDto {
     @Size(max = 1000, min = 1, message = "Post : 500 max characters")
     private String postText;
 
-    @Size(max = 50, min = 1, message = "Tag: 50 max characters")
+    @Size(max = 10, message = "Tag: 10 max tags")
     private List<String> tags;
 
 }

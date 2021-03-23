@@ -185,7 +185,7 @@
 
                                         <div class="form-group">
                                             <textarea class="form-control" rows="1" cols="50" th:field="*{tags}" id="post-tag"
-                                                   placeholder="What is your tag?" required></textarea>
+                                                   placeholder="What is your tag? Seperate multiple tags with ','." ></textarea>
                                             <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
 
                                             <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>

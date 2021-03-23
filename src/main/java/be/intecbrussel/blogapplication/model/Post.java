@@ -68,13 +68,6 @@ public class Post implements Principal {
     }
 
     public void setTags(List<String> tags) {
-
-        tags.add("New");
-        tags.add("Sports");
-        tags.add("Local");
-        tags.add("Fashion");
-        tags.add("Life");
-
         this.tags = tags;
     }
 

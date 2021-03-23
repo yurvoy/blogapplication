@@ -118,21 +118,6 @@ public class PostServiceImpl implements PostService{
         return post.get().getLikes();
     }
 
-    @Override
-    public void tagPost(Long postId, Principal principal, String tag) {
-        User user = userService.findByEmail(principal.getName());
-        Optional<Post> post = postRepository.findById(postId);
-        List<String> tags = post.get().getTags();
-
-        //boolean alreadyLiked = tags.contains(user);
-        if (tags.contains(tag)) {
-            tags.remove(tag);
-        } else {
-            tags.add(tag);
-        }
-        post.get().setTags(tags);
-        postRepository.save(post.get());
-    }
 
 
 

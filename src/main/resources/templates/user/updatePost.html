@@ -62,42 +62,29 @@
             <div id="ui">
                 <form th:object="${post}" th:action="@{'/editPost/' + ${post.getId()}}" class="form-group"
                       method="post">
+
                     <div class="form-group">
                         <label for="post-title" class="control-label">Title</label>
                         <input class="form-control" rows="4" cols="50" th:field="*{postTitle}" id="post-title"
                                placeholder="What is the title?" required></input>
                     </div>
+
                     <div class="form-group">
                         <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text"
                                   placeholder="Wanna do you wanna share with us?" required></textarea>
                     </div>
 
-
                     <div class="form-group">
                         <input class="form-control" rows="4" cols="50" th:field="*{tags}" id="post-tag"
                                placeholder="What is your tag?" required></input>
                         <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
-
                     </div>
-
-                    <div>
-                        <div class="row">
-                            <div class="col-sm-3 col-sm-offset-3">
-
-                                <a class="card-link" th:if="not ${#lists.contains(post.tags, userVisitor)}"
-                                   href="/" th:href="@{'/addTag/' + ${post.id}}">
-
-                                    <span type="submit" name="tag-click" class="form-control btn btn-primary"
-                                          th:field="${post.getTags()}" id="tag-title"> </span></a>
-                            </div>
-                        </div>
-                    </div>
-
 
                     <div class="col text-center">
                         <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
                             <span style="font-size:xx-large">Edit Post</span></button>
                     </div>
+
                 </form>
             </div>
         </div>
