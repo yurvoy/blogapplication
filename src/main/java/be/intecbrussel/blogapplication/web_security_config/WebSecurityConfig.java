@@ -73,7 +73,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .userInfoEndpoint().userService(oAuth2Service)
                     .and()
-                    .successHandler(oAuth2LoginSuccessHandler)
                 .and()
                 .logout()
                 .invalidateHttpSession(true)

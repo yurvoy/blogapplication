@@ -28,18 +28,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                                         Authentication authentication) throws IOException, ServletException {
 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-        String email = oAuth2User.getEmail();
-        String name = oAuth2User.getName();
-        AuthProvider provider = AuthProvider.GOOGLE;
-        System.out.println("success oauth handler test: " + email);
 
-        User user = userService.findByEmail(email);
-
-        if(user == null) {
-            userService.createNewOAuth2User(email, name, provider);
-        } else {
-            userService.updateOAuth2User(user, name, provider);
-        }
 
         super.onAuthenticationSuccess(request, response, authentication);
     }

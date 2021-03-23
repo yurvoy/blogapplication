@@ -45,6 +45,9 @@ public class HomeController {
         }
 
         User user = userService.findByEmail(principal.getName());
+        if(user == null) {
+            return "login";
+        }
 
         model.addAttribute("user", user);
 
