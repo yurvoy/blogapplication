@@ -18,8 +18,6 @@ public class UserRegistrationDto {
 
     private String confirmPassword;
 
-    //@Pattern(regexp = "\\\\d{2}-\\\\d{2}-\\\\d{4}", message = "not allowed")
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
     @NotNull(message = "Please enter birth date")
     private String birthday;
 
