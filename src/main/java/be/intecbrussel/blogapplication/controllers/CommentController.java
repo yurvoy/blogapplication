@@ -7,6 +7,7 @@ import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class CommentController {
 
     @PostMapping("user/{postId}/{userId}/createComment")
     public String createNewPost(@PathVariable Long postId, @PathVariable Long userId, @Valid @ModelAttribute("comment")
-            CreateCommentDto comment, BindingResult result, HttpServletRequest request) {
+            CreateCommentDto comment, BindingResult result, HttpServletRequest request, Model model) {
 
         Post post = postService.findById(postId);
         User user = userService.findById(userId);
@@ -39,6 +40,8 @@ public class CommentController {
         }
 
         commentService.saveComment(post.getId(), user.getId(), comment);
+
+
 
         return "redirect:" + request.getHeader("Referer");
     }
