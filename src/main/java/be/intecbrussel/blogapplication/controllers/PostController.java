@@ -108,23 +108,12 @@ public class PostController {
 
 
     @GetMapping("likePost/{id}")
-    public String likePost(@PathVariable Long id, Principal principal){
+    public String likePost(@PathVariable Long id, Principal principal, HttpServletRequest request){
 
         if(principal != null){
             postService.likePost(id, principal);
         }
-        return "redirect:/index";
-    }
-
-    @GetMapping("likeOwnPost/{id}")
-    public String likeOwnPost(@PathVariable Long id, Principal principal){
-        Post post = postService.findById(id);
-        Long userId = post.getUser().getId();
-
-        if(principal != null){
-            postService.likePost(id, principal);
-        }
-        return "redirect:/user/" + userId + "/profile";
+        return "redirect:" + request.getHeader("Referer");
     }
 
     @GetMapping("deletePost/{id}")
