@@ -19,13 +19,15 @@ public interface UserService extends UserDetailsService{
 
     User findById(Long id);
 
-    User save(UserRegistrationDto registration);
+    User save(UserRegistrationDto registration, String token);
 
     void updateProfile(Long userId, Principal principal, User userForm);
 
     void updateResetPasswordToken(String token, String email) throws UserNotFoundException;
 
     User getByResetPasswordToken(String token);
+
+    User getByVerifyAccountToken(String token);
 
     void updatePassword(User user, String newPassword);
 
@@ -34,6 +36,5 @@ public interface UserService extends UserDetailsService{
     void save(User user);
 
     List<User> findAll();
-
 
 }

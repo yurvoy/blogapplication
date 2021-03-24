@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         return userOptional.get();
     }
 
-    public User save(UserRegistrationDto registration) {
+    public User save(UserRegistrationDto registration, String verificationToken) {
         User user = new User();
         user.setFirstName(registration.getFirstName());
         user.setLastName(registration.getLastName());
@@ -56,6 +56,8 @@ public class UserServiceImpl implements UserService {
         user.setBirthday(LocalDate.parse(registration.getBirthday()));
         user.setGender(registration.getGender());
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        user.setAccountVerified(false);
+        user.setVerifyAccountToken(verificationToken);
         return userRepository.save(user);
     }
 
@@ -112,6 +114,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getByVerifyAccountToken(String token) {
+        return userRepository.findByVerifyAccountToken(token);
+    }
+
+    @Override
     public void updatePassword(User user, String newPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(newPassword);
@@ -144,8 +151,5 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll(){
         return userRepository.findAll();
     }
-
-
-
 
 }

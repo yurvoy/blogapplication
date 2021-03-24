@@ -40,6 +40,12 @@ public class User implements Principal {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
+    @Column(name = "verify_account_token")
+    private String verifyAccountToken;
+
+    @Column
+    private boolean accountVerified;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_roles",
@@ -95,4 +101,5 @@ public class User implements Principal {
     public boolean implies(Subject subject) {
         return false;
     }
+
 }

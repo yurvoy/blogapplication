@@ -6,10 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -28,6 +25,7 @@ class UserServiceImplTest {
 
     @Mock
     BCryptPasswordEncoder passwordEncoder;
+
 
     Principal mockPrincipal;
 
