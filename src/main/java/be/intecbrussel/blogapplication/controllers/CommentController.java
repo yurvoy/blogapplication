@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -32,32 +33,17 @@ public class CommentController {
 
     @PostMapping("user/{postId}/{userId}/createComment")
     public String createNewPost(@PathVariable Long postId, @PathVariable Long userId, @Valid @ModelAttribute("comment")
-            CreateCommentDto comment, BindingResult result) {
+            CreateCommentDto comment, BindingResult result, HttpServletRequest request) {
 
         Post post = postService.findById(postId);
         User user = userService.findById(userId);
         if (result.hasErrors() || user == null || post == null) {
-            return "user/frontpage";
+            return "redirect:" + request.getHeader("Referer");
         }
 
         commentService.saveComment(post.getId(), user.getId(), comment);
 
-        return "redirect:/index";
-    }
-
-    @PostMapping("user/{postId}/{userId}/profileComment")
-    public String createNewComment(@PathVariable Long postId, @PathVariable Long userId, @Valid @ModelAttribute("comment")
-            CreateCommentDto comment, BindingResult result, Principal principal) {
-
-        Post post = postService.findById(postId);
-        User user = userService.findByEmail(principal.getName());
-        if (result.hasErrors() || user == null || post == null) {
-            return "user/profile";
-        }
-
-        commentService.saveComment(post.getId(), user.getId(), comment);
-
-        return "redirect:/user/" + userId + "/profile";
+        return "redirect:" + request.getHeader("Referer");
     }
 
     @PostMapping("/error")
