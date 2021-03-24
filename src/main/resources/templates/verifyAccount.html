@@ -67,6 +67,11 @@
                 <strong>The link you tried is already expired! Please try again</strong>
             </div>
         </div>
+        <div class="pt-3" th:if="${success}">
+            <div class="alert alert-success">
+                <strong>Your account have been correctly verified! Please log in!</strong>
+            </div>
+        </div>
     </div>
 
 

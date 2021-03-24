@@ -1,5 +1,7 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.SecurityToken;
+import be.intecbrussel.blogapplication.services.SecurityTokenService;
 import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 import org.thymeleaf.context.Context;
 
@@ -30,14 +33,17 @@ public class UserRegistrationController {
 
     private final UserService userService;
 
+    private final SecurityTokenService securityTokenService;
+
     private final JavaMailSender mailSender;
 
     @Autowired
     private SpringTemplateEngine templateEngine;
 
 
-    public UserRegistrationController(UserService userService, JavaMailSender mailSender) {
+    public UserRegistrationController(UserService userService, SecurityTokenService securityTokenService, JavaMailSender mailSender) {
         this.userService = userService;
+        this.securityTokenService = securityTokenService;
         this.mailSender = mailSender;
     }
 
@@ -64,14 +70,18 @@ public class UserRegistrationController {
         }
 
         String email = userDto.getEmail();
-        String token = RandomString.make(30);
+
+        SecurityToken verificationToken = new SecurityToken(RandomString.make(30));
 
         try {
-            String verifyAccountLink = Utility.getSiteURL(request) + "/verifyAccount?token=" + token;
+            String verifyAccountLink = Utility.getSiteURL(request) + "/verifyAccount?token=" + verificationToken.getToken();
             System.out.println(verifyAccountLink);
             sendVerificationEmail(email, verifyAccountLink);
             model.addAttribute("message", "Email sent ! Please check your mail box.");
-            userService.save(userDto, token);
+
+            User savedUser = userService.save(userDto);
+            SecurityToken savedSecurityToken = securityTokenService.save(verificationToken, savedUser);
+
         } catch (UnsupportedEncodingException | MessagingException e) {
             System.out.println("error sending mail");
             model.addAttribute("error", "Error while sending email");
@@ -86,13 +96,10 @@ public class UserRegistrationController {
         context.setVariable("link",link);
 
         MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message,
-                MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                StandardCharsets.UTF_8.name());
+        MimeMessageHelper helper = new MimeMessageHelper(message);
 
         helper.setFrom("team2.intec.iot@gmail.com", "Blog application Support");
         helper.setTo(recipientEmail);
-        helper.addAttachment("email.png", new ClassPathResource("static/email.png"));
 
         String subject = "Blogify!: Verify your account!";
 
@@ -109,17 +116,24 @@ public class UserRegistrationController {
     @GetMapping("/verifyAccount")
     public String showVerifiedAccountPage(@Param(value = "token") String token, Model model) {
 
-        User user = userService.getByVerifyAccountToken(token);
+        SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
+        User user = userService.findById(verificationToken.getUser().getId());
 
         if (user == null) {
-            System.out.println("User not found");
+            model.addAttribute("failed","userNotFound");
+            return "/verifyAccount";
+
+        }else if (verificationToken.getExpireAt().isBefore(LocalDateTime.now())){
             model.addAttribute("failed","invalidToken");
             return "/verifyAccount";
         }
 
         user.setAccountVerified(true);
+        user.getSecurityTokens().remove(verificationToken);
         model.addAttribute("token", token);
+        model.addAttribute("success","validated");
         userService.save(user);
+
         return "verifyAccount";
     }
 

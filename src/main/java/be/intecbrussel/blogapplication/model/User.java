@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,8 +41,9 @@ public class User implements Principal {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
-    @Column(name = "verify_account_token")
-    private String verifyAccountToken;
+    @Column
+    @OneToMany
+    private List<SecurityToken> securityTokens = new ArrayList<>();
 
     @Column
     private boolean accountVerified;

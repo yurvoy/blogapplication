@@ -77,6 +77,9 @@
                     <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
                         <label for="email" class="control-label">E-mail</label>
                         <input type="email" id="email" class="form-control" th:field="*{email}" required/>
+                        <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('email')}">
+                            <strong th:text="${#fields.errors('email')}"></strong>
+                        </div>
                     </div>
                     <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
                         <label for="password" class="control-label">Password</label>

@@ -2,6 +2,7 @@ package be.intecbrussel.blogapplication.controllers;
 
 
 import be.intecbrussel.blogapplication.model.User;
+import be.intecbrussel.blogapplication.services.SecurityTokenService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.web_security_config.WebConfig;
@@ -20,7 +21,6 @@ import org.springframework.validation.BindingResult;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,6 +33,9 @@ class UserRegistrationControllerTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private SecurityTokenService securityTokenService;
 
     @InjectMocks
     private WebConfig webConfig;
@@ -54,7 +57,7 @@ class UserRegistrationControllerTest {
     @BeforeEach
     void setUp() {
 
-        userRegistrationController = new UserRegistrationController(userService, mailSender);
+        userRegistrationController = new UserRegistrationController(userService, securityTokenService, mailSender);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(userRegistrationController)
                 .setViewResolvers(webConfig.viewResolver())

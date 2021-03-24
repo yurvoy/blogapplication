@@ -1,6 +1,7 @@
 package be.intecbrussel.blogapplication.services;
 
 import be.intecbrussel.blogapplication.model.User;
+import be.intecbrussel.blogapplication.repositories.SecurityTokenRepository;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,9 @@ class UserServiceImplTest {
     UserRepository userRepository;
 
     @Mock
+    SecurityTokenRepository securityTokenRepository;
+
+    @Mock
     BCryptPasswordEncoder passwordEncoder;
 
 
@@ -36,7 +40,7 @@ class UserServiceImplTest {
 
         MockitoAnnotations.openMocks(this);
 
-        userService = new UserServiceImpl(userRepository, passwordEncoder);
+        userService = new UserServiceImpl(userRepository, securityTokenRepository, passwordEncoder);
 
     }
 
