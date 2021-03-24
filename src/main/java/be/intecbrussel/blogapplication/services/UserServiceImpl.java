@@ -57,6 +57,7 @@ public class UserServiceImpl implements UserService {
         user.setBirthday(LocalDate.parse(registration.getBirthday()));
         user.setGender(registration.getGender());
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        user.setAuthProvider(AuthProvider.LOCAL);
         return userRepository.save(user);
     }
 

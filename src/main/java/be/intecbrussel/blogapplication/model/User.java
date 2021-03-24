@@ -89,10 +89,6 @@ public class User implements Principal {
     }
 
     public User() {
-        posts = new ArrayList<>();
-        comments = new ArrayList<>();
-        followers = new ArrayList<>();
-        following = new ArrayList<>();
     }
 
     @Override

@@ -31,7 +31,7 @@ public class GithubOAuth2User implements OAuth2User {
     // principal.getName() must return email address !
     @Override
     public String getName() {
-        return oAuth2User.getAttribute("email");
+        return oAuth2User.getAttribute("node_id");
     }
 
     public String getFullName(){
@@ -39,7 +39,7 @@ public class GithubOAuth2User implements OAuth2User {
     }
 
     public Byte[] getPicture() throws IOException {
-        String picture = oAuth2User.getAttribute("picture");
+        String picture = oAuth2User.getAttribute("avatar_url");
 
         byte[] bytes = IOUtils.toByteArray(new URL(picture));
 
