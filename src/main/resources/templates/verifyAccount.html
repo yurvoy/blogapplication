@@ -12,6 +12,7 @@
           integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
           crossorigin="anonymous"/>
 
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         html {
             position: relative;
@@ -60,18 +61,40 @@
             Welcome to Blogify !
         </h2>
         <h3 class="font-weight-light">
-            Thanks for becoming part of our comunity
+            Thanks for becoming part of our community
         </h3>
+        <form th:action="@{'/verifyAccount/' + ${token}}" th:method="post" onsubmit="return validateCaptcha()">
+            <div th:if="${captcha}">
+                <h5 class="font-weight-light">
+                    Please show us that you're not a robot!
+                </h5>
+                <div class="g-recaptcha d-flex m-3 justify-content-center" data-sitekey="6LdZ4YwaAAAAAI49zk3Mmqf65TG7adPG4NJO1Kb5" th:data-sitekey="${@environment.getProperty('recaptcha.key')}" required>
+                </div>
+                <div class="col text-center">
+                    <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
+                        <span style="font-size:xx-large">Verify me!</span></button>
+                </div>
+            </div>
+        </form>
+
         <div class="pt-3" th:if="${failed}">
             <div class="alert alert-danger">
                 <strong>The link you tried is already expired! Please try again</strong>
             </div>
         </div>
-        <div class="pt-3" th:if="${success}">
+        <div class="pt-3" th:if="${validated}">
             <div class="alert alert-success">
                 <strong>Your account have been correctly verified! Please log in!</strong>
             </div>
         </div>
+        <div class="pt-3" th:if="${alreadyVerified}">
+            <div class="alert alert-primary">
+                <strong>Your account have been already verified! Not needed to do it again! :)</strong>
+            </div>
+        </div>
+
+
+
     </div>
 
 
@@ -85,5 +108,16 @@
 
     </div>
 </footer>
+
+<script type="text/javascript">
+    function validateCaptcha(){
+        if (grecaptcha.getResponse()) {
+            return true;
+        } else {
+            alert("Please prove that you're not a robot")
+            return false;
+        }
+    }
+</script>
 </body>
 </html>

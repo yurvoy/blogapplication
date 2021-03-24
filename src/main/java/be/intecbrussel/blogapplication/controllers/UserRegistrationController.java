@@ -75,7 +75,6 @@ public class UserRegistrationController {
 
         try {
             String verifyAccountLink = Utility.getSiteURL(request) + "/verifyAccount?token=" + verificationToken.getToken();
-            System.out.println(verifyAccountLink);
             sendVerificationEmail(email, verifyAccountLink);
             model.addAttribute("message", "Email sent ! Please check your mail box.");
 
@@ -117,21 +116,42 @@ public class UserRegistrationController {
     public String showVerifiedAccountPage(@Param(value = "token") String token, Model model) {
 
         SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
-        User user = userService.findById(verificationToken.getUser().getId());
-
-        if (user == null) {
-            model.addAttribute("failed","userNotFound");
+        if (verificationToken == null){
+            model.addAttribute("failed","invalidToken");
             return "/verifyAccount";
-
-        }else if (verificationToken.getExpireAt().isBefore(LocalDateTime.now())){
+        }
+        System.out.println("is null");
+        if (verificationToken.getExpireAt().isBefore(LocalDateTime.now())){
             model.addAttribute("failed","invalidToken");
             return "/verifyAccount";
         }
 
+        User user = userService.findById(verificationToken.getUser().getId());
+
+        if (user == null) {
+            model.addAttribute("UserNotFound","userNotFound");
+            return "/verifyAccount";
+        }
+
+        if (user.getAccountVerified()){
+            model.addAttribute("alreadyVerified","AlreadyVerified");
+            return "/verifyAccount";
+        }
+
+        model.addAttribute("token", token);
+        model.addAttribute("captcha", "captchaAvailable");
+
+        return "verifyAccount";
+    }
+
+    @PostMapping("/verifyAccount/{token}")
+    public String showResponseFromCaptcha(@PathVariable String token, Model model) {
+        SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
+        User user = userService.findById(verificationToken.getUser().getId());
+
         user.setAccountVerified(true);
         user.getSecurityTokens().remove(verificationToken);
-        model.addAttribute("token", token);
-        model.addAttribute("success","validated");
+        model.addAttribute("validated", "validated");
         userService.save(user);
 
         return "verifyAccount";

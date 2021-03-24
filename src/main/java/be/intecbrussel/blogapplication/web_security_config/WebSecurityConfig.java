@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/home**",
                         "/",
                         "/verifyAccount**",
+                        "/verifyAccount/{token}**",
                         "/console/",
                         "/login**",
                         "/search",

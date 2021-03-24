@@ -46,7 +46,7 @@ public class User implements Principal {
     private List<SecurityToken> securityTokens = new ArrayList<>();
 
     @Column
-    private boolean accountVerified;
+    private boolean accountVerified = false;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -104,4 +104,7 @@ public class User implements Principal {
         return false;
     }
 
+    public boolean getAccountVerified() {
+        return accountVerified;
+    }
 }
