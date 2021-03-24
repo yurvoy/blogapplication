@@ -2,7 +2,8 @@ package be.intecbrussel.blogapplication.services;
 
 import be.intecbrussel.blogapplication.model.AuthProvider;
 import be.intecbrussel.blogapplication.model.User;
-import be.intecbrussel.blogapplication.web_security_config.CustomOAuth2User;
+import be.intecbrussel.blogapplication.web_security_config.GithubOAuth2User;
+import be.intecbrussel.blogapplication.web_security_config.GoogleOAuth2User;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -24,10 +25,23 @@ public class OAuth2Service extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        CustomOAuth2User customOAuth2User = new CustomOAuth2User(oAuth2User);
-        String email = customOAuth2User.getEmail();
-        String name = customOAuth2User.getName();
-        AuthProvider provider = AuthProvider.GITHUB;
+        GithubOAuth2User githubOAuth2User = new GithubOAuth2User(oAuth2User);
+        GoogleOAuth2User googleOAuth2User = new GoogleOAuth2User(oAuth2User);
+
+        String email;
+        String name;
+        AuthProvider provider;
+
+        if (oAuth2User.getAttribute("name") == null) {
+            email = githubOAuth2User.getEmail();
+            name = githubOAuth2User.getName();
+            provider = AuthProvider.GITHUB;
+        } else {
+            email = googleOAuth2User.getEmail();
+            name = googleOAuth2User.getName();
+            provider = AuthProvider.GOOGLE;
+        }
+
         System.out.println("success oauth handler test: " + email);
 
         User user = userService.findByEmail(email);
@@ -37,6 +51,9 @@ public class OAuth2Service extends DefaultOAuth2UserService {
         } else {
             userService.updateOAuth2User(user, name, provider);
         }
-        return customOAuth2User;
+        if (oAuth2User.getAttribute("name") == null) {
+            return githubOAuth2User;
+        }
+        return googleOAuth2User;
     }
 }

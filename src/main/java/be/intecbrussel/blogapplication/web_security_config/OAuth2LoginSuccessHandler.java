@@ -1,7 +1,5 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
-import be.intecbrussel.blogapplication.model.AuthProvider;
-import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -27,7 +25,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                         Authentication authentication) throws IOException, ServletException {
 
-        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+        GoogleOAuth2User oAuth2User = (GoogleOAuth2User) authentication.getPrincipal();
 
 
         super.onAuthenticationSuccess(request, response, authentication);
