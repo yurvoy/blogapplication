@@ -147,20 +147,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createNewOAuth2User(String email, String name, AuthProvider provider) {
+    public void createNewOAuth2User(String email, String name, Byte[] picture, AuthProvider provider) {
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setFirstName(name);
         newUser.setLastName("");
+        newUser.setProfileImage(picture);
         newUser.setAuthProvider(provider);
 
         userRepository.save(newUser);
     }
 
     @Override
-    public void updateOAuth2User(User user, String name, AuthProvider provider) {
+    public void updateOAuth2User(User user, String name, Byte[] picture, AuthProvider provider) {
         user.setFirstName(name);
         user.setAuthProvider(provider);
+        user.setProfileImage(picture);
 
         userRepository.save(user);
     }

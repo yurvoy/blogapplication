@@ -1,8 +1,12 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Map;
 
@@ -24,17 +28,24 @@ public class GithubOAuth2User implements OAuth2User {
         return oAuth2User.getAuthorities();
     }
 
+    // principal.getName() must return email address !
     @Override
     public String getName() {
         return oAuth2User.getAttribute("email");
     }
 
-    public String getEmail(){
-        return oAuth2User.getAttribute("email");
-    }
-
     public String getFullName(){
         return oAuth2User.getAttribute("login");
+    }
+
+    public Byte[] getPicture() throws IOException {
+        String picture = oAuth2User.getAttribute("picture");
+
+        byte[] bytes = IOUtils.toByteArray(new URL(picture));
+
+        Byte[] pictureObject = ArrayUtils.toObject(bytes);
+
+        return pictureObject;
     }
 
 }

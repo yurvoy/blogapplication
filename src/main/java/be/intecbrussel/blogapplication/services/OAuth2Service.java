@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 
 @Service
 public class OAuth2Service extends DefaultOAuth2UserService {
@@ -31,26 +33,36 @@ public class OAuth2Service extends DefaultOAuth2UserService {
         String email;
         String name;
         AuthProvider provider;
+        Byte[] picture = null;
 
         if (oAuth2User.getAttribute("name") == null) {
-            email = githubOAuth2User.getEmail();
+            email = githubOAuth2User.getName();
             name = githubOAuth2User.getFullName();
+            try {
+                picture = githubOAuth2User.getPicture();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             provider = AuthProvider.GITHUB;
         } else {
-            email = googleOAuth2User.getEmail();
+            email = googleOAuth2User.getName();
             name = googleOAuth2User.getFullName();
+            try {
+                picture = googleOAuth2User.getPicture();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             provider = AuthProvider.GOOGLE;
         }
-
-        System.out.println("success oauth handler test: " + email);
 
         User user = userService.findByEmail(email);
 
         if(user == null) {
-            userService.createNewOAuth2User(email, name, provider);
+            userService.createNewOAuth2User(email, name, picture, provider);
         } else {
-            userService.updateOAuth2User(user, name, provider);
+            userService.updateOAuth2User(user, name, picture, provider);
         }
+
         if (oAuth2User.getAttribute("name") == null) {
             return githubOAuth2User;
         }

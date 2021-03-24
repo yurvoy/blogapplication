@@ -36,7 +36,7 @@ public interface UserService extends UserDetailsService{
 
     List<User> findAll();
 
-    void createNewOAuth2User(String email, String name, AuthProvider provider);
+    void createNewOAuth2User(String email, String name, Byte[] picture, AuthProvider provider);
 
-    void updateOAuth2User(User user, String name, AuthProvider provider);
+    void updateOAuth2User(User user, String name, Byte[] picture, AuthProvider provider);
 }
