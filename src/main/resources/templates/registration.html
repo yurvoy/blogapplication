@@ -11,6 +11,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
           integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
           crossorigin="anonymous"/>
+    <script src="https://kit.fontawesome.com/51a5fc685f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -138,6 +139,18 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
+<div class="container col-3 pt-5 w-100">
+    <div class="container justify-content-center">
+        <a class="btn btn-outline-dark btn-lg btn-block" th:href="@{/oauth2/authorization/github}">
+            <span style="font-size: 2em; vertical-align: middle"><i class="fa fa-github-square"></i></span>
+            <span>Login with <strong>Github</strong></span>
+        </a>
+        <a class="btn btn-outline-danger btn-lg btn-block" th:href="@{/oauth2/authorization/google}">
+            <span style="font-size: 2em; vertical-align: middle"><i class="fa fa-google-plus-square"></i></span>
+            <span>Login with <strong>Google</strong></span>
+        </a>
     </div>
 </div>
 <!-------------- End line Formulair ---------------->
