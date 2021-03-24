@@ -139,6 +139,8 @@ public class UserRegistrationController {
         }
 
         model.addAttribute("token", token);
+        model.addAttribute("captcha", "captchaAvailable");
+
         return "verifyAccount";
     }
 

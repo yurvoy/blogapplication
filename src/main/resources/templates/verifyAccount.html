@@ -64,7 +64,7 @@
             Thanks for becoming part of our community
         </h3>
         <form th:action="@{'/verifyAccount/' + ${token}}" th:method="post" onsubmit="return validateCaptcha()">
-            <div th:unless="${validated}">
+            <div th:if="${captcha}">
                 <h5 class="font-weight-light">
                     Please show us that you're not a robot!
                 </h5>
