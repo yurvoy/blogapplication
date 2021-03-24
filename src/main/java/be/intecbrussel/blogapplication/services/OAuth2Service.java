@@ -34,11 +34,11 @@ public class OAuth2Service extends DefaultOAuth2UserService {
 
         if (oAuth2User.getAttribute("name") == null) {
             email = githubOAuth2User.getEmail();
-            name = githubOAuth2User.getName();
+            name = githubOAuth2User.getFullName();
             provider = AuthProvider.GITHUB;
         } else {
             email = googleOAuth2User.getEmail();
-            name = googleOAuth2User.getName();
+            name = googleOAuth2User.getFullName();
             provider = AuthProvider.GOOGLE;
         }
 
@@ -56,4 +56,5 @@ public class OAuth2Service extends DefaultOAuth2UserService {
         }
         return googleOAuth2User;
     }
+
 }
