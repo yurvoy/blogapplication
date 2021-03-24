@@ -1,17 +1,12 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import javax.xml.bind.DatatypeConverter;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Map;
 
