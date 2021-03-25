@@ -68,6 +68,7 @@ class UserControllerTest {
 
         MockitoAnnotations.openMocks(this);
         user = User.builder().id(1L).email("abc@gmail.com").password("abcdef").build();
+        user.setAccountVerified(true);
         userController = new UserController(userService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(userController)
@@ -91,9 +92,9 @@ class UserControllerTest {
                 .principal(mockPrincipal);
 
         mockMvc.perform(requestBuilder)
-                .andExpect(status().isOk())
                 .andExpect(view().name("user/updateProfile"))
-                .andExpect(model().attributeExists("user"));
+                .andExpect(model().attributeExists("user"))
+                .andExpect(status().isOk());
 
     }
 

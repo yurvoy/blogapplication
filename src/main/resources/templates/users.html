@@ -110,14 +110,14 @@
                 <div class="col col-sm-2 col-sm-offset-4 text-right">
 
                     <form th:action="@{/follow/} + ${user.email}" th:if="${followingStatus.containsKey(user.email)
-				&& !followingStatus.get(user.email)}" method="post">
+				&& !followingStatus.get(user.email) && loggedInUser.getAccountVerified()}" method="post">
 
                         <button style="float:right" type="Submit" class="btn btn-md btn-success">Follow</button>
 
                     </form>
 
                     <form th:action="@{/unfollow/} + ${user.email}" th:if="${followingStatus.containsKey(user.email)
-				&& followingStatus.get(user.email)}" method="post">
+				&& followingStatus.get(user.email) && loggedInUser.getAccountVerified()} " method="post">
 
                         <button style="float:right" type="Submit" class="btn btn-md btn-primary unfollow_btn">Following</button>
 

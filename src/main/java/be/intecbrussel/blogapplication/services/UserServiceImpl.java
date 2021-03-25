@@ -62,8 +62,8 @@ public class UserServiceImpl implements UserService {
         user.setBirthday(registration.getBirthday());
         user.setGender(registration.getGender());
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
-        user.setAuthProvider(AuthProvider.LOCAL);
         user.setAccountVerified(false);
+        user.setAuthProvider(AuthProvider.LOCAL);
         return userRepository.save(user);
     }
 
@@ -168,6 +168,7 @@ public class UserServiceImpl implements UserService {
         newUser.setProfileImage(picture);
         newUser.setAuthProvider(provider);
         newUser.setAccountVerified(true);
+
 
         userRepository.save(newUser);
     }

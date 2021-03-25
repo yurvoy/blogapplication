@@ -21,10 +21,15 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.Validator;
+import java.util.Date;
+
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
 import org.thymeleaf.context.Context;
+import javax.validation.Validator;
+import java.util.Date;
 
 @Controller
 public class UserRegistrationController {
@@ -66,7 +71,6 @@ public class UserRegistrationController {
         } else if (result.hasErrors()) {
             return "registration";
         }
-
             String email = userDto.getEmail();
 
             SecurityToken verificationToken = new SecurityToken(RandomString.make(30));

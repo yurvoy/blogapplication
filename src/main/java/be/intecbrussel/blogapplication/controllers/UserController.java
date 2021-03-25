@@ -28,11 +28,12 @@ public class UserController {
 
         User existing = userService.findById(userId);
         User visitor = userService.findByEmail(principal.getName());
-        if (existing == null || existing != visitor) {
+
+        if (existing == null || existing != visitor || !existing.getAccountVerified()) {
             return "redirect:/index";
         }
-
         model.addAttribute("user", userService.findById(userId));
+
         return "user/updateProfile";
     }
 
@@ -49,6 +50,7 @@ public class UserController {
 
         User userProfile = userService.findById(userId);
         User userVisitor = userService.findByEmail(principal.getName());
+
         model.addAttribute("view", "user/profile");
         model.addAttribute("userVisitor", userVisitor);
         model.addAttribute("user", userProfile);
@@ -63,7 +65,7 @@ public class UserController {
             }
         }
 
-        model.addAttribute("currentUser", userVisitor);
+        //model.addAttribute("currentUser", userVisitor);
         model.addAttribute("following", isFollowing);
 
 
@@ -132,6 +134,7 @@ public class UserController {
             model.addAttribute("filter", "all");
         }
         model.addAttribute("users", users);
+        model.addAttribute("loggedInUser", loggedInUser);
 
         SetFollowingStatus(users, usersFollowing, model);
 

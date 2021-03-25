@@ -116,6 +116,8 @@ public class PostControllerTest {
 
         mockMvc.perform(requestBuilder)
                 .andExpect( view().name("user/post") );
+
+
     }
 
     @Test

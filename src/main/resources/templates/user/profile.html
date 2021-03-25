@@ -95,6 +95,7 @@
                     </a>
                 </ul>
             </div>
+
         </div>
 </nav>
 
@@ -104,6 +105,11 @@
 
 <div class="row py-5 px-4">
     <div class="col-md-5 mx-auto">
+        <div sec:authorize="isAuthenticated()" th:unless="${userVisitor.getAccountVerified()}">
+            <div class="alert alert-primary">
+                <strong>Your account must be verified before posting or interacting with other users :)</strong>
+            </div>
+        </div>
         <!-- Profile widget -->
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 cover">
@@ -137,26 +143,13 @@
                         <h4 class="mt-0 mb-0"><span th:text="${user.firstName}"> </span>&nbsp<span
                                 th:text="${user.lastName}"></span></h4>
                         <p class="small mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Stockholm</p>
-                        <div class="col p-0">
-<<<<<<< HEAD
 
-                            <form th:action="@{/follow/} + ${user.email}"
-                                  th:if="${!following and !user.equals(currentUser)}" method="post">
-                                <button style="float:right; width: 80px" type="Submit" class="btn btn-xs btn-success">
-                                    Follow
-                                </button>
-                            </form>
-                            <form th:action="@{/unfollow/} + ${user.email}" th:if="${following}" method="post">
-                                <button style="float:right; width: 80px" type="Submit"
-                                        class="btn btn-xs btn-primary unfollow_btn pl-0 pr-0 text-center">Unfollow
-                                </button>
-=======
-                            <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(currentUser)}" method="post">
+                        <div class="col p-0" sec:authorize="isAuthenticated()" th:if="${user.getAccountVerified() && userVisitor.getAccountVerified()}">
+                            <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(userVisitor)}" method="post"> <!-- 001 -->
                                 <button style="float:right; width: 80px" type="Submit" class="btn btn-xs btn-success">Follow</button>
                             </form>
                             <form th:action="@{/unfollow/} + ${user.email}" th:if="${following}" method="post">
                                 <button style="float:right; width: 80px" type="Submit"  class="btn btn-xs btn-primary unfollow_btn pl-0 pr-0 text-center">Unfollow</button>
->>>>>>> 866d23fbf4358058b39a68866e31846a17b0c961
                             </form>
                         </div>
 
@@ -183,6 +176,7 @@
                             class="text-muted"> <i
                             class="fas fa-user mr-1"></i>Following</small>
                     </li>
+
                 </ul>
             </div>
 
@@ -193,7 +187,7 @@
                 </div>
             </div>
             <div class="card gedf-card" sec:authorize="isAuthenticated()"
-                 th:if="${userVisitor.getId() == user.getId()}">
+                 th:if="${userVisitor.getId() == user.getId() && user.getAccountVerified()}">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -235,6 +229,7 @@
                                             <textarea class="form-control" rows="1" cols="50" th:field="*{tags}"
                                                       id="post-tag"
                                                       placeholder="What is your tag?"></textarea>
+
                                         <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
                                     </div>
 
@@ -279,6 +274,7 @@
         <!--- End Post form -->
 
         <!---- Posts from user ----------->
+
         <div th:if="${#lists.isEmpty(user.posts)}">
             <h3 class="text-white">There are no posts yet... :(</h3>
         </div>
@@ -286,7 +282,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="dropdown" th:if="${userVisitor.getId() == user.getId()}">
+                        <div class="dropdown" sec:authorize="isAuthenticated()" th:if="${userVisitor.getId() == user.getId() && user.getAccountVerified()}">
                             <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <i class="fa fa-ellipsis-h"></i>
@@ -319,8 +315,9 @@
                 <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
 
 
+
             </div>
-            <div class="card-footer">
+            <div class="card-footer" th:if="${user.getAccountVerified() && userVisitor.getAccountVerified()}">
                 <a class="card-link"><i class="fa fa-gittip">
                     <span th:text="${#lists.size(post.getLikes())}"></span></i></a>
                 <a class="card-link" th:if="not ${#lists.contains(post.likes, userVisitor)}"
@@ -341,7 +338,7 @@
                             <div class="card card-body mb-4" th:each="comment: ${post.comments}">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div class="mr-2" sec:authorize="isAuthenticated()">
+                                        <div class="mr-2" sec:authorize="isAuthenticated()" th:if="${user.getAccountVerified()}">
                                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLfn6eqrsbTp6+zg4uOwtrnJzc/j5earsbW0uby4vcDQ09XGyszU19jd3+G/xMamCvwDAAAFLklEQVR4nO2d2bLbIAxAbYE3sDH//7WFbPfexG4MiCAcnWmnrzkjIRaD2jQMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMwzAMw5wQkHJczewxZh2lhNK/CBOQo1n0JIT74/H/qMV0Z7GU3aCcVPuEE1XDCtVLAhgtpme7H0s1N1U7QjO0L8F7llzGeh1hEG/8Lo7TUmmuSrOfns9xnGXpXxsONPpA/B6OqqstjC6Ax/0ujkNdYQQbKNi2k64qiiEZ+ohi35X+2YcZw/WujmslYewiAliVYrxgJYrdwUmwXsU+RdApUi83oNIE27YvrfB/ZPg8+BJETXnqh9CVzBbTQHgojgiCvtqU9thFJg/CKz3VIMKMEkIXxIWqIpIg2SkjYj+xC816mrJae2aiWGykxRNsW0UwiJghJDljYI5CD8GRiCtIsJxizYUPQ2pzItZy5pcisTRdk/a9m4amtNNfBuQkdVhSaYqfpNTSFGfb9GRIakrE2Pm+GFLaCQPqiu0OpWP+HMPQQcgQMiQprWXNmsVwIjQjYi/ZrhAqNTCgr2gu0Jnz85RSSjso0HkMFZ0YZjKkc26a/jlmh9JiDyDxi9oeorTYAzZkwwoMz19pzj9bnH/GP/+qbchjSGflneWYhtTuKdMOmNKZcJ5TjInQKcYXnESd/jQxy0ENpULTNGOGgxpap/oyw9pbUAqhfx2Dbkhovvfgz4iUzoM9+GlK6/Mh4q29hyC1mwro30hpVVLPF9wYQr71RazOeM5/cw81iBRD+A03aM9/C/obbrKjbYSpCmIVG3qT/Q8oeUo3Rz0IL7vI1tEbCB9pSiu8I/aV8x3Kg/BGWrWp4ZVs0nZfmAoEG4h/61yHYIJiFSl6Q0Vk6tTW1N8kYp8hdOkfHYYMXd2Qft+8CYwqYDSKvqIh+MCF8Wgca2u/cwdgeW3TtuVn6+1oBs3yLo5C2JpK6CvQzGpfUkz9UG/87gCsi5o2LIXolxN0FbwAsjOLEr+YJmXn7iR6N0BCt5p5cMxm7eAsfS+/CACQf4CTpKjzgkvr2cVarVTf96372yut7XLJ1sa7lv6VcfgYrWaxqr3Wlo1S6pvStr22sxOtTNPLzdY3nj20bPP+ejFdJYkLsjGLdtPBEbe/mr2bQKiXWJDroA+vtzc0p9aahuwqHMDYrQEXHEw9jwQl3drMpts9JBU1SdktPe5FBRdJQ6bwXBpa57ib2A8kukQDzMjh++Uo7Fo6Wd02Pkf4fknqoo4HtvAIjsqUcjx6DIPgWCaOML9rKI/oqD9/lgNrn+eF+p7j8tnzHBiR7+kdUGw/+V1Kzkc75mMy6U+FMaxjPibiM1U1uGM+puInHpmALZCgP4pt7i840MV8+0R1zPsRB6UTcqpizncYwZ89syDydfyWCwXB1l8/zRNGWbTG/GHKUm9AkxHMc/EGSk3z2+ArEhPEV5TUBLEvUGFcjEUH80J/jveTGOAJEljJbILWGQT3zRYiwuKsUXN1EEJAzBhRJFll7mBUG7KD8EqPkKekBREaL8hMDZLQSG6AQjtHPYmvTQnX0TtpC1SYCe2YdkkyLP3jj5BSbKiuR585eQhTgoje6yIb0Yb0C+mV6EYvebqw5SDy2WmubogZiF2AVxPC2FpDf8H2Q9QWo6IkjUxTWVEI3WY/wrCeSuqJ+eRWzXR/JXwgVjUMozbCOfoEZiSiKVGepqv5CJ8RyR4D7xBeamqa7z3BJ/z17JxuBPdv93d/a2Ki878MMAzDMAzDMAzDMAzDMF/KP09VUmxBAiI3AAAAAElFTkSuQmCC"
                                                  class="rounded-circle" width="45" height="45" alt="100x100"
                                                  th:src="@{'/user/' + ${comment.user.id} + '/profileimage'}"
@@ -367,8 +364,9 @@
                             </div>
                             <!--- End post Comments list --->
                             <!--- start comments form --->
-                            <form th:action="@{'/user/' + ${post.id} + '/' + ${user.id} + '/createComment'}"
-                                  class="form-group mt-4" method="post" sec:authorize="isAuthenticated()">
+
+                            <form sec:authorize="isAuthenticated()" th:action="@{'/user/' + ${post.id} + '/' + ${user.id} + '/createComment'}"
+                                  class="form-group mt-4" method="post"  th:if="${user.getAccountVerified()}">
                                 <div class="form-group">
                                         <textarea class="form-control" rows="2" cols="50" name="commentText"
                                                   placeholder="What do you think about?" required></textarea>

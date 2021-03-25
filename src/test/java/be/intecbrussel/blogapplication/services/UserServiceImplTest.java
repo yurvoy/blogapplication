@@ -31,6 +31,7 @@ class UserServiceImplTest {
     @Mock
     BCryptPasswordEncoder passwordEncoder;
 
+
     Principal mockPrincipal;
 
 

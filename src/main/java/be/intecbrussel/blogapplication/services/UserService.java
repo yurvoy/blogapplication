@@ -43,4 +43,5 @@ public interface UserService extends UserDetailsService{
 
     void updateOAuth2User(User user, String name, Byte[] picture, AuthProvider provider);
 
+
 }

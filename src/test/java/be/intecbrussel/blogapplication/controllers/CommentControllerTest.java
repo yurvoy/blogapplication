@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -56,6 +57,8 @@ public class CommentControllerTest {
         when(mockPrincipal.getName()).thenReturn("abc@gmail.com");
 
         commentController = new CommentController(userService, postService, commentService);
+
+        //user.setAccountVerified(true);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(commentController)
                 .setViewResolvers(webConfig.viewResolver())
@@ -69,21 +72,11 @@ public class CommentControllerTest {
     }
 
 
-    @Test
-    void simpleProfileComment() throws Exception {
-        when(postService.findById(anyLong())).thenReturn(post);
-        when(userService.findById(anyLong())).thenReturn(user);
-
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/user/" + post.getId() + "/" + user.getId() + "/profileComment")
-                .principal(mockPrincipal);
-
-        mockMvc.perform(requestBuilder)
-                .andExpect(view().name("redirect:/user/" + user.getId() + "/profile"));
-    }
 
     @Test
     void simpleFrontPageComment() throws Exception {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+
         when(postService.findById(anyLong())).thenReturn(post);
         when(userService.findById(anyLong())).thenReturn(user);
 
@@ -92,19 +85,9 @@ public class CommentControllerTest {
                 .principal(mockPrincipal);
 
         mockMvc.perform(requestBuilder)
-                .andExpect(view().name("redirect:/index"));
+                .andExpect(view().name("redirect:" + request.getHeader("Referer")));
     }
 
-    @Test
-    void shouldStayOnFrontPageIfBindingErrors() throws Exception {
-        when(postService.findById(anyLong())).thenReturn(post);
-        when(userService.findById(anyLong())).thenReturn(user);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/user/" + post.getId() + "/" + user.getId() + "/profileComment")
-                .principal(mockPrincipal);
 
-        mockMvc.perform(requestBuilder)
-                .andExpect(view().name("user/profile"));
-    }
 }

@@ -60,6 +60,7 @@ class UserRegistrationControllerTest {
     @MockBean
     private HttpServletRequest request;
 
+
     @Mock
     private ITemplateEngine templateEngine;
 
@@ -165,3 +166,6 @@ class UserRegistrationControllerTest {
     }
 
 }
+
+
+

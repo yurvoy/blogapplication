@@ -36,6 +36,7 @@ public class PostServiceImpl implements PostService{
         post.setPostTitle(newPost.getPostTitle());
         post.setPostText(newPost.getPostText());
         post.setPostTimeStamp(LocalDateTime.now(Clock.systemUTC()));
+
         post.setTags(newPost.getTags());
         //post.setPostTimeStamp(LocalDateTime.now(Clock.systemDefaultZone()));
         post.setUser(user);
