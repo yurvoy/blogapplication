@@ -34,7 +34,7 @@ public class GithubOAuth2User implements OAuth2User {
         if (oAuth2User.getAttribute("email") != null) {
             return oAuth2User.getAttribute("email");
         }
-        return oAuth2User.getAttribute("node_id");
+        return oAuth2User.getAttribute("login") + "@github.com";
     }
 
     public String getFullName(){

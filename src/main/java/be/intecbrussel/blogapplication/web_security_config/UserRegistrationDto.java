@@ -5,6 +5,7 @@ import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 
 @Data
@@ -18,6 +19,7 @@ public class UserRegistrationDto {
 
     private String confirmPassword;
 
+    @NotNull(message = "Please enter birth date")
     private String birthday;
 
     private String gender;
