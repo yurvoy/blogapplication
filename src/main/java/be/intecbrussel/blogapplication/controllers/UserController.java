@@ -30,7 +30,8 @@ public class UserController {
 
         User existing = userService.findById(userId);
         User visitor = userService.findByEmail(principal.getName());
-        if (existing == null || existing != visitor) {
+
+        if (existing == null || existing != visitor || !existing.getAccountVerified()) {
             return "redirect:/index";
         }
 
