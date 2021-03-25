@@ -135,6 +135,7 @@ public class UserController {
             model.addAttribute("filter", "all");
         }
         model.addAttribute("users", users);
+        model.addAttribute("loggedInUser", loggedInUser);
 
         SetFollowingStatus(users, usersFollowing, model);
 
