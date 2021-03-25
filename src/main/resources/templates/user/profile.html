@@ -258,7 +258,7 @@
                             class="fa fa-clock-o"></i>
                     </i>
                 </div>
-                <a class="card-link" href="#">
+                <a class="card-link" href="#" th:href="@{'/user/'+ ${post.getId()}}" >
                     <h5 class="card-title" th:text="${post.postTitle}"></h5>
                 </a>
 
@@ -269,13 +269,13 @@
                 <a class="card-link"><i class="fa fa-gittip">
                     <span th:text="${#lists.size(post.getLikes())}"></span></i></a>
                 <a class="card-link" th:if="not ${#lists.contains(post.likes, userVisitor)}"
-                   href="/" th:href="@{'/likeOwnPost/' + ${post.id}}">
+                   href="/" th:href="@{'/likePost/' + ${post.id}}">
                     <i class="fa fa-thumbs-up"> Like</i></a>
                 <a class="card-link" th:if="${#lists.contains(post.likes, userVisitor)}"
-                   href="/" th:href="@{'/likeOwnPost/' + ${post.id}}">
+                   href="/" th:href="@{'/likePost/' + ${post.id}}">
                     <i class="fa fa-thumbs-down"> Unlike</i></a>
                 <a class="card-link" data-toggle="collapse" th:href="'#collapseExample' + ${post.id}" role="button"
-                   aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"></i> Comment</a>
+                   aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment" th:text="${post.comments.size()} > 1 ? ${post.comments.size()} + ' ' + 'Comments' : ${post.comments.size()} + ' ' + 'Comment'"></i> </a>
                 <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                 <!--- start collapse comments div --->
                 <div class="collapse" th:id="'collapseExample' + ${post.id}">
@@ -311,7 +311,7 @@
                             </div>
                             <!--- End post Comments list --->
                             <!--- start comments form --->
-                            <form th:action="@{'/user/' + ${post.id} + '/' + ${user.id} + '/profileComment'}"
+                            <form th:action="@{'/user/' + ${post.id} + '/' + ${user.id} + '/createComment'}"
                                   class="form-group mt-4" method="post" sec:authorize="isAuthenticated()">
                                 <div class="form-group">
                                         <textarea class="form-control" rows="2" cols="50" name="commentText"

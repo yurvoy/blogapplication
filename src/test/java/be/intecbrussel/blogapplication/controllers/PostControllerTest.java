@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -54,7 +55,7 @@ public class PostControllerTest {
     @BeforeEach
     public void setUp() throws Exception {
         mockPrincipal = mock(Principal.class);
-        when(mockPrincipal.getName()).thenReturn("abc@gmail.com");
+//        when(mockPrincipal.getName()).thenReturn("abc@gmail.com");
 
         MockitoAnnotations.openMocks(this);
         postController = new PostController(userService, postService);
@@ -107,6 +108,17 @@ public class PostControllerTest {
     }
 
     @Test
+    public void singlePost() throws Exception {
+        when(postService.findById(anyLong())).thenReturn(post);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/user/" + post.getId());
+
+        mockMvc.perform(requestBuilder)
+                .andExpect( view().name("/user/post") );
+    }
+
+    @Test
     public void processUpdatePost() throws Exception {
         when(postService.findById(anyLong())).thenReturn(post);
 
@@ -120,25 +132,14 @@ public class PostControllerTest {
 
     @Test
     public void likePost() throws Exception {
+        HttpServletRequest request = mock(HttpServletRequest.class);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/likePost/" + post.getId())
                 .principal(mockPrincipal);
 
         mockMvc.perform(requestBuilder)
-                .andExpect(view().name("redirect:/index"));
-    }
-
-    @Test
-    public void likeOwnPost() throws Exception {
-        when(postService.findById(anyLong())).thenReturn(post);
-
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/likeOwnPost/" + post.getId())
-                .principal(mockPrincipal);
-
-        mockMvc.perform(requestBuilder)
-                .andExpect(view().name("redirect:/user/" + user.getId() + "/profile"));
+                .andExpect(view().name("redirect:" + request.getHeader("Referer")));
     }
 
     @Test

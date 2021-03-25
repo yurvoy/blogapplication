@@ -1,6 +1,5 @@
 package be.intecbrussel.blogapplication.controllers;
 
-import be.intecbrussel.blogapplication.model.Comment;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.CommentService;
@@ -8,14 +7,14 @@ import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @Controller
 public class CommentController {
@@ -32,32 +31,19 @@ public class CommentController {
 
     @PostMapping("user/{postId}/{userId}/createComment")
     public String createNewPost(@PathVariable Long postId, @PathVariable Long userId, @Valid @ModelAttribute("comment")
-            CreateCommentDto comment, BindingResult result) {
+            CreateCommentDto comment, BindingResult result, HttpServletRequest request, Model model) {
 
         Post post = postService.findById(postId);
         User user = userService.findById(userId);
         if (result.hasErrors() || user == null || post == null) {
-            return "user/frontpage";
+            return "redirect:" + request.getHeader("Referer");
         }
 
         commentService.saveComment(post.getId(), user.getId(), comment);
 
-        return "redirect:/index";
-    }
 
-    @PostMapping("user/{postId}/{userId}/profileComment")
-    public String createNewComment(@PathVariable Long postId, @PathVariable Long userId, @Valid @ModelAttribute("comment")
-            CreateCommentDto comment, BindingResult result, Principal principal) {
 
-        Post post = postService.findById(postId);
-        User user = userService.findByEmail(principal.getName());
-        if (result.hasErrors() || user == null || post == null) {
-            return "user/profile";
-        }
-
-        commentService.saveComment(post.getId(), user.getId(), comment);
-
-        return "redirect:/user/" + userId + "/profile";
+        return "redirect:" + request.getHeader("Referer");
     }
 
     @PostMapping("/error")

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -50,6 +50,21 @@ public class PostController {
             return "redirect:/";
         }
 
+    }
+
+    @GetMapping("/user/{postId}")
+    public String singlePost(@PathVariable Long postId, Model model){
+
+        Post post= postService.findById(postId);
+        User user = this.userService.getLoggedInUser();
+        User postOwner = post.getUser();
+
+        model.addAttribute("postOwner", postOwner);
+        model.addAttribute("post", post);
+        model.addAttribute("user", user);
+
+
+        return "/user/post";
     }
 
     @GetMapping("editPost/{id}")
@@ -91,23 +106,12 @@ public class PostController {
 
 
     @GetMapping("likePost/{id}")
-    public String likePost(@PathVariable Long id, Principal principal){
+    public String likePost(@PathVariable Long id, Principal principal, HttpServletRequest request){
 
         if(principal != null){
             postService.likePost(id, principal);
         }
-        return "redirect:/index";
-    }
-
-    @GetMapping("likeOwnPost/{id}")
-    public String likeOwnPost(@PathVariable Long id, Principal principal){
-        Post post = postService.findById(id);
-        Long userId = post.getUser().getId();
-
-        if(principal != null){
-            postService.likePost(id, principal);
-        }
-        return "redirect:/user/" + userId + "/profile";
+        return "redirect:" + request.getHeader("Referer");
     }
 
     @GetMapping("deletePost/{id}")
@@ -182,4 +186,6 @@ public class PostController {
         model.addAttribute("user", userService.findById(userId));
         return "user/configuration/reviewPosts";
     }
+
+
 }

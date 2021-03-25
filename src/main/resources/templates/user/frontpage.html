@@ -110,6 +110,7 @@
                         <span class="h7 glyphicon-font="><a href="/"
                                                             th:href="@{'/users/'}"
                                                             th:text="'Search Members' ">See your profile</a></span><br><br>
+
                         <div class="h7 glyphicon-font=">Biography</div>
 
                         <div class="h7 text-muted" th:text="${user.userBio}"></div>
@@ -259,7 +260,7 @@
                             ago
                         </i>
                     </div>
-                    <a class="card-link" href="#">
+                    <a class="card-link" href="#" th:href="@{'/user/'+ ${post.getId()}}">
                         <h5 class="card-title" th:text="${post.postTitle}"></h5>
                     </a>
 
@@ -276,7 +277,7 @@
                        href="/" th:href="@{'/likePost/' + ${post.id}}">
                         <i class="fa fa-thumbs-down"> Unlike</i></a>
                     <a class="card-link" data-toggle="collapse" th:href="'#collapseExample' + ${post.id}" role="button"
-                       aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"></i> Comment</a>
+                       aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment" th:text="${post.comments.size()} > 1 ? ${post.comments.size()} + ' ' + 'Comments' : ${post.comments.size()} + ' ' + 'Comment'"></i></a>
                     <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                     <!--- start collapse comments div --->
                     <div class="collapse" th:id="'collapseExample' + ${post.id}">
