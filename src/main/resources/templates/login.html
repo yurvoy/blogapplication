@@ -17,15 +17,27 @@
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blogify</a>
-            <ul class = "navbar-nav ml-auto">
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()" font-color="black">
-                    <a href="/" th:href="@{/login}">Log in</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()" font-color="black">
-                    <a href="/" th:href="@{/registration}">Register</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
-                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
-            </ul>
+            <a class="navbar-brand" href="#" th:href="@{/index}">
+                <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
+            </a>
+            <div class="navbar-nav ml-auto">
+
+                <a href="/" th:href="@{/index}">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
+                            th:text="Frontpage"></button>
+                </a>
+
+                <a href="/" th:href="@{/registration}" sec:authorize="isAnonymous()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg"
+                            th:text="Register"></button>
+                </a>
+
+                <a href="/" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg"
+
+                            th:text="Logout"></button>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
