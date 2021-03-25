@@ -3,6 +3,7 @@ package be.intecbrussel.blogapplication.services;
 import be.intecbrussel.blogapplication.exceptions.UserNotFoundException;
 
 import be.intecbrussel.blogapplication.model.AuthProvider;
+import be.intecbrussel.blogapplication.model.SecurityToken;
 import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,6 +29,8 @@ public interface UserService extends UserDetailsService{
 
     User getByResetPasswordToken(String token);
 
+    User getByVerifyAccountToken(String token);
+
     void updatePassword(User user, String newPassword);
 
     User getLoggedInUser();
@@ -39,4 +42,5 @@ public interface UserService extends UserDetailsService{
     void createNewOAuth2User(String email, String name, Byte[] picture, AuthProvider provider);
 
     void updateOAuth2User(User user, String name, Byte[] picture, AuthProvider provider);
+
 }

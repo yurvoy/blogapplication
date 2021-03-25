@@ -59,7 +59,6 @@ public class ForgotPasswordControllerTest {
         String token = RandomString.make(30);
 
         userService.updateResetPasswordToken(token, email);
-
     }
 
 

@@ -2,7 +2,10 @@
 package be.intecbrussel.blogapplication.controllers;
 
 
+import be.intecbrussel.blogapplication.model.SecurityToken;
 import be.intecbrussel.blogapplication.model.User;
+import be.intecbrussel.blogapplication.services.ITemplateEngine;
+import be.intecbrussel.blogapplication.services.SecurityTokenService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.web_security_config.WebConfig;
@@ -12,13 +15,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.thymeleaf.context.Context;
+
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,24 +46,42 @@ class UserRegistrationControllerTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private SecurityTokenService securityTokenService;
+
     @InjectMocks
     private WebConfig webConfig;
 
+    @Mock
+    private JavaMailSender mailSender;
 
+    @MockBean
+    private HttpServletRequest request;
+
+    @Mock
+    private ITemplateEngine templateEngine;
 
     @InjectMocks
     private UserRegistrationController userRegistrationController;
 
     UserRegistrationDto user;
 
+    SecurityToken securityToken;
+
+    MimeMessage mockMessage;
+
+    MimeMessageHelper mockHelper;
+
     User user1;
 
     MockMvc mockMvc;
 
+    Model model;
+
     @BeforeEach
     void setUp() {
 
-        userRegistrationController = new UserRegistrationController(userService);
+        userRegistrationController = new UserRegistrationController(userService, securityTokenService, mailSender, templateEngine);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(userRegistrationController)
                 .setViewResolvers(webConfig.viewResolver())
@@ -67,8 +97,22 @@ class UserRegistrationControllerTest {
         user.setGender("male");
         user.setTerms(true);
 
+        user1 = new User();
+        user1.setId(1L);
+        user1.setEmail("foofoo@gmail.com");
+
+        securityToken = new SecurityToken();
+        securityToken.setId(1L);
+        securityToken.setToken("ThisIsATokenTest");
+        securityToken.setUser(user1);
+
         mockBindingResult = mock(BindingResult.class);
-    }
+        request = mock(HttpServletRequest.class);
+        mockHelper = mock(MimeMessageHelper.class);
+        mockMessage = mock(MimeMessage.class);
+        templateEngine = mock(ITemplateEngine.class);
+        model = mock(Model.class);
+       }
 
     @Test
     public void showRegistrationFormTest() throws Exception {
@@ -79,8 +123,13 @@ class UserRegistrationControllerTest {
 
     @Test
     void simpleRegistration() throws Exception {
-        when(mockBindingResult.hasErrors()).thenReturn(false);
-        String registered = userRegistrationController.registerUserAccount(user, mockBindingResult);
+
+
+        when(request.getRequestURL()).thenReturn(new StringBuffer("ThisIsMockingURL"));
+        when(request.getServletPath()).thenReturn("ThisIsAMockingPath");
+        when(mailSender.createMimeMessage()).thenReturn(mockMessage);
+
+        String registered = userRegistrationController.registerUserAccount(user, request, model, mockBindingResult);
         assertThat(registered, is("redirect:/registration?success"));
     }
 
@@ -88,9 +137,28 @@ class UserRegistrationControllerTest {
     void shouldStayOnRegistrationPageIfBindingErrors() throws Exception {
         when(mockBindingResult.hasErrors()).thenReturn(true);
 
-        String registered = userRegistrationController.registerUserAccount(user, mockBindingResult);
+        String registered = userRegistrationController.registerUserAccount(user, request, model, mockBindingResult);
 
         assertThat(registered, is("registration"));
     }
 
+
+    @Test
+    void showVerifyAccountPage() throws Exception {
+
+        String verification = userRegistrationController.showVerifiedAccountPage("ThisIsAMockToken", model);
+
+        assertThat(verification, is("/verifyAccount"));
+    }
+
+    @Test
+    void showVerifyCaptcha() throws Exception {
+
+        when(securityTokenService.getSecurityTokenByToken(anyString())).thenReturn(securityToken);
+        when(userService.findById(anyLong())).thenReturn(user1);
+
+        String verification = userRegistrationController.showResponseFromCaptcha("ThisIsAMockToken", model);
+
+        assertThat(verification, is("verifyAccount"));
+    }
 }

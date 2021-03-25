@@ -46,6 +46,13 @@ public class User implements Principal {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
+    @Column
+    @OneToMany
+    private List<SecurityToken> securityTokens = new ArrayList<>();
+
+    @Column
+    private boolean accountVerified = false;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_roles",
@@ -104,5 +111,9 @@ public class User implements Principal {
     @Override
     public boolean implies(Subject subject) {
         return false;
+    }
+
+    public boolean getAccountVerified() {
+        return accountVerified;
     }
 }

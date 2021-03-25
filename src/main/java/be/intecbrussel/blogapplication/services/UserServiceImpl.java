@@ -3,6 +3,8 @@ package be.intecbrussel.blogapplication.services;
 
 import be.intecbrussel.blogapplication.exceptions.UserNotFoundException;
 import be.intecbrussel.blogapplication.model.AuthProvider;
+import be.intecbrussel.blogapplication.model.SecurityToken;
+import be.intecbrussel.blogapplication.repositories.SecurityTokenRepository;
 import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.Role;
 import be.intecbrussel.blogapplication.model.User;
@@ -29,10 +31,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final SecurityTokenRepository securityTokenRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, SecurityTokenRepository securityTokenRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.securityTokenRepository = securityTokenRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -59,6 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setGender(registration.getGender());
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
         user.setAuthProvider(AuthProvider.LOCAL);
+        user.setAccountVerified(false);
         return userRepository.save(user);
     }
 
@@ -112,6 +117,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByResetPasswordToken(String token) {
         return userRepository.findByResetPasswordToken(token);
+    }
+
+    @Override
+    public User getByVerifyAccountToken(String token) {
+        SecurityToken verificationToken = securityTokenRepository.findByToken(token);
+        return verificationToken.getUser();
     }
 
     @Override

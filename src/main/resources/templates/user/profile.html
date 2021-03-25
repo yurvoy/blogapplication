@@ -134,6 +134,7 @@
                                 th:text="${user.lastName}"></span></h4>
                         <p class="small mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Stockholm</p>
                         <div class="col p-0">
+<<<<<<< HEAD
 
                             <form th:action="@{/follow/} + ${user.email}"
                                   th:if="${!following and !user.equals(currentUser)}" method="post">
@@ -145,6 +146,13 @@
                                 <button style="float:right; width: 80px" type="Submit"
                                         class="btn btn-xs btn-primary unfollow_btn pl-0 pr-0 text-center">Unfollow
                                 </button>
+=======
+                            <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(currentUser)}" method="post">
+                                <button style="float:right; width: 80px" type="Submit" class="btn btn-xs btn-success">Follow</button>
+                            </form>
+                            <form th:action="@{/unfollow/} + ${user.email}" th:if="${following}" method="post">
+                                <button style="float:right; width: 80px" type="Submit"  class="btn btn-xs btn-primary unfollow_btn pl-0 pr-0 text-center">Unfollow</button>
+>>>>>>> 866d23fbf4358058b39a68866e31846a17b0c961
                             </form>
                         </div>
 

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>ERROR</title>
 </head>
 <body>
 <p>It is not your fault!</p>
+<h5 th:if="${error}" th:text="${error}"></h5>
 
 </body>
 </html>
