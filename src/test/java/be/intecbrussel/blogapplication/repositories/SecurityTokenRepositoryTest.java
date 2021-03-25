@@ -1,7 +1,6 @@
 package be.intecbrussel.blogapplication.repositories;
 
 import be.intecbrussel.blogapplication.model.SecurityToken;
-import be.intecbrussel.blogapplication.model.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;

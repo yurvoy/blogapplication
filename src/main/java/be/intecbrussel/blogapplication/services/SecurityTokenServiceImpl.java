@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Service
-public class SecurityTokenServiceImp implements SecurityTokenService {
+public class SecurityTokenServiceImpl implements SecurityTokenService {
 
     private final SecurityTokenRepository securityTokenRepository;
     private final UserService userService;
 
-    public SecurityTokenServiceImp(SecurityTokenRepository securityTokenRepository, UserService userService) {
+    public SecurityTokenServiceImpl(SecurityTokenRepository securityTokenRepository, UserService userService) {
         this.securityTokenRepository = securityTokenRepository;
         this.userService = userService;
     }

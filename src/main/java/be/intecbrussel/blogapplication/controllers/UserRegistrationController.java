@@ -1,14 +1,13 @@
 package be.intecbrussel.blogapplication.controllers;
 
 import be.intecbrussel.blogapplication.model.SecurityToken;
+import be.intecbrussel.blogapplication.services.ITemplateEngine;
 import be.intecbrussel.blogapplication.services.SecurityTokenService;
 import be.intecbrussel.blogapplication.web_security_config.UserRegistrationDto;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.Utility;
 import net.bytebuddy.utility.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -16,14 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import org.thymeleaf.context.Context;
@@ -37,14 +34,13 @@ public class UserRegistrationController {
 
     private final JavaMailSender mailSender;
 
-    @Autowired
-    private SpringTemplateEngine templateEngine;
+    private final ITemplateEngine templateEngine;
 
-
-    public UserRegistrationController(UserService userService, SecurityTokenService securityTokenService, JavaMailSender mailSender) {
+    public UserRegistrationController(UserService userService, SecurityTokenService securityTokenService, JavaMailSender mailSender, ITemplateEngine templateEngine) {
         this.userService = userService;
         this.securityTokenService = securityTokenService;
         this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
     }
 
     @ModelAttribute("user")
@@ -79,7 +75,7 @@ public class UserRegistrationController {
             model.addAttribute("message", "Email sent ! Please check your mail box.");
 
             User savedUser = userService.save(userDto);
-            SecurityToken savedSecurityToken = securityTokenService.save(verificationToken, savedUser);
+            securityTokenService.save(verificationToken, savedUser);
 
         } catch (UnsupportedEncodingException | MessagingException e) {
             System.out.println("error sending mail");
@@ -104,9 +100,18 @@ public class UserRegistrationController {
 
         String html = templateEngine.process("user/email/verificationEmail", context);
 
-        helper.setSubject(subject);
+        String content = "<p>Hello,</p>"
+                + "<p>You have created a new account in our app.</p>"
+                + "<p>Click the link below to validate your account:</p>"
+                + "<p><a href=\"" + link + "\">Validate my account</a></p>"
+                + "<br>"
+                + "<p>Ignore this email if you haven't made an account with us";
 
-        helper.setText(html, true);
+        if (html == null){
+            helper.setText(content, true);
+        } else {
+            helper.setText(html, true);
+        }
 
         mailSender.send(message);
     }
