@@ -68,9 +68,9 @@ public class UserRegistrationController {
         if (existing != null) {
             result.rejectValue("email","existingMail", "There is already an account registered with that email");
             return "registration";
-        } else if (result.hasErrors()) {
+        } /*else if (result.hasErrors()) {
             return "registration";
-        }
+        }*/
             String email = userDto.getEmail();
 
             SecurityToken verificationToken = new SecurityToken(RandomString.make(30));
