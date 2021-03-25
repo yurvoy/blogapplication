@@ -64,7 +64,7 @@ public class PostController {
         model.addAttribute("user", user);
 
 
-        return "/user/post";
+        return "user/post";
     }
 
     @GetMapping("editPost/{id}")

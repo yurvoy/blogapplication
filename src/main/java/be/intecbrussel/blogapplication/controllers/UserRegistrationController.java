@@ -130,24 +130,24 @@ public class UserRegistrationController {
             SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
             if (verificationToken == null) {
                 model.addAttribute("failed", "invalidToken");
-                return "/verifyAccount";
+                return "verifyAccount";
             }
             System.out.println("is null");
             if (verificationToken.getExpireAt().isBefore(LocalDateTime.now())) {
                 model.addAttribute("failed", "invalidToken");
-                return "/verifyAccount";
+                return "verifyAccount";
             }
 
             User user = userService.findById(verificationToken.getUser().getId());
 
             if (user == null) {
                 model.addAttribute("UserNotFound", "userNotFound");
-                return "/verifyAccount";
+                return "verifyAccount";
             }
 
             if (user.getAccountVerified()) {
                 model.addAttribute("alreadyVerified", "AlreadyVerified");
-                return "/verifyAccount";
+                return "verifyAccount";
             }
 
             model.addAttribute("token", token);
