@@ -109,7 +109,7 @@
                                  th:classappend="${#fields.hasErrors('birthday')}? 'has-error':''">
                                 <label>
 
-                                    <input oninput="verifyBdate(this)" th:type="date" th:name="bdate" class="form-control" th:field="*{birthday}" required >
+                                    <input oninput="verifyBdate(this)" type="date" name="bdate" class="form-control" th:field="*{birthday}" required >
 
                                 </label>
 

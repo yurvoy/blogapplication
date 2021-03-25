@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(registration.getLastName());
         user.setEmail(registration.getEmail());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-        user.setBirthday(LocalDate.parse(registration.getBirthday()));
+        user.setBirthday(registration.getBirthday());
         user.setGender(registration.getGender());
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
         user.setAuthProvider(AuthProvider.LOCAL);

@@ -8,6 +8,7 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 
 @Data
@@ -22,7 +23,8 @@ public class UserRegistrationDto {
     private String confirmPassword;
 
     @NotNull(message = "Please enter birth date")
-    private String birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
 
     private String gender;
 

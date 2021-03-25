@@ -28,6 +28,8 @@ import org.thymeleaf.context.Context;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
+import java.time.LocalDate;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.*;
@@ -89,7 +91,7 @@ class UserRegistrationControllerTest {
 
         user = new UserRegistrationDto();
         user.setEmail("foofoo@gmail.com");
-        user.setBirthday("20/07/1995");
+        user.setBirthday(LocalDate.of(1999,01,01));
         user.setPassword("foooo2");
         user.setConfirmPassword("foooo2");
         user.setFirstName("foo");
