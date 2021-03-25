@@ -167,6 +167,7 @@ public class UserServiceImpl implements UserService {
         newUser.setLastName("");
         newUser.setProfileImage(picture);
         newUser.setAuthProvider(provider);
+        newUser.setAccountVerified(true);
 
         userRepository.save(newUser);
     }

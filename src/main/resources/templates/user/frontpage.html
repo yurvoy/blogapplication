@@ -80,29 +80,23 @@
             </form>
 
             <div class="navbar-nav ml-auto">
-
                 <a href="/" th:href="@{'/user/'+${user.getId()}+'/profile'}" sec:authorize="isAuthenticated()">
                     <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
                             th:text="Profile"></button>
                 </a>
-
                 <a href="/" th:href="@{/login}" sec:authorize="isAnonymous()">
                     <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
                             th:text="Login"></button>
                 </a>
-
                 <a href="/" th:href="@{/registration}" sec:authorize="isAnonymous()">
                     <button class="ml-auto btn btn-outline-secondary btn-lg"
                             th:text="Register"></button>
                 </a>
-
-
                 <a href="/" th:href="@{/logout}" sec:authorize="isAuthenticated()">
                     <button class="ml-auto btn btn-outline-secondary btn-lg"
 
                             th:text="Logout"></button>
                 </a>
-
             </div>
         </div>
     </div>
@@ -200,11 +194,13 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}" id="post-tag"
-                                                   placeholder="What is your tag? Seperate multiple tags with ','." ></textarea>
+                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}"
+                                                      id="post-tag"
+                                                      placeholder="What is your tag? Seperate multiple tags with ','."></textarea>
                                             <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
 
-                                            <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
+                                            <a th:each="tag: ${post.getTags()}" href="/" class="post-tag"
+                                               th:text="${tag}">javascript</a>
 
 
                                         </div>
@@ -325,8 +321,8 @@
                        href="/" th:href="@{'/likePost/' + ${post.id}}">
                         <i class="fa fa-thumbs-down"> Unlike</i></a>
                     <a class="card-link" data-toggle="collapse" th:href="'#collapseExample' + ${post.id}" role="button"
-                       aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment" th:text="${post.comments.size()} > 1 ? ${post.comments.size()} + ' ' + 'Comments' : ${post.comments.size()} + ' ' + 'Comment'"></i></a>
-                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                       aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"
+                                                                                th:text="${post.comments.size()} > 1 ? ' ' + ${post.comments.size()} + ' ' + 'Comments' : ' ' + ${post.comments.size()} + ' ' + 'Comment'"></i></a>
                     <!--- start collapse comments div --->
                     <div class="collapse" th:id="'collapseExample' + ${post.id}">
                         <!--- Start Post's comments list --->

@@ -83,15 +83,19 @@
             </form>
             <div class="navbar-nav ml-auto">
 
-            <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">
 
-                    <a href="/" th:href="@{/index}" > <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
-                                                                      th:text="Frontpage"></button></a>
-                    <a href="/" th:href="@{/logout}" ><button class="ml-auto btn btn-outline-secondary btn-lg"
-                                                                   th:text="Logout"></button></a>
-            </ul>
+                    <a href="/" th:href="@{/index}">
+                        <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
+                                th:text="Frontpage"></button>
+                    </a>
+                    <a href="/" th:href="@{/logout}">
+                        <button class="ml-auto btn btn-outline-secondary btn-lg"
+                                th:text="Logout"></button>
+                    </a>
+                </ul>
+            </div>
         </div>
-    </div>
 </nav>
 
 
@@ -221,8 +225,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}" id="post-tag"
-                                                      placeholder="What is your tag?" ></textarea>
+                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}"
+                                                      id="post-tag"
+                                                      placeholder="What is your tag?"></textarea>
                                         <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
                                     </div>
 
@@ -297,7 +302,7 @@
                             class="fa fa-clock-o"></i>
                     </i>
                 </div>
-                <a class="card-link" href="#" th:href="@{'/user/'+ ${post.getId()}}" >
+                <a class="card-link" href="#" th:href="@{'/user/'+ ${post.getId()}}">
                     <h5 class="card-title" th:text="${post.postTitle}"></h5>
                 </a>
 
@@ -305,7 +310,6 @@
 
 
                 <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
-
 
 
             </div>
@@ -319,8 +323,9 @@
                    href="/" th:href="@{'/likePost/' + ${post.id}}">
                     <i class="fa fa-thumbs-down"> Unlike</i></a>
                 <a class="card-link" data-toggle="collapse" th:href="'#collapseExample' + ${post.id}" role="button"
-                   aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment" th:text="${post.comments.size()} > 1 ? ${post.comments.size()} + ' ' + 'Comments' : ${post.comments.size()} + ' ' + 'Comment'"></i> </a>
-                <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                   aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"
+                                                                            th:text="${post.comments.size()} > 1 ? ' ' + ${post.comments.size()} + ' ' + 'Comments' : ' ' + ${post.comments.size()} + ' ' + 'Comment'"></i>
+                </a>
                 <!--- start collapse comments div --->
                 <div class="collapse" th:id="'collapseExample' + ${post.id}">
                     <!--- Start Post's comments list --->
