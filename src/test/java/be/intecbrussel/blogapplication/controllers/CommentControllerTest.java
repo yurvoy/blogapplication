@@ -72,7 +72,7 @@ public class CommentControllerTest {
     @Test
     void simpleProfileComment() throws Exception {
         when(postService.findById(anyLong())).thenReturn(post);
-        when(userService.findByEmail(any())).thenReturn(user);
+        when(userService.findById(anyLong())).thenReturn(user);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/user/" + post.getId() + "/" + user.getId() + "/profileComment")
@@ -98,6 +98,7 @@ public class CommentControllerTest {
     @Test
     void shouldStayOnFrontPageIfBindingErrors() throws Exception {
         when(postService.findById(anyLong())).thenReturn(post);
+        when(userService.findById(anyLong())).thenReturn(user);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/user/" + post.getId() + "/" + user.getId() + "/profileComment")
