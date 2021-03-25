@@ -2,6 +2,7 @@ package be.intecbrussel.blogapplication.controllers;
 
 
 import be.intecbrussel.blogapplication.model.SecurityToken;
+import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.ITemplateEngine;
 import be.intecbrussel.blogapplication.services.SecurityTokenService;
 import be.intecbrussel.blogapplication.services.UserService;
@@ -70,6 +71,8 @@ class UserRegistrationControllerTest {
 
     MimeMessageHelper mockHelper;
 
+    User user1;
+
     MockMvc mockMvc;
 
     Model model;
@@ -93,9 +96,14 @@ class UserRegistrationControllerTest {
         user.setGender("male");
         user.setTerms(true);
 
+        user1 = new User();
+        user1.setId(1L);
+        user1.setEmail("foofoo@gmail.com");
+
         securityToken = new SecurityToken();
         securityToken.setId(1L);
         securityToken.setToken("ThisIsATokenTest");
+        securityToken.setUser(user1);
 
         mockBindingResult = mock(BindingResult.class);
         request = mock(HttpServletRequest.class);
@@ -133,4 +141,22 @@ class UserRegistrationControllerTest {
         assertThat(registered, is("registration"));
     }
 
+    @Test
+    void showVerifyAccountPage() throws Exception {
+
+        String verification = userRegistrationController.showVerifiedAccountPage("ThisIsAMockToken", model);
+
+        assertThat(verification, is("/verifyAccount"));
+    }
+
+    @Test
+    void showVerifyCaptcha() throws Exception {
+
+        when(securityTokenService.getSecurityTokenByToken(anyString())).thenReturn(securityToken);
+        when(userService.findById(anyLong())).thenReturn(user1);
+
+        String verification = userRegistrationController.showResponseFromCaptcha("ThisIsAMockToken", model);
+
+        assertThat(verification, is("verifyAccount"));
+    }
 }
