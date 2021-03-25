@@ -70,11 +70,11 @@ public class HomeController {
         return new CreatePostDto();
     }
 
-    /*@RequestMapping("/404")
+    @RequestMapping("/404")
     public String notFoundError(){
 
         return "404";
-    }*/
+    }
 
 
 
