@@ -150,7 +150,7 @@ class UserRegistrationControllerTest {
 
         String verification = userRegistrationController.showVerifiedAccountPage("ThisIsAMockToken", model);
 
-        assertThat(verification, is("/verifyAccount"));
+        assertThat(verification, is("verifyAccount"));
     }
 
     @Test
