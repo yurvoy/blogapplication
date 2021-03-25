@@ -71,7 +71,7 @@ public class UserRegistrationController {
         } else if (result.hasErrors()) {
             return "registration";
         }
-            /*String email = userDto.getEmail();
+            String email = userDto.getEmail();
 
             SecurityToken verificationToken = new SecurityToken(RandomString.make(30));
 
@@ -87,10 +87,10 @@ public class UserRegistrationController {
                 System.out.println("error sending mail");
                 model.addAttribute("error", "Error while sending email");
             }
-*/
+
 
         //return "redirect:user/frontpage";
-            return "redirect:registration?success";
+            return "redirect:/registration?success";
 
         }
 
