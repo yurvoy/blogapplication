@@ -1,10 +1,11 @@
 package be.intecbrussel.blogapplication.web_security_config;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 
 @Data

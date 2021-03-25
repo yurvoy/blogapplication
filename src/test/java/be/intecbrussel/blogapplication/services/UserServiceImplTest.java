@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.services;
 
+import be.intecbrussel.blogapplication.model.AuthProvider;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,8 +29,6 @@ class UserServiceImplTest {
 
     @Mock
     BCryptPasswordEncoder passwordEncoder;
-
-    Principal mockPrincipal;
 
 
 
@@ -83,9 +82,8 @@ class UserServiceImplTest {
         user.setId(1L);
         user.setEmail("mock@gmail.com");
         user.setPassword("newpassword");
+        user.setAuthProvider(AuthProvider.LOCAL);
         Optional<User> userOptional = Optional.of(user);
-
-        //UserRegistrationDto registration = new UserRegistrationDto();
 
         when(userRepository.findById(anyLong())).thenReturn(userOptional);
         when(userRepository.save(any())).thenReturn(userOptional);
@@ -124,7 +122,6 @@ class UserServiceImplTest {
         assertEquals(userOptional1, userReturned);
         verify(userRepository, times(1)).findById(1L);
         verify(userRepository, never()).findAll();
-
     }
 
     @Test
@@ -144,4 +141,51 @@ class UserServiceImplTest {
 
     }
 
+    @Test
+    void createNewOAuth2User() {
+        User user = new User();
+        user.setId(1L);
+        user.setEmail("foo@gmail.com");
+        user.setFirstName("OAuth2");
+        user.setLastName("");
+        user.setAuthProvider(AuthProvider.GOOGLE);
+        user.setProfileImage(new Byte[10]);
+
+        Optional<User> userOptional = Optional.of(user);
+
+        when(userRepository.findById(anyLong())).thenReturn(userOptional);
+        when(userRepository.save(any())).thenReturn(userOptional);
+
+        Optional<User> userReturned = Optional.of(userService.findById(1L));
+
+        assertEquals(Long.valueOf(1L),user.getId());
+        assertNotNull(userOptional, "user is not null");
+        assertEquals(userOptional, userReturned);
+        verify(userRepository, never()).findAll();
+    }
+
+    @Test
+    void updateOAuth2User() {
+        User user = new User();
+        user.setId(1L);
+        Optional<User> userOptional = Optional.of(user);
+
+        when(userRepository.findById(anyLong())).thenReturn(userOptional);
+
+        User updatedUser = new User();
+        updatedUser.setFirstName("OAuth²");
+        updatedUser.setProfileImage(new Byte[420]);
+        updatedUser.setAuthProvider(AuthProvider.GITHUB);
+
+        Optional<User> userOptional1 = Optional.of(updatedUser);
+
+        when(userRepository.findById(anyLong())).thenReturn(userOptional1);
+
+        Optional<User> userReturned = Optional.of(userService.findById(1L));
+
+        assertNotNull(userReturned, "user is not null");
+        assertEquals(userOptional1, userReturned);
+        verify(userRepository, times(1)).findById(1L);
+        verify(userRepository, never()).findAll();
+    }
 }

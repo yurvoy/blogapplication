@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8" />
@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/51a5fc685f.js" crossorigin="anonymous"></script>
 
     <title>Login</title>
 </head>
@@ -16,15 +17,27 @@
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blogify</a>
-            <ul class = "navbar-nav ml-auto">
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()" font-color="black">
-                    <a href="/" th:href="@{/login}">Log in</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()" font-color="black">
-                    <a href="/" th:href="@{/registration}">Register</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()" font-color="black">
-                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
-            </ul>
+            <a class="navbar-brand" href="#" th:href="@{/index}">
+                <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
+            </a>
+            <div class="navbar-nav ml-auto">
+
+                <a href="/" th:href="@{/index}">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
+                            th:text="Frontpage"></button>
+                </a>
+
+                <a href="/" th:href="@{/registration}" sec:authorize="isAnonymous()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg"
+                            th:text="Register"></button>
+                </a>
+
+                <a href="/" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg"
+
+                            th:text="Logout"></button>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
@@ -66,8 +79,19 @@
             </form>
         </div>
     </div>
+    <div class="row col-md-6 col-md-offset-3">
+        <a class="btn btn-outline-dark btn-lg btn-block" th:href="@{/oauth2/authorization/github}">
+            <span style="font-size: 2em; vertical-align: middle"><i class="fa fa-github-square"></i></span>
+            <span>Login with <strong>Github</strong></span>
+        </a>
+        <a class="btn btn-outline-danger btn-lg btn-block" th:href="@{/oauth2/authorization/google}">
+            <span style="font-size: 2em; vertical-align: middle"><i class="fa fa-google-plus-square"></i></span>
+            <span>Login with <strong>Google</strong></span>
+        </a>
+    </div>
 
 
 </div>
+
 </body>
 </html>

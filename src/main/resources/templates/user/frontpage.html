@@ -64,18 +64,27 @@
 
             <div class="navbar-nav ml-auto">
 
-                    <a href="/" th:href="@{'/user/'+${user.getId()}+'/profile'}" sec:authorize="isAuthenticated()"> <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
-                                                                                                 th:text="Profile"></button></a>
+                <a href="/" th:href="@{'/user/'+${user.getId()}+'/profile'}" sec:authorize="isAuthenticated()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
+                            th:text="Profile"></button>
+                </a>
 
-                    <a href="/" th:href="@{/login}" sec:authorize="isAnonymous()"><button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
-                                                                   th:text="Login"></button></a>
+                <a href="/" th:href="@{/login}" sec:authorize="isAnonymous()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
+                            th:text="Login"></button>
+                </a>
 
-                    <a href="/" th:href="@{/registration}" sec:authorize="isAnonymous()"> <button class="ml-auto btn btn-outline-secondary btn-lg"
-                                                                            th:text="Register"></button></a>
+                <a href="/" th:href="@{/registration}" sec:authorize="isAnonymous()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg"
+                            th:text="Register"></button>
+                </a>
 
 
-                    <a href="/" th:href="@{/logout}" sec:authorize="isAuthenticated()"><button class="ml-auto btn btn-outline-secondary btn-lg"
-                                                                   th:text="Logout"></button></a>
+                <a href="/" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg"
+
+                            th:text="Logout"></button>
+                </a>
             </div>
         </div>
     </div>
@@ -152,19 +161,24 @@
                     </div>
 
                     <!--- Start Post from ---->
-                    <form class="card-body" id="form-post" th:object="${post}" th:action="@{'/user/' + ${user.getId()} + '/createPost/frontpage'}" method="post">
+                    <form class="card-body" id="form-post" th:object="${post}"
+                          th:action="@{'/user/' + ${user.getId()} + '/createPost/frontpage'}" method="post">
                         <div class="tab-content" id="myTabContent">
 
                             <div class="tab-pane fade show active" id="posts" role="tabpanel"
                                  aria-labelledby="posts-tab">
                                 <div class="form-group">
                                     <div>
-                                        <div class="form-group" th:classappend="${#fields.hasErrors('postTitle')}? 'has-error':''">
-                                            <textarea class="form-control" th:field="*{postTitle}" id="post-title" rows="1"
+                                        <div class="form-group"
+                                             th:classappend="${#fields.hasErrors('postTitle')}? 'has-error':''">
+                                            <textarea class="form-control" th:field="*{postTitle}" id="post-title"
+                                                      rows="1"
                                                       placeholder="Title?" required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text" placeholder="Wanna do you wanna share with us?" required></textarea>
+                                            <textarea class="form-control" rows="4" cols="50" th:field="*{postText}"
+                                                      id="post-text" placeholder="Wanna do you wanna share with us?"
+                                                      required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +270,8 @@
                 <div class="card-body"><!--Begin Search Result body-->
                     <div class="mb-2">
                         <i class="text-muted" th:text="${'Posted on ' + #temporals.format(post.postTimeStamp,'dd-MM-yyyy')
-                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm')}"><i class="fa fa-clock-o"></i>10 min
+                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm')}"><i
+                                class="fa fa-clock-o"></i>10 min
                             ago
                         </i>
                     </div>

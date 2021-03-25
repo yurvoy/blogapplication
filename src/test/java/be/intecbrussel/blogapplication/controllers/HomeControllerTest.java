@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.services.OAuth2Service;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.web_security_config.WebConfig;
 import be.intecbrussel.blogapplication.model.User;
@@ -36,6 +37,9 @@ class HomeControllerTest {
     PostService postService;
 
     @Mock
+    OAuth2Service oAuth2Service;
+
+    @Mock
     Model model;
 
     @Mock
@@ -52,7 +56,7 @@ class HomeControllerTest {
         user = User.builder().id(1L).email("abc@gmail.com").password("abcdef").build();
 
         MockitoAnnotations.openMocks(this);
-        controller = new HomeController(userService, postService);
+        controller = new HomeController(userService, postService, oAuth2Service);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setViewResolvers(webConfig.viewResolver())
                 .build();

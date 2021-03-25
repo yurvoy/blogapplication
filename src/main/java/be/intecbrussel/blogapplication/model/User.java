@@ -11,6 +11,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -65,6 +66,10 @@ public class User implements Principal {
 
     @ManyToMany(mappedBy="followers")
     private List<User> following;
+
+    @Enumerated
+    @Column(name = "auth_provider")
+    private AuthProvider authProvider;
 
 
     @Builder

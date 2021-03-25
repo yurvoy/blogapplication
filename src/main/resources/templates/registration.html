@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
 
@@ -11,6 +11,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
           integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
           crossorigin="anonymous"/>
+    <script src="https://kit.fontawesome.com/51a5fc685f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -18,15 +19,27 @@
 <nav class="navbar bg-white navbar-expand shadow">
     <div class="container">
         <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#" th:href="@{/index}">LOGO Blogify</a>
-            <ul class="navbar-nav ml-auto">
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
-                        font-color="black">
-                    <a href="/" th:href="@{/login}">Log in</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()"
-                        font-color="black">
-                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
-            </ul>
+            <a class="navbar-brand" href="#" th:href="@{/index}">
+                <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
+            </a>
+            <div class="navbar-nav ml-auto">
+
+                <a href="/" th:href="@{/index}">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
+                            th:text="Frontpage"></button>
+                </a>
+
+                <a href="/" th:href="@{/login}" sec:authorize="isAnonymous()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg"
+                            th:text="Login"></button>
+                </a>
+
+                <a href="/" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                    <button class="ml-auto btn btn-outline-secondary btn-lg"
+
+                            th:text="Logout"></button>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
@@ -100,7 +113,6 @@
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
-
                         <div class="col-lg-6 pr-0" th:classappend="${#fields.hasErrors('gender')}? 'has-error':''">
                             <label>Gender</label>
                             <div>
@@ -152,6 +164,18 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
+<div class="container col-3 pt-5 w-100">
+    <div class="container justify-content-center">
+        <a class="btn btn-outline-dark btn-lg btn-block" th:href="@{/oauth2/authorization/github}">
+            <span style="font-size: 2em; vertical-align: middle"><i class="fa fa-github-square"></i></span>
+            <span>Login with <strong>Github</strong></span>
+        </a>
+        <a class="btn btn-outline-danger btn-lg btn-block" th:href="@{/oauth2/authorization/google}">
+            <span style="font-size: 2em; vertical-align: middle"><i class="fa fa-google-plus-square"></i></span>
+            <span>Login with <strong>Google</strong></span>
+        </a>
     </div>
 </div>
 <!-------------- End line Formulair ---------------->

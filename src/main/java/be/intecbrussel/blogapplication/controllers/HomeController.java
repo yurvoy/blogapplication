@@ -2,6 +2,7 @@ package be.intecbrussel.blogapplication.controllers;
 
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
+import be.intecbrussel.blogapplication.services.OAuth2Service;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -20,10 +22,12 @@ public class HomeController {
 
     private final UserService userService;
     private final PostService postService;
+    private final OAuth2Service oAuth2Service;
 
-    public HomeController(UserService userService, PostService postService) {
+    public HomeController(UserService userService, PostService postService, OAuth2Service oAuth2Service) {
         this.userService = userService;
         this.postService = postService;
+        this.oAuth2Service = oAuth2Service;
     }
 
     @RequestMapping({"","/", "/index"})
@@ -33,9 +37,11 @@ public class HomeController {
         Collections.reverse(topTenPosts);
         topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
         model.addAttribute("posts", topTenPosts);
-        if (principal == null){
+
+        if (principal == null) {
             return "user/frontpage";
         }
+
         User user = userService.findByEmail(principal.getName());
 
         model.addAttribute("user", user);
