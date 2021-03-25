@@ -133,7 +133,7 @@ class UserRegistrationControllerTest {
         when(mailSender.createMimeMessage()).thenReturn(mockMessage);
 
         String registered = userRegistrationController.registerUserAccount(user, request, model, mockBindingResult);
-        assertThat(registered, is("redirect:/registration?success"));
+        assertThat(registered, is("redirect:registration?success"));
     }
 
     @Test

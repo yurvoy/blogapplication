@@ -89,7 +89,8 @@ public class UserRegistrationController {
             }
 
 
-            return "redirect:registration?success";
+        return "redirect:user/frontpage";
+            //return "redirect:registration?success";
 
         }
 
