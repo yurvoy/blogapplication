@@ -8,6 +8,7 @@ import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -36,6 +37,8 @@ public class Post implements Principal {
     private List<Comment> comments;
 
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> tags;
 
 
     @Builder
@@ -46,6 +49,7 @@ public class Post implements Principal {
         this.postTimeStamp = postTimeStamp;
         this.user = user;
         this.likes = new ArrayList<>();
+        this.tags = new ArrayList<>();
     }
 
     public Post(String postTitle, String postText, User user) {
@@ -54,11 +58,18 @@ public class Post implements Principal {
         this.postTimeStamp = getPostTimeStamp();
         this.user = user;
         this.likes = new ArrayList<>();
+        this.tags = new ArrayList<>();
     }
     public Post() {
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
 
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 
     public Long getId() {
         return id;

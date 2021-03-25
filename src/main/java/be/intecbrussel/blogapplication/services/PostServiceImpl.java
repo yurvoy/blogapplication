@@ -6,11 +6,8 @@ import be.intecbrussel.blogapplication.repositories.PostRepository;
 import be.intecbrussel.blogapplication.repositories.UserRepository;
 import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.security.Principal;
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -39,6 +36,8 @@ public class PostServiceImpl implements PostService{
         post.setPostTitle(newPost.getPostTitle());
         post.setPostText(newPost.getPostText());
         post.setPostTimeStamp(LocalDateTime.now(Clock.systemUTC()));
+
+        post.setTags(newPost.getTags());
         //post.setPostTimeStamp(LocalDateTime.now(Clock.systemDefaultZone()));
         post.setUser(user);
 
@@ -91,6 +90,9 @@ public class PostServiceImpl implements PostService{
         if(postForm.getPostText() != null) {
             post.get().setPostText(postForm.getPostText());
         }
+        if(postForm.getTags() != null){
+            post.get().setTags(postForm.getTags());
+        }
 
         postRepository.save(post.get());
     }
@@ -116,6 +118,16 @@ public class PostServiceImpl implements PostService{
         Optional<Post> post = postRepository.findById(postId);
         return post.get().getLikes();
     }
+
+
+
+
+    @Override
+    public List<String> findTags(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        return post.get().getTags();
+    }
+
 
 
 
@@ -156,6 +168,8 @@ public class PostServiceImpl implements PostService{
         }
 
     }
+
+
 
 
 }

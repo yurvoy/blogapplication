@@ -40,6 +40,23 @@
             margin: 10px 0px 0px 10px;
 
         }
+
+        .post-tag, .post-tag:visited, .job-preferences-mobile .-section .location-results .geo-tag {
+            color: #39739d;
+            background: #e1ecf4;
+            border: 1px solid #e1ecf4;
+            margin: 0 2px 2px 0;
+            text-decoration: none;
+            text-align: center;
+            font-weight: normal;
+            display: inline-block;
+            font-size: 11px;
+            padding: 3px 5px;
+            white-space: nowrap;
+            text-shadow: none;
+            border-radius: 25px;
+            border-radius: 0;
+        }
     </style>
 
 </head>
@@ -180,6 +197,17 @@
                                                       id="post-text" placeholder="Wanna do you wanna share with us?"
                                                       required></textarea>
                                         </div>
+
+                                        <div class="form-group">
+                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}" id="post-tag"
+                                                   placeholder="What is your tag? Seperate multiple tags with ','." ></textarea>
+                                            <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
+
+                                            <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
+
+
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -280,6 +308,10 @@
                     </a>
 
                     <p class="card-text" th:text="${post.postText}"></p>
+
+                    <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
+
+
                 </div> <!-- End of Search Result body -->
 
                 <div class="card-footer">

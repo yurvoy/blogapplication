@@ -114,6 +114,8 @@ public class PostController {
         return "redirect:" + request.getHeader("Referer");
     }
 
+
+
     @GetMapping("deletePost/{id}")
     public String deletePost(@PathVariable Long id, Model model, Principal principal) {
 
