@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.Validator;
 import java.util.Date;
-
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
@@ -64,13 +63,9 @@ public class UserRegistrationController {
         User existing = userService.findByEmail(userDto.getEmail());
 
         if (existing != null) {
+            result.rejectValue("email","existingMail", "There is already an account registered with that email");
             return "registration";
         } else if (result.hasErrors()) {
-            return "registration";
-        }
-
-        if (result.hasErrors()) {
-            result.rejectValue("email", "existingMail", "There is already an account registered with that email");
             return "registration";
         }
             String email = userDto.getEmail();

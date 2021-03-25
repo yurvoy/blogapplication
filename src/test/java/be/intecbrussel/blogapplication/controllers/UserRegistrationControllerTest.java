@@ -161,4 +161,5 @@ class UserRegistrationControllerTest {
 
         assertThat(verification, is("verifyAccount"));
     }
+
 }
