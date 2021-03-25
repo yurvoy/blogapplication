@@ -89,7 +89,7 @@
 
 <div class="row py-3 px-4 mt-0">
     <div class="col-md-5 mx-auto">
-        <div sec:authorize="isAuthenticated()" th:unless="${user.getAccountVerified()}">
+        <div sec:authorize="isAuthenticated()" th:unless="${userVisitor.getAccountVerified()}">
             <div class="alert alert-primary">
                 <strong>Your account must be verified before posting or interacting with other users :)</strong>
             </div>
@@ -124,7 +124,7 @@
                         <h4 class="mt-0 mb-0"><span th:text="${user.firstName}"> </span>&nbsp<span
                                 th:text="${user.lastName}"></span></h4>
                         <p class="small mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Stockholm</p>
-                        <div class="col p-0">
+                        <div class="col p-0" sec:authorize="isAuthenticated()" th:if="${user.getAccountVerified()&& userVisitor.getAccountVerified()}">
                             <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(currentUser)}" method="post">
                                 <button style="float:right; width: 80px" type="Submit" class="btn btn-xs btn-success">Follow</button>
                             </form>
