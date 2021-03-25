@@ -59,6 +59,7 @@ public class PostController {
         User user = this.userService.getLoggedInUser();
         User postOwner = post.getUser();
 
+        model.addAttribute("postOwner", postOwner);
         model.addAttribute("post", post);
         model.addAttribute("user", user);
 

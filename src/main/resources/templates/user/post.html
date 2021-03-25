@@ -103,11 +103,17 @@
 
                                         </h2>
                                     </a>
-                                        <i class="text-muted" th:text="${#temporals.format(post.postTimeStamp,'dd-MM-yyyy')
-                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm ')}">10 min
-                                            ago
 
-                                        </i>
+                                    <div>
+                                    <span class="text-muted" th:text="'Posted by:' + ' ' + ${postOwner.getFirstName()}"></span>
+                                    </div>
+                                    <br>
+                                    <div>
+                                    <i class="text-muted" th:text="${#temporals.format(post.postTimeStamp,'dd-MM-yyyy')
+                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm ')}"  >10 min
+                                        ago
+                                    </i>
+                                    </div>
 
 
                                 </div>
