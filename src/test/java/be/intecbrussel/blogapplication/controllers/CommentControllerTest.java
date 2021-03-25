@@ -66,8 +66,8 @@ public class CommentControllerTest {
         user.setId(1L);
         post.setId(1L);
         post.setUser(user);
-
     }
+
 
     @Test
     void simpleProfileComment() throws Exception {
