@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -22,12 +21,10 @@ public class HomeController {
 
     private final UserService userService;
     private final PostService postService;
-    private final OAuth2Service oAuth2Service;
 
     public HomeController(UserService userService, PostService postService, OAuth2Service oAuth2Service) {
         this.userService = userService;
         this.postService = postService;
-        this.oAuth2Service = oAuth2Service;
     }
 
     @RequestMapping({"","/", "/index"})

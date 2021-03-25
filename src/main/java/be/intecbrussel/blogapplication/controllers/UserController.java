@@ -44,7 +44,7 @@ public class UserController {
     }
 
 
-    @GetMapping("user/{userId}/profile")
+    @GetMapping("/user/{userId}/profile")
     public String showProfile(@PathVariable Long userId, Model model, Principal principal) {
 
         User userProfile = userService.findById(userId);

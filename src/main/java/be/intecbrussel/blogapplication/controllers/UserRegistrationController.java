@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.AuthProvider;
 import be.intecbrussel.blogapplication.model.SecurityToken;
 import be.intecbrussel.blogapplication.services.ITemplateEngine;
 import be.intecbrussel.blogapplication.services.SecurityTokenService;
@@ -14,15 +15,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.Validator;
-import java.util.Date;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
@@ -68,6 +66,7 @@ public class UserRegistrationController {
         } else if (result.hasErrors()) {
             return "registration";
         }
+
             String email = userDto.getEmail();
 
             SecurityToken verificationToken = new SecurityToken(RandomString.make(30));

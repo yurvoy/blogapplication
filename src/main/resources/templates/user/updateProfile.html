@@ -56,8 +56,12 @@
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <label>BirthDate</label>
-                            <div class="input-group date bdp-date">
-                                <input type="text" class="form-control" th:field="*{birthday}" placeholder="dd/mm/yyyy"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            <div class="input-group date bdp-date"
+                                 th:classappend="${#fields.hasErrors('birthday')}? 'has-error':''">
+                                <label>
+                                    <input oninput="verifyBdate(this)" th:name="bdate" class="form-control" th:field="*{birthday}" required >
+                                </label>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
                         <div class="col-lg-6 pr-0">
@@ -87,6 +91,17 @@
                         <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
                             <span style="font-size:xx-large">Update profile</span></button>
                     </div>
+                    <script>
+                        function verifyBdate(birthdate){
+                            birthdate.oninput = function () {
+                                if (this.value.length > 10) {
+                                    this.value = this.value.slice(0,9);
+                                }else{
+                                    birthdate.setCustomValidity('');
+                                }
+                            }
+                        }
+                    </script>
                 </form>
             </div>
         </div>
