@@ -272,8 +272,7 @@
                    href="/" th:href="@{'/likePost/' + ${post.id}}">
                     <i class="fa fa-thumbs-down"> Unlike</i></a>
                 <a class="card-link" data-toggle="collapse" th:href="'#collapseExample' + ${post.id}" role="button"
-                   aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment" th:text="${post.comments.size()} > 1 ? ${post.comments.size()} + ' ' + 'Comments' : ${post.comments.size()} + ' ' + 'Comment'"></i> </a>
-                <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                   aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment" th:text="${post.comments.size()} > 1 ? ' ' + ${post.comments.size()} + ' ' + 'Comments' : ' ' + ${post.comments.size()} + ' ' + 'Comment'"></i> </a>
                 <!--- start collapse comments div --->
                 <div class="collapse" th:id="'collapseExample' + ${post.id}">
                     <!--- Start Post's comments list --->
