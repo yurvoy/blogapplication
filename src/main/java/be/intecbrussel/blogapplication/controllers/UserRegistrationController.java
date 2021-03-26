@@ -91,8 +91,8 @@ public class UserRegistrationController {
         User savedUser = userService.save(userDto);
         securityTokenService.save(verificationToken, savedUser);
 
-        //return "redirect:user/frontpage";
-            return "redirect:/registration?success";
+//        return "redirect:user/frontpage";
+        return "redirect:/registration?success";
 
         }
 
