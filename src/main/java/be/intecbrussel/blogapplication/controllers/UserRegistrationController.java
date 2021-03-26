@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
 import org.thymeleaf.context.Context;
+
 import javax.validation.Validator;
 import java.util.Date;
 
@@ -66,114 +67,108 @@ public class UserRegistrationController {
         User existing = userService.findByEmail(userDto.getEmail());
 
         if (existing != null) {
-            result.rejectValue("email","existingMail", "There is already an account registered with that email");
+            result.rejectValue("email", "existingMail", "There is already an account registered with that email");
             return "registration";
-        } /*else if (result.hasErrors()) {
-            return "registration";
-        }*/
-            String email = userDto.getEmail();
+        }
 
-            SecurityToken verificationToken = new SecurityToken(RandomString.make(30));
+        String email = userDto.getEmail();
 
-            try {
-                String verifyAccountLink = Utility.getSiteURL(request) + "/verifyAccount?token=" + verificationToken.getToken();
-                sendVerificationEmail(email, verifyAccountLink);
-                model.addAttribute("message", "Email sent ! Please check your mail box.");
+        SecurityToken verificationToken = new SecurityToken(RandomString.make(30));
 
-                User savedUser = userService.save(userDto);
-                securityTokenService.save(verificationToken, savedUser);
+        try {
+            String verifyAccountLink = Utility.getSiteURL(request) + "/verifyAccount?token=" + verificationToken.getToken();
+            sendVerificationEmail(email, verifyAccountLink);
+            model.addAttribute("message", "Email sent ! Please check your mail box.");
 
-            } catch (UnsupportedEncodingException | MessagingException e) {
-                System.out.println("error sending mail");
-                model.addAttribute("error", "Error while sending email");
-            }
+            User savedUser = userService.save(userDto);
+            securityTokenService.save(verificationToken, savedUser);
 
-        User savedUser = userService.save(userDto);
-        securityTokenService.save(verificationToken, savedUser);
+        } catch (UnsupportedEncodingException | MessagingException e) {
+            System.out.println("error sending mail");
+            model.addAttribute("error", "Error while sending email");
+        }
 
-//        return "redirect:user/frontpage";
         return "redirect:/registration?success";
-
-        }
-
-
-        public void sendVerificationEmail (String recipientEmail, String link) throws
-        MessagingException, UnsupportedEncodingException {
-
-            Context context = new Context();
-            context.setVariable("link", link);
-
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message);
-
-            helper.setFrom("team2.intec.iot@gmail.com", "Blog application Support");
-            helper.setTo(recipientEmail);
-
-            String subject = "Blogify!: Verify your account!";
-
-            String html = templateEngine.process("user/email/verificationEmail", context);
-
-            String content = "<p>Hello,</p>"
-                    + "<p>You have created a new account in our app.</p>"
-                    + "<p>Click the link below to validate your account:</p>"
-                    + "<p><a href=\"" + link + "\">Validate my account</a></p>"
-                    + "<br>"
-                    + "<p>Ignore this email if you haven't made an account with us";
-
-            if (html == null) {
-                helper.setText(content, true);
-            } else {
-                helper.setText(html, true);
-            }
-
-            mailSender.send(message);
-        }
-
-
-        @GetMapping("/verifyAccount")
-        public String showVerifiedAccountPage (@Param(value = "token") String token, Model model){
-
-            SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
-            if (verificationToken == null) {
-                model.addAttribute("failed", "invalidToken");
-                return "verifyAccount";
-            }
-            System.out.println("is null");
-            if (verificationToken.getExpireAt().isBefore(LocalDateTime.now())) {
-                model.addAttribute("failed", "invalidToken");
-                return "verifyAccount";
-            }
-
-            User user = userService.findById(verificationToken.getUser().getId());
-
-            if (user == null) {
-                model.addAttribute("UserNotFound", "userNotFound");
-                return "verifyAccount";
-            }
-
-            if (user.getAccountVerified()) {
-                model.addAttribute("alreadyVerified", "AlreadyVerified");
-                return "verifyAccount";
-            }
-
-            model.addAttribute("token", token);
-            model.addAttribute("captcha", "captchaAvailable");
-
-            return "verifyAccount";
-        }
-
-        @PostMapping("/verifyAccount/{token}")
-        public String showResponseFromCaptcha (@PathVariable String token, Model model){
-            SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
-            User user = userService.findById(verificationToken.getUser().getId());
-
-            user.setAccountVerified(true);
-            user.getSecurityTokens().remove(verificationToken);
-            model.addAttribute("validated", "validated");
-            userService.save(user);
-
-            return "verifyAccount";
-        }
-
     }
+
+
+    public void sendVerificationEmail(String recipientEmail, String link) throws
+            MessagingException, UnsupportedEncodingException {
+
+        Context context = new Context();
+        context.setVariable("link", link);
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("team2.intec.iot@gmail.com", "Blog application Support");
+        helper.setTo(recipientEmail);
+
+        String subject = "Blogify!: Verify your account!";
+
+        String html = templateEngine.process("user/email/verificationEmail", context);
+
+        String content = "<p>Hello,</p>"
+                + "<p>You have created a new account in our app.</p>"
+                + "<p>Click the link below to validate your account:</p>"
+                + "<p><a href=\"" + link + "\">Validate my account</a></p>"
+                + "<br>"
+                + "<p>Ignore this email if you haven't made an account with us";
+
+        if (html == null) {
+            helper.setText(content, true);
+        } else {
+            helper.setText(html, true);
+        }
+
+        mailSender.send(message);
+    }
+
+
+    @GetMapping("/verifyAccount")
+    public String showVerifiedAccountPage(@Param(value = "token") String token, Model model) {
+
+        SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
+        if (verificationToken == null) {
+            model.addAttribute("failed", "invalidToken");
+            return "verifyAccount";
+        }
+        System.out.println("is null");
+        if (verificationToken.getExpireAt().isBefore(LocalDateTime.now())) {
+            model.addAttribute("failed", "invalidToken");
+            return "verifyAccount";
+        }
+
+        User user = userService.findById(verificationToken.getUser().getId());
+
+        if (user == null) {
+            model.addAttribute("UserNotFound", "userNotFound");
+            return "verifyAccount";
+        }
+
+        if (user.getAccountVerified()) {
+            model.addAttribute("alreadyVerified", "AlreadyVerified");
+            return "verifyAccount";
+        }
+
+        model.addAttribute("token", token);
+        model.addAttribute("captcha", "captchaAvailable");
+
+        return "verifyAccount";
+    }
+
+    @PostMapping("/verifyAccount/{token}")
+    public String showResponseFromCaptcha(@PathVariable String token, Model model) {
+        SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
+        User user = userService.findById(verificationToken.getUser().getId());
+
+        user.setAccountVerified(true);
+        user.getSecurityTokens().remove(verificationToken);
+        model.addAttribute("validated", "validated");
+        userService.save(user);
+
+        return "verifyAccount";
+    }
+
+}
 

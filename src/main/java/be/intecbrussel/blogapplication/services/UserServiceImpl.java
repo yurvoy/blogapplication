@@ -18,8 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -64,7 +62,8 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
         user.setAccountVerified(false);
         user.setAuthProvider(AuthProvider.LOCAL);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return userRepository.findByEmail(registration.getEmail());
     }
 
     @Override

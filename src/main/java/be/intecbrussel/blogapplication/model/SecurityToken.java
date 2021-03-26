@@ -1,11 +1,13 @@
 package be.intecbrussel.blogapplication.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class SecurityToken {
 
@@ -36,39 +38,6 @@ public class SecurityToken {
         this.token = token;
     }
 
-    public SecurityToken() {
+    public SecurityToken() {}
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getExpireAt() {
-        return expireAt;
-    }
-
-    public void setExpireAt(LocalDateTime expireAt) {
-        this.expireAt = expireAt;
-    }
 }
