@@ -88,7 +88,7 @@ public class UserRegistrationController {
             model.addAttribute("error", "Error while sending email");
         }
 
-        return "registration";
+        return "redirect:/registration?success";
     }
 
 
