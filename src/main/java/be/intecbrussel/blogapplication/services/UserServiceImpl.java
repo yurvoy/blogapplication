@@ -178,7 +178,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(name);
         user.setAuthProvider(provider);
         user.setProfileImage(picture);
-        user.setAccountVerified(true);git
+        user.setAccountVerified(true);
 
         userRepository.save(user);
     }
