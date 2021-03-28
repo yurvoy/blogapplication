@@ -100,7 +100,6 @@ public class ForgotPasswordController {
         String password = request.getParameter("password");
 
         User user = userService.getByResetPasswordToken(token);
-        model.addAttribute("title", "Reset your password");
 
         if (user == null) {
             model.addAttribute("message", "Invalid Token");
@@ -110,6 +109,6 @@ public class ForgotPasswordController {
 
             model.addAttribute("message", "You have successfully changed your password.");
         }
-        return "message";
+        return "resetPassword";
     }
 }
