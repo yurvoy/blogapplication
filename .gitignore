@@ -172,8 +172,8 @@ $RECYCLE.BIN/
 
 #Configs
 
-src/main/resources/application.properties
-src/main/resources/application-dev.properties
-src/main/resources/application-prod.properties
+#src/main/resources/application.properties
+#src/main/resources/application-dev.properties
+#src/main/resources/application-prod.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij+all,mavental.com/developers/gitignore/api/windows,macos,intellij+all,maven
