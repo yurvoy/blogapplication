@@ -70,10 +70,9 @@ public class UserRegistrationController {
             result.rejectValue("email", "existingMail", "There is already an account registered with that email");
             return "registration";
         }
+            String email = userDto.getEmail();
 
-        String email = userDto.getEmail();
-
-        SecurityToken verificationToken = new SecurityToken(RandomString.make(30));
+            SecurityToken verificationToken = new SecurityToken(RandomString.make(30));
 
         try {
             String verifyAccountLink = Utility.getSiteURL(request) + "/verifyAccount?token=" + verificationToken.getToken();
