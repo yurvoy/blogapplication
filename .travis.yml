@@ -18,6 +18,6 @@ cache:
 deploy:
   provider: heroku:git
   app: blogify1
-  username: team2.intec.iot@gmail.com
-  password: intec_brussel2
+  username: ${TRAVIS_USER_NAME}
+  password: ${TRAVIS_PASSWORD}
   edge: true
