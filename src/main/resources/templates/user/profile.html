@@ -309,8 +309,7 @@
                 <p class="card-text" th:text="${post.postText}"></p>
 
 
-                <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
-
+                <a th:each="tag: ${post.getTags()}" th:action="@{'/search/' +${tag}}" method="get" th:href="@{'/search/' +${tag}}" class="post-tag" th:text="${tag}">javascript</a>
 
 
             </div>

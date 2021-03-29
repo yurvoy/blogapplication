@@ -13,6 +13,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -122,11 +123,18 @@ public class PostServiceImpl implements PostService{
 
 
     @Override
-    public List<String> findTags(Long postId) {
-        Optional<Post> post = postRepository.findById(postId);
-        return post.get().getTags();
-    }
+    public List<Post> findTags(String tag) {
 
+        List<Post> postOptional = null;
+
+
+        if(tag != null){
+
+            postOptional = postRepository.findAll().stream().filter(post -> post.getTags().contains(tag)).collect(Collectors.toList());
+
+        }
+        return postOptional;
+    }
 
 
 
@@ -167,7 +175,6 @@ public class PostServiceImpl implements PostService{
         }
 
     }
-
 
 
 

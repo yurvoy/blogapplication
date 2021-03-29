@@ -26,7 +26,7 @@ public interface PostService {
     void deleteById(Long along);
 
 
-    List<String> findTags(Long postId);
+    List<Post> findTags(String tag);
 
 
 
