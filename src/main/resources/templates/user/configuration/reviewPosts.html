@@ -22,40 +22,8 @@
 
 <body>
 <!--------------Navigation--------------->
-
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
-
-<nav class="navbar bg-white navbar-expand shadow">
-    <div class="container">
-        <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#" th:href="@{/index}">
-                <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
-            </a>
-
-            <!--form th:action="@{/search}" method="get">
-                <input type="text" name="text" id="text" class="form-control" placeholder="Search here"
-                       th:value="${text}" required
-                       aria-label="Search" size="30"/>
-            </form-->
-
-            <div class="navbar-nav ml-auto">
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAuthenticated()"
-                        font-color="black">
-                    <a href="/" th:href="@{'/user/'+${user.getId()}+'/profile'}">Profile</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg mr-3" sec:authorize="isAnonymous()"
-                        font-color="black">
-                    <a href="/" th:href="@{/login}">Log in</a></buttom>
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAnonymous()"
-                        font-color="black">
-                    <a href="/" th:href="@{/registration}">Register</a></buttom>
-
-                <buttom class="ml-auto btn btn-outline-secondary btn-lg" sec:authorize="isAuthenticated()"
-                        font-color="black">
-                    <a href="/" th:href="@{/logout}">Logout</a></buttom>
-            </div>
-        </div>
-    </div>
-</nav>
+<div th:replace="nav :: navbar"></div>
 <!--------------End Navigation --------------->
 
 

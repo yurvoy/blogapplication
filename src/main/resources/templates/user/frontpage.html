@@ -22,51 +22,10 @@
 
 <body>
 <!--------------Navigation--------------->
-
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
-
-<nav class="navbar bg-white navbar-expand shadow">
-    <div class="container">
-        <div class="collapse navbar-collapse p-2" id="navbarResponsive">
-            <a class="navbar-brand" href="#" th:href="@{/index}">
-                <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
-            </a>
-
-            <form th:action="@{/search}" method="get">
-                <input type="text" name="text" id="text" class="form-control" placeholder="Search here"
-                       th:value="${text}" required
-                       aria-label="Search" size="30"/>
-            </form>
-
-            <div class="navbar-nav ml-auto">
-
-                <a href="/" th:href="@{'/user/'+${user.getId()}+'/profile'}" sec:authorize="isAuthenticated()">
-                    <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
-                            th:text="Profile"></button>
-                </a>
-
-                <a href="/" th:href="@{/login}" sec:authorize="isAnonymous()">
-                    <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
-                            th:text="Login"></button>
-                </a>
-
-                <a href="/" th:href="@{/registration}" sec:authorize="isAnonymous()">
-                    <button class="ml-auto btn btn-outline-secondary btn-lg"
-                            th:text="Register"></button>
-                </a>
-
-                <a href="/" th:href="@{/logout}" sec:authorize="isAuthenticated()">
-                    <button class="ml-auto btn btn-outline-secondary btn-lg"
-
-                            th:text="Logout"></button>
-                </a>
-            </div>
-        </div>
-    </div>
-</nav>
+<div th:replace="nav :: navbar"></div>
 <!--------------End Navigation --------------->
 
-<!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
 
 <div class="container-fluid gedf-wrapper">
 
@@ -213,11 +172,13 @@
             <!-- Dashboard /////-->
             <!-- Begin Search result title -->
             <div th:if="${not #lists.isEmpty(postList)}">
-                <h3 class="text-white">Your Search Results for : <span th:text="${text}"></span></h3>
+                <br>
+                <h4 class="text-white">Your Search Results for : <span th:text="${text}"></span></h4>
             </div>
             <!-- End Search result title -->
             <div th:if="${#lists.isEmpty(posts)}">
-                <h3 class="text-white">There are no posts yet... :(</h3>
+                <br>
+                <h4 class="text-white">There are no posts yet... :(</h4>
             </div>
             <!--- \\\\\\\Post-->
             <div class="card gedf-card mt-3" th:each="post: ${posts}">
