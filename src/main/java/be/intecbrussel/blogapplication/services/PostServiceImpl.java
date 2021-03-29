@@ -36,9 +36,14 @@ public class PostServiceImpl implements PostService{
         post.setPostTitle(newPost.getPostTitle());
         post.setPostText(newPost.getPostText());
         post.setPostTimeStamp(LocalDateTime.now(Clock.systemUTC()));
-
+        if (newPost.getEmbedURL() != null) {
+            if (newPost.getEmbedURL().contains("youtube.com/")){
+                post.setEmbedURL(addVideo(newPost.getEmbedURL()));
+            } else {
+                post.setEmbedURL(newPost.getEmbedURL());
+            }
+        }
         post.setTags(newPost.getTags());
-        //post.setPostTimeStamp(LocalDateTime.now(Clock.systemDefaultZone()));
         post.setUser(user);
 
         List<Post> posts = user.getPosts();
@@ -74,7 +79,6 @@ public class PostServiceImpl implements PostService{
         if(text != null){
 
             return postRepository.search(text);
-
         }
         return postRepository.findAll();
     }
@@ -128,8 +132,12 @@ public class PostServiceImpl implements PostService{
         return post.get().getTags();
     }
 
-
-
+    @Override
+    public String addVideo(String videoURL) {
+        String embedURL = "https://www.youtube.com/embed/";
+        embedURL = embedURL + videoURL.substring(videoURL.lastIndexOf("="));
+        return embedURL;
+    }
 
     @Override
     public void deleteById(Long userId) {

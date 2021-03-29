@@ -205,6 +205,7 @@
                     </a>
 
                     <p class="card-text" th:text="${post.postText}"></p>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/i3Jv9fNPjgk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
                     <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
 

@@ -24,6 +24,8 @@ public class Post implements Principal {
     @Lob
     @Column
     private String postText;
+    @Column
+    private String embedURL;
 
     @Column
     private LocalDateTime postTimeStamp;
