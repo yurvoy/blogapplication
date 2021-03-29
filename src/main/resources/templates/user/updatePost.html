@@ -10,14 +10,14 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
           integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
           crossorigin="anonymous"/>
-    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script src="https://kit.fontawesome.com/51a5fc685f.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
 <!--------------Navigation--------------->
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
-<div th:replace="nav :: navbar"></div>
+<div th:replace="nav2 :: navbar2"></div>
 <!--------------End Navigation --------------->
 
 
@@ -39,17 +39,20 @@
                 <form th:object="${post}" th:action="@{'/editPost/' + ${post.getId()}}" class="form-group"
                       method="post">
 
-                    <div class="form-group">
-                        <label for="post-title" class="control-label">Title</label>
-                        <input class="form-control" rows="4" cols="50" th:field="*{postTitle}" id="post-title"
-                               placeholder="What is the title?" required></input>
+                    <div class="form-group"
+                         th:classappend="${#fields.hasErrors('postTitle')}? 'has-error':''">
+                        <textarea class="form-control" th:field="*{postTitle}" id="post-title"
+                                  rows="1" placeholder="Title?" required></textarea>
                     </div>
-
                     <div class="form-group">
                         <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text"
                                   placeholder="Wanna do you wanna share with us?" required></textarea>
                     </div>
-
+                    <div class="form-group">
+                        <textarea class="form-control" rows="1" th:field="*{embedURL}"
+                                  id="embed-url" placeholder="Insert here Picture address or Youtube video address"
+                                  required></textarea>
+                    </div>
                     <div class="form-group">
                         <input class="form-control" rows="4" cols="50" th:field="*{tags}" id="post-tag"
                                placeholder="What is your tag?" required></input>

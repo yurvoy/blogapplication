@@ -83,6 +83,16 @@ public class Post implements Principal {
         return user;
     }
 
+    public String getEmbedURL() {
+        if (videoURL != null) {
+            return videoURL;
+        }
+        if (pictureURL != null) {
+            return pictureURL;
+        }
+        return "Add picture URL or Youtube video address !";
+    }
+
     @Override
     public String getName() {
         return null;
