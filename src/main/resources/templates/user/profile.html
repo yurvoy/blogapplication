@@ -230,12 +230,12 @@
                 </a>
 
                 <p class="card-text" th:text="${post.postText}"></p>
-
-
+                <img th:if="${post.pictureURL}" th:src="${post.pictureURL}" width="auto"/>
+                <iframe th:if="${post.videoURL}" width="560" height="315" th:src="${post.videoURL}"
+                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
+                            clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <br>
                 <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
-
-
-
             </div>
             <div class="card-footer" th:if="${user.getAccountVerified() && userVisitor.getAccountVerified()}">
                 <a class="card-link"><i class="fa fa-gittip">

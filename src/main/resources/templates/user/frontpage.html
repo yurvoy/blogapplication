@@ -193,7 +193,7 @@
                     <iframe th:if="${post.videoURL}" width="560" height="315" th:src="${post.videoURL}"
                             title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
                             clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+                    <br>
                     <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
 
 
