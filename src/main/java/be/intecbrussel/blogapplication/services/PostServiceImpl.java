@@ -38,9 +38,9 @@ public class PostServiceImpl implements PostService{
         post.setPostTimeStamp(LocalDateTime.now(Clock.systemUTC()));
         if (newPost.getEmbedURL() != null) {
             if (newPost.getEmbedURL().contains("youtube.com/")){
-                post.setEmbedURL(addVideo(newPost.getEmbedURL()));
+                post.setVideoURL(addVideo(newPost.getEmbedURL()));
             } else {
-                post.setEmbedURL(newPost.getEmbedURL());
+                post.setPictureURL(newPost.getEmbedURL());
             }
         }
         post.setTags(newPost.getTags());
@@ -135,7 +135,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public String addVideo(String videoURL) {
         String embedURL = "https://www.youtube.com/embed/";
-        embedURL = embedURL + videoURL.substring(videoURL.lastIndexOf("="));
+        embedURL = embedURL + videoURL.substring(videoURL.lastIndexOf("=")+1);
         return embedURL;
     }
 

@@ -25,7 +25,9 @@ public class Post implements Principal {
     @Column
     private String postText;
     @Column
-    private String embedURL;
+    private String pictureURL;
+    @Column
+    private String videoURL;
 
     @Column
     private LocalDateTime postTimeStamp;
