@@ -5,7 +5,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <title>FrontPage</title>
 
     <script src="https://kit.fontawesome.com/51a5fc685f.js" crossorigin="anonymous"></script>
@@ -17,47 +16,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <!--- style sheet page -->
-    <style>
-        .profile-head {
-            transform: translateY(5rem)
-        }
-
-        .cover {
-            background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
-            background-size: cover;
-            background-repeat: no-repeat
-        }
-
-        body {
-            background: #654ea3;
-            background: linear-gradient(to right, #e96443, #904e95);
-            min-height: 100vh
-        }
-
-        .rounded-circle {
-            margin: 10px 0px 0px 10px;
-
-        }
-
-        .post-tag, .post-tag:visited, .job-preferences-mobile .-section .location-results .geo-tag {
-            color: #39739d;
-            background: #e1ecf4;
-            border: 1px solid #e1ecf4;
-            margin: 0 2px 2px 0;
-            text-decoration: none;
-            text-align: center;
-            font-weight: normal;
-            display: inline-block;
-            font-size: 11px;
-            padding: 3px 5px;
-            white-space: nowrap;
-            text-shadow: none;
-            border-radius: 25px;
-            border-radius: 0;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 
 </head>
 

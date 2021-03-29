@@ -38,7 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(
                         "/registration**",
-                        "/oauth2/**",
                         "/search",
                         "/home**",
                         "/",
@@ -46,7 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/verifyAccount/{token}**",
                         "/console/",
                         "/login**",
-                        "/oAuthLogin**",
                         "/search",
                         "/forgotPassword**",
                         "/404**",
@@ -59,9 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/user/createPost**",
                         "/user/updatePost**",
                         "/user/profile**",
-                        "/js/**",
                         "/css/**",
-                        "/img/**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
