@@ -6,6 +6,7 @@ import be.intecbrussel.blogapplication.web_security_config.CreatePostDto;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 public interface PostService {
 
@@ -23,7 +24,7 @@ public interface PostService {
 
     void likePost(Long postId, Principal principal);
 
-    List<User> findLikes (Long postId);
+    List<User> findLikes(Long postId);
 
     void deleteById(Long along);
 
@@ -31,5 +32,8 @@ public interface PostService {
 
     String addVideo(String videoURL);
 
-    }
+    List<Post> findTags(String tag);
+
+    List<String> findTopTenTags();
+}
 

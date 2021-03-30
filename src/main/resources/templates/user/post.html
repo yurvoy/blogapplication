@@ -33,6 +33,7 @@
 <!--------------Navigation--------------->
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
 <div th:replace="nav :: navbar"></div>
+
 <!--------------End Navigation --------------->
 
 
@@ -68,6 +69,7 @@
                                             ago
                                         </i>
 
+
                                     </div>
 
 
@@ -76,6 +78,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="card-body">
                     <p class="card-text" th:text="${post.postText}"></p>
                     <img th:if="${post.pictureURL}" th:src="${post.pictureURL}" width="auto"/>
@@ -98,7 +101,6 @@
                     <a class="card-link" th:href="${post.id}" role="button"
                        aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"
                                                                                 th:text="${post.comments.size()} > 1 ? ${post.comments.size()} + ' ' + 'Comments' : ${post.comments.size()} + ' ' + 'Comment'"></i></a>
-                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                     <!--- start collapse comments div --->
                     <div>
                         <!--- Start Post's comments list --->
@@ -151,6 +153,7 @@
                         <!-- end collapse comment div --->
                     </div>
                 </div>
+
 
             </div>
             <!--- \\\\\\\Post-->

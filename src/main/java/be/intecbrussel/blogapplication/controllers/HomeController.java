@@ -12,9 +12,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.Collator;
+import java.util.*;
+import java.util.function.Function;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.reverseOrder;
+import static java.util.Map.Entry.comparingByKey;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.*;
 
 @Controller
 public class HomeController {
@@ -35,7 +44,10 @@ public class HomeController {
         topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
         model.addAttribute("posts", topTenPosts);
 
-        if (principal == null) {
+        List<String> topTenTags = postService.findTopTenTags();
+        model.addAttribute("topTags", topTenTags);
+
+        if (principal == null){
             return "user/frontpage";
         }
 
@@ -75,9 +87,6 @@ public class HomeController {
 
         return "404";
     }
-
-
-
 
 
 }

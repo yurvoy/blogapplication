@@ -58,7 +58,6 @@ public class CommentControllerTest {
 
         commentController = new CommentController(userService, postService, commentService);
 
-        //user.setAccountVerified(true);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(commentController)
                 .setViewResolvers(webConfig.viewResolver())
@@ -87,6 +86,7 @@ public class CommentControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(view().name("redirect:" + request.getHeader("Referer")));
     }
+
 
 
 

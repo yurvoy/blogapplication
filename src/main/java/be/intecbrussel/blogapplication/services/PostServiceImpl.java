@@ -11,8 +11,14 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.Collections.reverseOrder;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.*;
 
 @Slf4j
 @Service
@@ -102,6 +108,7 @@ public class PostServiceImpl implements PostService{
         if(postForm.getTags() != null){
             post.get().setTags(postForm.getTags());
         }
+
         if (postForm.getEmbedURL() != null && !postForm.getEmbedURL().contains("/embed/")) {
             if (postForm.getEmbedURL().contains("youtube.com/")){
                 post.get().setVideoURL(addVideo(postForm.getEmbedURL()));
@@ -109,6 +116,7 @@ public class PostServiceImpl implements PostService{
                 post.get().setPictureURL(postForm.getEmbedURL());
             }
         }
+
         postRepository.save(post.get());
     }
 
@@ -134,7 +142,44 @@ public class PostServiceImpl implements PostService{
         return post.get().getLikes();
     }
 
+    @Override
+    public List<Post> findTags(String tag) {
 
+        List<Post> postOptional = null;
+
+        if(tag != null){
+
+            postOptional = postRepository.findAll()
+                    .stream()
+                    .filter(post -> post.getTags().contains(tag))
+                    .collect(toList());
+        }
+        return postOptional;
+    }
+
+    @Override
+    public List<String> findTopTenTags() {
+        List<Post> postsWithTags = postRepository.findAll()
+                .stream()
+                .filter(post -> !post.getTags().isEmpty())
+                .collect(toList());
+        List<String> tags = new ArrayList<>();
+        for (Post post : postsWithTags) {
+            tags.addAll(post.getTags());
+        }
+        Set<String> uniqueTags = new HashSet<>(tags);
+        TreeMap<String, Integer> tagsMap = new TreeMap<>();
+        for (String tag : uniqueTags) {
+            int count = Collections.frequency(tags, tag);
+            tagsMap.put(tag, count);
+        }
+        List<String> topTenTags = tagsMap.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .limit(10)
+                .collect(Collectors.toList());
+        return topTenTags;
+    }
 
 
     @Override
@@ -184,10 +229,5 @@ public class PostServiceImpl implements PostService{
         }
 
     }
-
-
-
-
-
 
 }

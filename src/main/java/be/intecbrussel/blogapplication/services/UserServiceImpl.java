@@ -18,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -178,6 +180,7 @@ public class UserServiceImpl implements UserService {
         user.setAuthProvider(provider);
         user.setProfileImage(picture);
         user.setAccountVerified(true);
+
 
         userRepository.save(user);
     }

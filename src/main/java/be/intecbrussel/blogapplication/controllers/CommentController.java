@@ -45,7 +45,6 @@ public class CommentController {
         commentService.saveComment(post.getId(), user.getId(), comment);
 
 
-
         return "redirect:" + request.getHeader("Referer");
     }
 

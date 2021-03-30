@@ -189,5 +189,24 @@ public class PostController {
         return "user/configuration/reviewPosts";
     }
 
+    @GetMapping("/search/{tag}")
+    public String tagSearch(@PathVariable String tag, Model model, Principal principal){
+
+        List<Post> tagList = postService.findTags(tag);
+        model.addAttribute("tags", tagList);
+        model.addAttribute("tagList", tagList);
+        model.addAttribute("tag", tag);
+
+
+        if(principal != null) {
+            User user = userService.findByEmail(principal.getName());
+            model.addAttribute("user", userService.findById(user.getId()));
+        }
+
+        if(tagList == null){
+            return "searchNotFound";
+        }
+        return "user/configuration/searchTag";
+    }
 
 }

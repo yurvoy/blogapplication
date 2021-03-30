@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
 </head>
 
 <body>
@@ -77,6 +78,8 @@
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                             <i class="fas fa-edit"></i>
                                         </button>
+                                        <a th:each="tag: ${post.getTags()}" th:href="@{'/search/' +${tag}}" class="post-tag" th:text="${tag}">javascript</a>
+
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
                                             <div class="h6 dropdown-header">Configuration</div>
                                             <a class="dropdown-item" href="/" th:href="@{'/editPost/' + ${post.getId()}}">Edit</a>
@@ -85,6 +88,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

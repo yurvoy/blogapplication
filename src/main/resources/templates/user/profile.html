@@ -26,12 +26,14 @@
           crossorigin="anonymous"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 
+
 </head>
 
 <body>
 <!--------------Navigation--------------->
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
 <div th:replace="nav :: navbar"></div>
+
 <!--------------End Navigation --------------->
 
 
@@ -84,6 +86,7 @@
                                 <button style="float:right; width: 80px" type="Submit"  class="btn btn-xs btn-primary unfollow_btn pl-0 pr-0 text-center">Unfollow</button>
                             </form>
                         </div>
+
 
                     </div>
                 </div>
@@ -167,6 +170,7 @@
                                                       id="post-tag"
                                                       placeholder="What is your tag?"></textarea>
 
+
                                         <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
                                     </div>
 
@@ -231,6 +235,7 @@
                     </i>
                 </div>
                 <a class="card-link" href="/" th:href="@{'/user/'+ ${post.getId()}}">
+
                     <h5 class="card-title" th:text="${post.postTitle}"></h5>
                 </a>
 
@@ -240,7 +245,12 @@
                         title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
                             clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <br>
-                <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
+<!--                <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>-->
+
+
+                <a th:each="tag: ${post.getTags()}" th:action="@{'/search/' +${tag}}" method="get" th:href="@{'/search/' +${tag}}" class="post-tag" th:text="${tag}">javascript</a>
+
+
             </div>
             <div class="card-footer" th:if="${user.getAccountVerified() && userVisitor.getAccountVerified()}">
                 <a class="card-link"><i class="fa fa-gittip">
@@ -255,6 +265,7 @@
                    aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"
                                                                             th:text="${post.comments.size()} > 1 ? ' ' + ${post.comments.size()} + ' ' + 'Comments' : ' ' + ${post.comments.size()} + ' ' + 'Comment'"></i>
                 </a>
+
                 <!--- start collapse comments div --->
                 <div class="collapse" th:id="'collapseExample' + ${post.id}">
                     <!--- Start Post's comments list --->
@@ -306,6 +317,7 @@
 
                             <form sec:authorize="isAuthenticated()" th:action="@{'/user/' + ${post.id} + '/' + ${userVisitor.id} + '/createComment'}"
                                   class="form-group mt-4" method="post"  th:if="${user.getAccountVerified()}">
+
                                 <div class="form-group">
                                         <textarea class="form-control" rows="2" cols="50" name="commentText"
                                                   placeholder="What do you think about?" required></textarea>

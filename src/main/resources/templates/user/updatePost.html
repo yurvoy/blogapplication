@@ -10,6 +10,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
           integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
           crossorigin="anonymous"/>
+
     <script src="https://kit.fontawesome.com/51a5fc685f.js" crossorigin="anonymous"></script>
 
 </head>
@@ -18,6 +19,7 @@
 <!--------------Navigation--------------->
 <!--/*@thymesVar id="user" type="be.intecbrussel.blogapplication.model.User"*/-->
 <div th:replace="nav2 :: navbar2"></div>
+
 <!--------------End Navigation --------------->
 
 
@@ -46,14 +48,17 @@
                     </div>
                     <div class="form-group">
                         <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text"
-                                  placeholder="Wanna do you wanna share with us?" required></textarea>
+                                  placeholder="What do you wanna share with us?" required></textarea>
                     </div>
                     <div class="form-group">
                         <textarea class="form-control" rows="1" th:field="*{embedURL}"
                                   id="embed-url" placeholder="Insert here Picture address or Youtube video address"
                                   required></textarea>
+
                     </div>
+
                     <div class="form-group">
+
                         <input class="form-control" rows="4" cols="50" th:field="*{tags}" id="post-tag"
                                placeholder="What is your tag?" required></input>
                         <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
