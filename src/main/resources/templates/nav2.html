@@ -1,0 +1,41 @@
+<div th:fragment="navbar2">
+    <nav class="navbar bg-white navbar-expand shadow">
+        <div class="container">
+            <div class="collapse navbar-collapse p-2" id="navbarResponsive">
+                <a class="navbar-brand" href="#" th:href="@{/index}">
+                    <span style="font-size: 1.5em;"><i class="fas fa-book-reader"></i> Blogify</span>
+                </a>
+
+                <form th:action="@{/search}" method="get">
+                    <input type="text" name="text" id="text" class="form-control" placeholder="Search here"
+                           th:value="${text}" required
+                           aria-label="Search" size="30"/>
+                </form>
+
+                <div class="navbar-nav ml-auto">
+
+                    <a href="/" th:href="@{/index}">
+                        <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
+                                th:text="Frontpage"></button>
+                    </a>
+
+                    <a href="/" th:href="@{/login}" sec:authorize="isAnonymous()">
+                        <button class="ml-auto btn btn-outline-secondary btn-lg mr-3"
+                                th:text="Login"></button>
+                    </a>
+
+                    <a href="/" th:href="@{/registration}" sec:authorize="isAnonymous()">
+                        <button class="ml-auto btn btn-outline-secondary btn-lg"
+                                th:text="Register"></button>
+                    </a>
+
+                    <a href="/" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                        <button class="ml-auto btn btn-outline-secondary btn-lg"
+
+                                th:text="Logout"></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

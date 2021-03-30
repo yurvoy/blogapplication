@@ -24,6 +24,10 @@ public class Post implements Principal {
     @Lob
     @Column
     private String postText;
+    @Column
+    private String pictureURL;
+    @Column
+    private String videoURL;
 
     @Column
     private LocalDateTime postTimeStamp;
@@ -77,6 +81,16 @@ public class Post implements Principal {
 
     public User getUser() {
         return user;
+    }
+
+    public String getEmbedURL() {
+        if (videoURL != null) {
+            return videoURL;
+        }
+        if (pictureURL != null) {
+            return pictureURL;
+        }
+        return "Add picture URL or Youtube video address !";
     }
 
     @Override

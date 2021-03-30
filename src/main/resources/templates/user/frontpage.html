@@ -88,14 +88,6 @@
                                    aria-controls="posts" aria-selected="true">Make
                                     a publication</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images"
-                                   aria-selected="false" href="#images">Images</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="videos-tab" data-toggle="tab" role="tab" aria-controls="videos"
-                                   aria-selected="false" href="#videos">Video</a>
-                            </li>
                         </ul>
                     </div>
 
@@ -119,34 +111,23 @@
                                                       id="post-text" placeholder="Wanna do you wanna share with us?"
                                                       required></textarea>
                                         </div>
-
                                         <div class="form-group">
-                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}"
+                                            <textarea class="form-control" rows="1" th:field="*{embedURL}"
+                                                      id="embed-url" placeholder="Add picture URL or Youtube video address !"
+                                                      required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control" rows="1" th:field="*{tags}"
                                                       id="post-tag"
                                                       placeholder="What is your tag? Seperate multiple tags with ','."></textarea>
                                             <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
 
                                             <a th:each="tag: ${post.getTags()}" href="/" class="post-tag"
                                                th:text="${tag}">javascript</a>
-
-
-
                                         </div>
 
                                     </div>
                                 </div>
-
-                            </div>
-
-
-                            <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
-                                <div class="form-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Upload video</label>
-                                    </div>
-                                </div>
-                                <div class="py-4"></div>
                             </div>
                         </div>
                         <div class="btn-toolbar justify-content-between">
@@ -205,7 +186,11 @@
                     </a>
 
                     <p class="card-text" th:text="${post.postText}"></p>
-
+                    <img th:if="${post.pictureURL}" th:src="${post.pictureURL}" width="auto"/>
+                    <iframe th:if="${post.videoURL}" width="560" height="315" th:src="${post.videoURL}"
+                            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
+                            clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <br>
                     <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
 
 
