@@ -92,7 +92,7 @@ public class CommentController {
     public String processDeleteComment(@PathVariable Long id, @PathVariable String pageIndicator) {
 
         User user = new User();
-        user.setId(commentService.findById(id).getUser().getId());
+        user.setId(commentService.findById(id).getPost().getUser().getId());
 
         commentService.deleteById(id);
 

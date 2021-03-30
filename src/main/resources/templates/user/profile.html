@@ -379,7 +379,7 @@
                             <!--- End post Comments list --->
                             <!--- start comments form --->
 
-                            <form sec:authorize="isAuthenticated()" th:action="@{'/user/' + ${post.id} + '/' + ${user.id} + '/createComment'}"
+                            <form sec:authorize="isAuthenticated()" th:action="@{'/user/' + ${post.id} + '/' + ${userVisitor.id} + '/createComment'}"
                                   class="form-group mt-4" method="post"  th:if="${user.getAccountVerified()}">
                                 <div class="form-group">
                                         <textarea class="form-control" rows="2" cols="50" name="commentText"
