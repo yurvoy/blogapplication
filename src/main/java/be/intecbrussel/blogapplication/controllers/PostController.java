@@ -137,7 +137,7 @@ public class PostController {
 
             if (user.equals(post.getUser().getEmail())) {
                 model.addAttribute("post", post);
-                return "user/deletePost";
+                return "user/deletePreview";
             } else {
                 return "403";
             }

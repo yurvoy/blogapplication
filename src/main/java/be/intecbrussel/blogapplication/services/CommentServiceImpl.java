@@ -66,4 +66,38 @@ public class CommentServiceImpl implements CommentService{
         }
         return comments;
     }
+
+    @Override
+    public void deleteById(Long commentId) {
+
+        System.out.println("Deleting post: " + commentId);
+
+        Optional<Comment> commentOptional = Optional.ofNullable(commentRepository.findById(commentId).get());
+
+        Optional<User> userOptional = Optional.of(commentOptional.get().getUser());
+
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            System.out.println("found user");
+
+            if(commentOptional.isPresent()){
+                System.out.println("Comment found");
+                log.debug("Comment found");
+                Comment commentToDelete = commentOptional.get();
+
+                Post post = commentToDelete.getPost();
+                post.getComments().remove(commentToDelete);
+                user.getPosts().remove(commentToDelete);
+                commentRepository.delete(commentToDelete);
+
+                System.out.println(commentToDelete.getId());
+                postService.save(post);
+                userService.save(user);
+            }
+        } else {
+            log.debug("User Id Not found. Id:" + commentId);
+        }
+
+    }
+
 }

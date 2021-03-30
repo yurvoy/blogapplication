@@ -49,6 +49,11 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    public Post save(Post post){
+        return postRepository.save(post);
+    }
+
+    @Override
     public Post findById(Long id) {
         Optional<Post> postOptional = postRepository.findById(id);
         if (!postOptional.isPresent()) {
@@ -153,9 +158,6 @@ public class PostServiceImpl implements PostService{
                 log.debug("found Post");
                 Post postToDelete = postOptional.get();
 
-
-
-                //postToDelete.setPostText(null);
                 user.getPosts().remove(postToDelete);
                 postRepository.delete(postToDelete);
 
@@ -168,6 +170,8 @@ public class PostServiceImpl implements PostService{
         }
 
     }
+
+
 
 
 
