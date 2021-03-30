@@ -33,13 +33,9 @@
         <h3 class="font-weight-light">
             Thanks for becoming part of our community
         </h3>
-        <form th:action="@{'/verifyAccount/' + ${token}}" th:method="post" onsubmit="return validateCaptcha()">
-            <div th:if="${captcha}">
-                <h5 class="font-weight-light">
-                    Please show us that you're not a robot!
-                </h5>
-                <div class="g-recaptcha d-flex m-3 justify-content-center" data-sitekey="6LdZ4YwaAAAAAI49zk3Mmqf65TG7adPG4NJO1Kb5" th:data-sitekey="${@environment.getProperty('recaptcha.key')}" required>
-                </div>
+        <form th:action="@{'/verifyAccount/' + ${token}}" th:method="post">
+            <div>
+
                 <div class="col text-center">
                     <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
                         <span style="font-size:xx-large">Verify me!</span></button>
@@ -63,11 +59,7 @@
             </div>
         </div>
 
-
-
     </div>
-
-
 </div>
 
 <!-------------- End line Registration text ---------------->
@@ -79,15 +71,5 @@
     </div>
 </footer>
 
-<script type="text/javascript">
-    function validateCaptcha(){
-        if (grecaptcha.getResponse()) {
-            return true;
-        } else {
-            alert("Please prove that you're not a robot")
-            return false;
-        }
-    }
-</script>
 </body>
 </html>
