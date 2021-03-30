@@ -168,27 +168,34 @@
                     </div>
 
                     <!--- Start Post from ---->
-                    <form class="card-body" id="form-post" th:object="${post}" th:action="@{'/user/' + ${user.getId()} + '/createPost/frontpage'}" method="post">
+                    <form class="card-body" id="form-post" th:object="${post}"
+                          th:action="@{'/user/' + ${user.getId()} + '/createPost/frontpage'}" method="post">
                         <div class="tab-content" id="myTabContent">
 
                             <div class="tab-pane fade show active" id="posts" role="tabpanel"
                                  aria-labelledby="posts-tab">
                                 <div class="form-group">
                                     <div>
-                                        <div class="form-group" th:classappend="${#fields.hasErrors('postTitle')}? 'has-error':''">
-                                            <textarea class="form-control" th:field="*{postTitle}" id="post-title" rows="1"
+                                        <div class="form-group"
+                                             th:classappend="${#fields.hasErrors('postTitle')}? 'has-error':''">
+                                            <textarea class="form-control" th:field="*{postTitle}" id="post-title"
+                                                      rows="1"
                                                       placeholder="Title?" required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <textarea class="form-control" rows="4" cols="50" th:field="*{postText}" id="post-text" placeholder="Wanna do you wanna share with us?" required></textarea>
+                                            <textarea class="form-control" rows="4" cols="50" th:field="*{postText}"
+                                                      id="post-text" placeholder="Wanna do you wanna share with us?"
+                                                      required></textarea>
                                         </div>
 
                                         <div class="form-group">
-                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}" id="post-tag"
-                                                   placeholder="What is your tag? Seperate multiple tags with ','." ></textarea>
+                                            <textarea class="form-control" rows="1" cols="50" th:field="*{tags}"
+                                                      id="post-tag"
+                                                      placeholder="What is your tag? Seperate multiple tags with ','."></textarea>
                                             <!--<span th:object="${post}" th:text="${(post.getTags())}"></span>-->
 
-                                            <a th:each="tag: ${post.getTags()}" href="/" class="post-tag" th:text="${tag}">javascript</a>
+                                            <a th:each="tag: ${post.getTags()}" href="/" class="post-tag"
+                                               th:text="${tag}">javascript</a>
 
 
                                         </div>
@@ -283,7 +290,8 @@
                 <div class="card-body"><!--Begin Search Result body-->
                     <div class="mb-2">
                         <i class="text-muted" th:text="${'Posted on ' + #temporals.format(post.postTimeStamp,'dd-MM-yyyy')
-                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm')}"><i class="fa fa-clock-o"></i>10 min
+                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm')}"><i
+                                class="fa fa-clock-o"></i>10 min
                             ago
                         </i>
                     </div>
@@ -293,8 +301,8 @@
 
                     <p class="card-text" th:text="${post.postText}"></p>
 
-                    <a th:each="tag: ${post.getTags()}" th:href="@{'/search/' +${tag}}" class="post-tag" th:text="${tag}">javascript</a>
-
+                    <a th:each="tag: ${post.getTags()}" th:href="@{'/search/' +${tag}}" class="post-tag"
+                       th:text="${tag}">javascript</a>
 
 
                 </div> <!-- End of Search Result body -->
@@ -362,8 +370,24 @@
                     </div>
                 </div>
             </div>
-            <!--- \\\\\\\Post-->
+
+
         </div>
+
+        <!--- \\\\\\\Top Tags-->
+        <div class="col-md-3" >
+            <div class="card gedf-card">
+                <h7>Top Tags</h7>
+            </div>
+            <div class="card gedf-card" >
+                <div class="card-body">
+                    <a th:each="tag: ${topTags}" th:href="@{'/search/' +${tag}}" class="post-tag"
+                        th:text="${tag}">javascript</a>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
 </body>
