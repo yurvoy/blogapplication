@@ -1,5 +1,6 @@
 package be.intecbrussel.blogapplication.controllers;
 
+import be.intecbrussel.blogapplication.model.Comment;
 import be.intecbrussel.blogapplication.model.Post;
 import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.CommentService;
@@ -9,12 +10,14 @@ import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class CommentController {
@@ -50,4 +53,55 @@ public class CommentController {
     public String error() {
         return "redirect:/";
     }
+
+
+    @GetMapping("deleteComment/{id}/{pageIndicator}")
+    public String deletePost(@PathVariable Long id, @PathVariable String pageIndicator, Model model, Principal principal) {
+
+        model.addAttribute(pageIndicator);
+
+        Comment comment = this.commentService.findById(id);
+
+        User commentUser = comment.getUser();
+        User visitor =  userService.findByEmail(principal.getName());
+
+        if (commentUser != visitor) {
+            return "redirect:/index";
+        }
+
+        String user = "aUser";
+
+        if (principal != null) {
+            user = principal.getName();
+        }
+
+        if (comment != null) {
+
+            if (user.equals(comment.getUser().getEmail())) {
+                model.addAttribute("comment", comment);
+                return "user/deletePreview";
+            } else {
+                return "403";
+            }
+        } else {
+            return "error";
+        }
+    }
+
+    @PostMapping("deleteComment/{id}/{pageIndicator}")
+    public String processDeleteComment(@PathVariable Long id, @PathVariable String pageIndicator) {
+
+        User user = new User();
+        user.setId(commentService.findById(id).getPost().getUser().getId());
+
+        commentService.deleteById(id);
+
+        if (pageIndicator.equals("profile")){
+            return "redirect:/user/" + user.getId() + "/profile";
+        } else {
+            return "redirect:/";
+        }
+
+    }
+
 }

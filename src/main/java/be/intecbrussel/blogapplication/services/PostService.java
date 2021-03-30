@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface PostService {
 
+    Post save(Post post);
+
     Post findById(Long id);
 
     Post savePost(Long userId, CreatePostDto newPost);
