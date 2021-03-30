@@ -377,8 +377,9 @@
         <!--- \\\\\\\Top Tags-->
         <div class="col-md-3" >
             <div class="card gedf-card">
-                <h7>Top Tags</h7>
-            </div>
+                <div class="card-body">
+                    <div class="h7 glyphicon-font=">Top Tags</div>
+                </div>
             <div class="card gedf-card" >
                 <div class="card-body">
                     <a th:each="tag: ${topTags}" th:href="@{'/search/' +${tag}}" class="post-tag"
