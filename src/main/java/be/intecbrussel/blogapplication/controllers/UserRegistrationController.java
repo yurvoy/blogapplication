@@ -9,11 +9,21 @@ import be.intecbrussel.blogapplication.model.User;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.Utility;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +37,7 @@ import java.util.Date;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
+import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.context.Context;
 
 import javax.validation.Validator;
@@ -42,6 +53,20 @@ public class UserRegistrationController {
     private final JavaMailSender mailSender;
 
     private final ITemplateEngine templateEngine;
+
+    @Value("${recaptcha.secret}")
+    private String recaptchaSecret;
+
+    @Value("${recaptcha.url}")
+    private String recaptchaUrl;
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder){
+        return builder.build();
+    }
+
+    @Autowired
+    public RestTemplate restTemplate;
 
     public UserRegistrationController(UserService userService, SecurityTokenService securityTokenService, JavaMailSender mailSender, ITemplateEngine templateEngine) {
         this.userService = userService;
@@ -126,7 +151,9 @@ public class UserRegistrationController {
 
 
     @GetMapping("/verifyAccount")
-    public String showVerifiedAccountPage(@Param(value = "token") String token, Model model) {
+    public String showVerifiedAccountPage(@Param(value = "token") String token, @Param("g-recaptcha-response") String gRecaptchaReponse, Model model) {
+
+        verifyRecaptcha(gRecaptchaReponse);
 
         SecurityToken verificationToken = securityTokenService.getSecurityTokenByToken(token);
         if (verificationToken == null) {
@@ -168,6 +195,23 @@ public class UserRegistrationController {
         userService.save(user);
 
         return "verifyAccount";
+    }
+
+    private void verifyRecaptcha(String gRecaptchaResponse){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("secret",recaptchaSecret);
+        map.add("response",gRecaptchaResponse);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+
+        //ReCaptchaResponse response = restTemplate.postForObject(recaptchaUrl, request, ReCaptchaResponse);
+
+        ResponseEntity<String> response  = restTemplate.postForEntity(recaptchaUrl, request, String.class);
+
+        System.out.println(response);
     }
 
 }

@@ -68,7 +68,7 @@
                 <h5 class="font-weight-light">
                     Please show us that you're not a robot!
                 </h5>
-                <div class="g-recaptcha d-flex m-3 justify-content-center" data-sitekey="6LdZ4YwaAAAAAI49zk3Mmqf65TG7adPG4NJO1Kb5" th:data-sitekey="${@environment.getProperty('recaptcha.key')}" required>
+                <div id="recaptcha-item" class="g-recaptcha d-flex m-3 justify-content-center" data-sitekey="6LcvaY8aAAAAAL9RRqwLQbTTrreiFDIW9Z2c0uwh" th:data-sitekey="${@environment.getProperty('recaptcha.key')}" required>
                 </div>
                 <div class="col text-center">
                     <button class="block btn btn-primary pl-5 pr-5 pt-0" type="submit">
