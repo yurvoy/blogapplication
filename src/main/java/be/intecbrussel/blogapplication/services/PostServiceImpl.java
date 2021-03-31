@@ -109,7 +109,9 @@ public class PostServiceImpl implements PostService{
             post.get().setTags(postForm.getTags());
         }
 
-        if (postForm.getEmbedURL() != null && !postForm.getEmbedURL().contains("/embed/")) {
+        if (postForm.getEmbedURL() != null
+                && !postForm.getEmbedURL().contains("/embed/")
+                && !postForm.getEmbedURL().contains("Add picture")) {
             if (postForm.getEmbedURL().contains("youtube.com/")){
                 post.get().setVideoURL(addVideo(postForm.getEmbedURL()));
             } else {
