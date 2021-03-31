@@ -90,8 +90,11 @@ public class UserRegistrationController {
             result.rejectValue("email", "existingMail", "There is already an account registered with that email");
             return "registration";
         }
-        String email = userDto.getEmail();
 
+        if(result.hasErrors()){
+            return "registration";
+        }
+        String email = userDto.getEmail();
         SecurityToken verificationToken = new SecurityToken(RandomString.make(30));
 
         try {

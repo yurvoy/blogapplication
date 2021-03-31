@@ -14,7 +14,7 @@ public class CreatePostDto {
     @Size(max = 1000, min = 1, message = "Post : 1000 max characters")
     private String postText;
 
-    @Size(max = 1000, min = 1, message = "Post : 1000 max characters")
+    @Size(max = 1000, message = "Post : 1000 max characters")
     private String embedURL;
 
     @Size(max = 10, message = "Tag: 10 max tags")

@@ -91,15 +91,20 @@ public class CommentController {
     public String processDeleteComment(@PathVariable Long id, @PathVariable String pageIndicator) {
 
         User user = new User();
+        Post post = commentService.findById(id).getPost();
         user.setId(commentService.findById(id).getPost().getUser().getId());
 
         commentService.deleteById(id);
 
         if (pageIndicator.equals("profile")){
             return "redirect:/user/" + user.getId() + "/profile";
-        } else {
-            return "redirect:/";
         }
+        if(pageIndicator.equals("post")){
+            return "redirect:/user/" + post.getId();
+        }
+
+
+        return "redirect:/";
 
     }
 

@@ -76,7 +76,7 @@
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0"><span th:text="${user.firstName}"> </span>&nbsp<span
                                 th:text="${user.lastName}"></span></h4>
-                        <p class="small mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Stockholm</p>
+                        <p class="small mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Belgium</p>
 
                         <div class="col p-0" sec:authorize="isAuthenticated()" th:if="${user.getAccountVerified() && userVisitor.getAccountVerified()}">
                             <form th:action="@{/follow/} + ${user.email}" th:if="${!following and !user.equals(userVisitor)}" method="post"> <!-- 001 -->
@@ -153,8 +153,7 @@
                                     </div>
                                     <div class="form-group">
                                             <textarea class="form-control" rows="1" th:field="*{embedURL}"
-                                                      id="embed-url" placeholder="Add picture URL or Youtube video address !"
-                                                      required></textarea>
+                                                      id="embed-url" placeholder="Add picture URL or Youtube video address !"></textarea>
                                     </div>
 
                                     <div class="form-group">

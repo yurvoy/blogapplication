@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.repository.query.Param;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -50,6 +51,9 @@ public class PostControllerTest {
 
     Post post;
 
+
+
+
     Principal mockPrincipal;
 
     @BeforeEach
@@ -69,6 +73,7 @@ public class PostControllerTest {
         user.setId(1L);
         post.setId(1L);
         post.setUser(user);
+
     }
 
 
@@ -174,7 +179,9 @@ public class PostControllerTest {
         when(userService.findByEmail(any())).thenReturn(user);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
+
                 .get("/search")
+
                 .principal(mockPrincipal);
 
         mockMvc.perform(requestBuilder)

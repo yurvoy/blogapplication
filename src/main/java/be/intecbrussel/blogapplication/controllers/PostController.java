@@ -160,6 +160,9 @@ public class PostController {
     @GetMapping("/search")
     public String postSearch(Model model, @Param("text") String text, Principal principal){
 
+        if(text != null) {
+            text = text.toLowerCase();
+        }
         List<Post> postList = postService.findAll(text);
         model.addAttribute("posts", postList);
         model.addAttribute("postList", postList);
