@@ -191,19 +191,17 @@
                 </div>
 
                 <div class="card-body"><!--Begin Search Result body-->
+
                     <div class="mb-2">
+                        <a class="card-link" href="/" th:href="@{'/user/'+ ${post.getId()}}">
+                            <h5 class="card-title" th:text="${post.postTitle}"></h5>
+                        </a>
                         <i class="text-muted" th:text="${'Posted on ' + #temporals.format(post.postTimeStamp,'dd-MM-yyyy')
-                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm')}"><i
-                                class="fa fa-clock-o"></i>10 min
+                                        + ' at ' + #temporals.format(post.postTimeStamp,'HH:mm')}">
+                            <i class="fa fa-clock-o"></i>10 min
                             ago
                         </i>
                     </div>
-                    <a class="card-link" href="/" th:href="@{'/user/'+ ${post.getId()}}">
-
-
-                        <h5 class="card-title" th:text="${post.postTitle}"></h5>
-                    </a>
-
                     <p class="card-text" th:text="${post.postText}"></p>
                     <img th:if="${post.pictureURL}" th:src="${post.pictureURL}" width="560"/>
                     <iframe th:if="${post.videoURL}" width="560" height="315" th:src="${post.videoURL}"

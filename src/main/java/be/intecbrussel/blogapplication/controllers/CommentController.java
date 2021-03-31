@@ -7,6 +7,7 @@ import be.intecbrussel.blogapplication.services.CommentService;
 import be.intecbrussel.blogapplication.services.PostService;
 import be.intecbrussel.blogapplication.services.UserService;
 import be.intecbrussel.blogapplication.web_security_config.CreateCommentDto;
+import org.h2.engine.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -102,9 +103,12 @@ public class CommentController {
         if(pageIndicator.equals("post")){
             return "redirect:/user/" + post.getId();
         }
+        if(pageIndicator.equals("frontpage")){
+            return "redirect:/";
+        }
 
 
-        return "redirect:/";
+        return "redirect:/search/" + pageIndicator;
 
     }
 
