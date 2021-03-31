@@ -11,7 +11,7 @@ public class CreatePostDto {
     @Size(max = 70, min = 1, message = "Title : 70 max characters")
     private String postTitle;
 
-    @Size(max = 1000, min = 1, message = "Post : 1000 max characters")
+    @Size(max = 2000, min = 1, message = "Post : 1000 max characters")
     private String postText;
 
     @Size(max = 1000, message = "Post : 1000 max characters")

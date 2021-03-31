@@ -60,7 +60,7 @@ public class OAuth2Service extends DefaultOAuth2UserService {
         if(user == null) {
             userService.createNewOAuth2User(email, name, picture, provider);
         } else {
-            userService.updateOAuth2User(user, name, picture, provider);
+            userService.updateOAuth2User(user, picture, provider);
         }
 
         if (oAuth2User.getAttribute("name") == null) {
