@@ -96,7 +96,7 @@
 
                     <!--- Start Post from ---->
                     <form class="card-body" id="form-post" th:object="${post}"
-                          th:action="@{'/user/' + ${user.getId()} + '/createPost/profile'}" method="post">
+                          th:action="@{'/user/' + ${user.getId()} + '/createPost/frontpage'}" method="post">
                         <div class="tab-content" id="myTabContent">
 
                             <div class="tab-pane fade show active" id="posts" role="tabpanel"
@@ -205,7 +205,7 @@
                     </a>
 
                     <p class="card-text" th:text="${post.postText}"></p>
-                    <img th:if="${post.pictureURL}" th:src="${post.pictureURL}" width="auto"/>
+                    <img th:if="${post.pictureURL}" th:src="${post.pictureURL}" width="560"/>
                     <iframe th:if="${post.videoURL}" width="560" height="315" th:src="${post.videoURL}"
                             title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
                             clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
