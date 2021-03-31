@@ -48,7 +48,7 @@
                             <div class="input-group date bdp-date"
                                  th:classappend="${#fields.hasErrors('birthday')}? 'has-error':''">
                                 <label>
-                                    <input oninput="verifyBdate(this)" type="date" name="bdate" class="form-control" th:field="*{birthday}">
+                                    <input oninput="verifyBdate(this)" type="text" name="bdate" class="form-control" th:field="*{birthday}">
                                 </label>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
