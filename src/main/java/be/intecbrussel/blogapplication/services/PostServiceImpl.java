@@ -42,8 +42,10 @@ public class PostServiceImpl implements PostService{
         post.setPostTitle(newPost.getPostTitle());
         post.setPostText(newPost.getPostText());
         post.setPostTimeStamp(LocalDateTime.now(Clock.systemUTC()));
-        if (newPost.getEmbedURL() != null) {
-            if (newPost.getEmbedURL().contains("youtube.com/")){
+        if (newPost.getEmbedURL() != null
+                && !newPost.getEmbedURL().contains("/embed/")
+                && !newPost.getEmbedURL().contains("Add picture")) {
+            if (newPost.getEmbedURL().contains("youtube.com/") || newPost.getEmbedURL().contains("://youtu")){
                 post.setVideoURL(addVideo(newPost.getEmbedURL()));
             } else {
                 post.setPictureURL(newPost.getEmbedURL());
@@ -108,14 +110,15 @@ public class PostServiceImpl implements PostService{
         if(postForm.getTags() != null){
             post.get().setTags(postForm.getTags());
         }
-
         if (postForm.getEmbedURL() != null
                 && !postForm.getEmbedURL().contains("/embed/")
                 && !postForm.getEmbedURL().contains("Add picture")) {
-            if (postForm.getEmbedURL().contains("youtube.com/")){
+            if (postForm.getEmbedURL().contains("youtube.com/") || postForm.getEmbedURL().contains("://youtu")){
                 post.get().setVideoURL(addVideo(postForm.getEmbedURL()));
+                post.get().setPictureURL(null);
             } else {
                 post.get().setPictureURL(postForm.getEmbedURL());
+                post.get().setVideoURL(null);
             }
         }
 
@@ -193,7 +196,11 @@ public class PostServiceImpl implements PostService{
     @Override
     public String addVideo(String videoURL) {
         String embedURL = "https://www.youtube.com/embed/";
-        embedURL = embedURL + videoURL.substring(videoURL.lastIndexOf("=")+1);
+        if (videoURL.contains("youtube.com/")) {
+            embedURL = embedURL + videoURL.substring(videoURL.lastIndexOf("=")+1);
+        } else {
+            embedURL = embedURL + videoURL.substring(videoURL.lastIndexOf("/")+1);
+        }
         return embedURL;
     }
 
