@@ -197,7 +197,7 @@ public class PostServiceImpl implements PostService{
     public String addVideo(String videoURL) {
         String embedURL = "https://www.youtube.com/embed/";
         if (videoURL.contains("youtube.com/")) {
-            embedURL = embedURL + videoURL.substring(videoURL.lastIndexOf("=")+1);
+            embedURL = embedURL + videoURL.substring(videoURL.indexOf("=")+1);
         } else {
             embedURL = embedURL + videoURL.substring(videoURL.lastIndexOf("/")+1);
         }
