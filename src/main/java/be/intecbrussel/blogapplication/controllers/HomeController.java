@@ -41,7 +41,7 @@ public class HomeController {
 
         List<Post> topTenPosts = postService.findAll();
         Collections.reverse(topTenPosts);
-        topTenPosts = topTenPosts.stream().limit(10).collect(Collectors.toList());
+        topTenPosts = topTenPosts.stream().limit(20).collect(Collectors.toList());
         model.addAttribute("posts", topTenPosts);
 
         List<String> topTenTags = postService.findTopTenTags();
