@@ -28,7 +28,7 @@ public class GithubOAuth2User implements OAuth2User {
         return oAuth2User.getAuthorities();
     }
 
-    // principal.getName() must return email address, else return node_id
+    // principal.getName() must return email address, else return fake address
     @Override
     public String getName() {
         if (oAuth2User.getAttribute("email") != null) {
