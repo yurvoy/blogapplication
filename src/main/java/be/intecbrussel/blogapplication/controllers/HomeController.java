@@ -39,10 +39,11 @@ public class HomeController {
     @RequestMapping({"","/", "/index"})
     public String root(Principal principal, Model model) {
 
-        List<Post> topTenPosts = postService.findAll();
-        Collections.reverse(topTenPosts);
-        topTenPosts = topTenPosts.stream().limit(20).collect(Collectors.toList());
-        model.addAttribute("posts", topTenPosts);
+        List<Post> lastPosts = postService.findPosts();
+        model.addAttribute("posts", lastPosts);
+
+        List<Post> popularPosts = postService.findPopularPosts();
+        model.addAttribute("popular", popularPosts);
 
         List<String> topTenTags = postService.findTopTenTags();
         model.addAttribute("topTags", topTenTags);

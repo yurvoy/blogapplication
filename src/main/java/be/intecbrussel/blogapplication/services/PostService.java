@@ -32,6 +32,10 @@ public interface PostService {
 
     String addVideo(String videoURL);
 
+    List<Post> findPosts();
+
+    List<Post> findPopularPosts();
+
     List<Post> findTags(String tag);
 
     List<String> findTopTenTags();

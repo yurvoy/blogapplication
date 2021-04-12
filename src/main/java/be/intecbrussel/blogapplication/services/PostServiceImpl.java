@@ -205,6 +205,27 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    public List<Post> findPosts() {
+        List<Post> lastPosts = findAll();
+        Collections.reverse(lastPosts);
+        lastPosts.stream().limit(30).collect(Collectors.toList());
+
+        return lastPosts;
+    }
+
+    @Override
+    public List<Post> findPopularPosts() {
+        List<Post> popularPosts = findAll();
+
+        popularPosts = popularPosts.stream()
+                .sorted(Comparator.comparingInt((Post p) -> p.getLikes().size()))
+                .limit(10)
+                .collect(Collectors.toList());
+
+        return popularPosts;
+    }
+
+    @Override
     public void deleteById(Long userId) {
 
         log.debug("Deleting post: " + userId);
