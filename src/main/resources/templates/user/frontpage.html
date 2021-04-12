@@ -320,10 +320,10 @@
                 <div class="card-body">
                     <div class="h7 glyphicon-font=">Popular Posts</div>
                 </div>
-                <div class="card gedf-card" >
+                <div class="card gedf-card">
                     <div class="card-body">
                         <a th:each="pop: ${popular}" class="card-link" href="/" th:href="@{'/user/'+ ${pop.getId()}}">
-                            <h5 class="card-title" th:text="${pop.postTitle}"></h5>
+                            <h5 class="card-title" id="popular-posts" th:text="${pop.postTitle}"></h5>
                             <h6 class="text-muted" th:text="${#strings.abbreviate(pop.postText,100)}"></h6>
                         </a>
                     </div>
